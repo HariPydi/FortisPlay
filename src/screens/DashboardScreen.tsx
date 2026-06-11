@@ -6,11 +6,11 @@ import {
   TouchableOpacity,
   StyleSheet,
   StatusBar,
-  SafeAreaView,
   Dimensions,
 } from 'react-native';
 import {Colors} from '../styles/colors';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type Props = {
   navigation?: any;

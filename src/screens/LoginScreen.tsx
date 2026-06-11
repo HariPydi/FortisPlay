@@ -12,10 +12,10 @@ import {
   ScrollView,
   ActivityIndicator,
 } from 'react-native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import MaterialIcons from '@react-native-vector-icons/material-icons';
 import {Colors} from '../styles/colors';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../App';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type Props = {
   navigation: NativeStackNavigationProp<RootStackParamList, 'Login'>;
@@ -29,113 +29,109 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
 
   const handleLogin = (): void => {
     if (!userId.trim()) {
-      Alert.alert('Error', 'Enter Card ID');
+      Alert.alert('Error', 'Please enter Card ID ');
       return;
     }
     if (!password.trim()) {
-      Alert.alert('Error', 'Enter Password ');
+      Alert.alert('Error', 'Please enter Password ');
       return;
     }
-
     setLoading(true);
-
     setTimeout(() => {
       setLoading(false);
-      navigation.navigate('Dashboard'); // ← fix here
+      navigation.navigate('Dashboard');
     }, 1500);
   };
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-      <StatusBar
-        barStyle="dark-content"
-        backgroundColor={Colors.backgroundTop}
-      />
+    <SafeAreaView style={styles.safeArea}>          {/* ← SafeAreaView outer */}
+      <StatusBar barStyle="dark-content" backgroundColor={Colors.backgroundTop} />
+      <KeyboardAvoidingView
+        style={styles.flex}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        <ScrollView
+          contentContainerStyle={styles.scrollContent}
+          keyboardShouldPersistTaps="handled"
+          showsVerticalScrollIndicator={false}>
 
-      <ScrollView
-        contentContainerStyle={styles.scrollContent}
-        keyboardShouldPersistTaps="handled"
-        showsVerticalScrollIndicator={false}>
-
-        <View style={styles.topSection}>
-          <View style={styles.logoContainer}>
-            <View style={styles.logoOuter}>
-              <View style={styles.logoInner}>
-                <Text style={styles.logoLetter}>F</Text>
+          <View style={styles.topSection}>
+            <View style={styles.logoContainer}>
+              <View style={styles.logoOuter}>
+                <View style={styles.logoInner}>
+                  <Text style={styles.logoLetter}>F</Text>
+                </View>
               </View>
             </View>
-          </View>
-          <Text style={styles.brandName}>FortisPlay</Text>
-        </View>
-
-        <View style={styles.card}>
-          <Text style={styles.cardTitle}>Admin</Text>
-          <Text style={styles.cardSubtitle}>
-            Enter your credentials to continue
-          </Text>
-
-          <Text style={styles.inputLabel}>User ID</Text>
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.textInput}
-              placeholder="Card ID"
-              placeholderTextColor={Colors.inputPlaceholder}
-              value={userId}
-              onChangeText={(text: string) => setUserId(text)}
-              autoCapitalize="none"
-              autoCorrect={false}
-              keyboardType="default"
-            />
+            <Text style={styles.brandName}>FortisPlay</Text>
           </View>
 
-          <Text style={styles.inputLabel}>Password</Text>
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={styles.textInput}
-              placeholder="••••••••"
-              placeholderTextColor={Colors.inputPlaceholder}
-              value={password}
-              onChangeText={(text: string) => setPassword(text)}
-              secureTextEntry={!showPassword}
-              autoCapitalize="none"
-              autoCorrect={false}
-            />
+          <View style={styles.card}>
+            <Text style={styles.cardTitle}>Admin</Text>
+            <Text style={styles.cardSubtitle}>
+              Enter your credentials to continue
+            </Text>
+
+            <Text style={styles.inputLabel}>User ID</Text>
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.textInput}
+                placeholder="Card ID"
+                placeholderTextColor={Colors.inputPlaceholder}
+                value={userId}
+                onChangeText={(text: string) => setUserId(text)}
+                autoCapitalize="none"
+                autoCorrect={false}
+                keyboardType="default"
+              />
+            </View>
+
+            <Text style={styles.inputLabel}>Password</Text>
+            <View style={styles.inputContainer}>
+              <TextInput
+                style={styles.textInput}
+                placeholder="••••••••"
+                placeholderTextColor={Colors.inputPlaceholder}
+                value={password}
+                onChangeText={(text: string) => setPassword(text)}
+                secureTextEntry={!showPassword}
+                autoCapitalize="none"
+                autoCorrect={false}
+              />
+              <TouchableOpacity
+                style={styles.eyeButton}
+                onPress={() => setShowPassword((prev: boolean) => !prev)}
+                activeOpacity={0.7}>
+                <Text style={styles.eyeIcon}>{showPassword ? '🔒' : '👁️'}</Text>
+              </TouchableOpacity>
+            </View>
+
             <TouchableOpacity
-              style={styles.eyeButton}
-              onPress={() => setShowPassword((prev: boolean) => !prev)}
-              activeOpacity={0.7}>
-              <Text style={styles.eyeIcon}>{showPassword ? '🔒' : '👁️'}</Text>
+              style={[styles.loginButton, loading && styles.loginButtonDisabled]}
+              onPress={handleLogin}
+              disabled={loading}
+              activeOpacity={0.85}>
+              {loading ? (
+                <ActivityIndicator color="#FFFFFF" size="small" />
+              ) : (
+                <Text style={styles.loginButtonText}>Login</Text>
+              )}
             </TouchableOpacity>
           </View>
 
-          <TouchableOpacity
-            style={[
-              styles.loginButton,
-              loading && styles.loginButtonDisabled,
-            ]}
-            onPress={handleLogin}
-            disabled={loading}
-            activeOpacity={0.85}>
-            {loading ? (
-              <ActivityIndicator color="#FFFFFF" size="small" />
-            ) : (
-              <Text style={styles.loginButtonText}>Login</Text>
-            )}
-          </TouchableOpacity>
-        </View>
-
-        <Text style={styles.footerText}>© 2026 FortisPlay.</Text>
-      </ScrollView>
-    </KeyboardAvoidingView>
+          <Text style={styles.footerText}>© 2026 FortisPlay.</Text>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  safeArea: {
     flex: 1,
-    backgroundColor: Colors.backgroundTop,
+    backgroundColor: Colors.backgroundTop,   // ← SafeAreaView gets bg color
+  },
+  flex: {
+    flex: 1,
   },
   scrollContent: {
     flexGrow: 1,
