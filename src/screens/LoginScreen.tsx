@@ -12,10 +12,13 @@ import {
   ScrollView,
   ActivityIndicator,
 } from 'react-native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import MaterialIcons from '@react-native-vector-icons/material-icons';
 import {Colors} from '../styles/colors';
+import {RootStackParamList} from '../../App';
 
 type Props = {
-  navigation?: any;
+  navigation: NativeStackNavigationProp<RootStackParamList, 'Login'>;
 };
 
 const LoginScreen: React.FC<Props> = ({navigation}) => {
@@ -26,11 +29,11 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
 
   const handleLogin = (): void => {
     if (!userId.trim()) {
-      Alert.alert('Error', 'దయచేసి Card ID enter చేయండి');
+      Alert.alert('Error', 'Enter Card ID');
       return;
     }
     if (!password.trim()) {
-      Alert.alert('Error', 'దయచేసి Password enter చేయండి');
+      Alert.alert('Error', 'Enter Password ');
       return;
     }
 
@@ -38,7 +41,7 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
 
     setTimeout(() => {
       setLoading(false);
-      Alert.alert('Success', 'Login అయ్యారు! 🎉');
+      navigation.navigate('Dashboard'); // ← fix here
     }, 1500);
   };
 
@@ -103,7 +106,7 @@ const LoginScreen: React.FC<Props> = ({navigation}) => {
               style={styles.eyeButton}
               onPress={() => setShowPassword((prev: boolean) => !prev)}
               activeOpacity={0.7}>
-              <Text style={styles.eyeIcon}>{showPassword ? '🙈' : '👁️'}</Text>
+              <Text style={styles.eyeIcon}>{showPassword ? '🔒' : '👁️'}</Text>
             </TouchableOpacity>
           </View>
 

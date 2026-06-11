@@ -1,4 +1,5 @@
 export const Colors = {
+  // existing
   backgroundTop: '#B8E8F7',
   backgroundBottom: '#E8F4F8',
   cardBackground: '#FFFFFF',
@@ -11,6 +12,30 @@ export const Colors = {
   inputBorder: '#E0E0E0',
   inputPlaceholder: '#BBBBBB',
   logoBlue: '#1E3A5F',
+
+  // dashboard
+  dashBackground: '#F0F2F5',
+  headerBackground: '#FFFFFF',
+  headerBorder: '#E0E0E0',
+  chipRed: '#D32F2F',
+  chipGreen: '#2E7D32',
+  chipText: '#FFFFFF',
+  tabActive: '#1A1A2E',
+  tabInactive: '#FFFFFF',
+  tabTextActive: '#FFFFFF',
+  tabTextInactive: '#666666',
+  tabBorder: '#DDDDDD',
+  dotGreen: '#2E7D32',
+  dotRed: '#D32F2F',
+  createButton: '#1565C0',
+  createButtonText: '#FFFFFF',
+  cardBorder: '#E0E0E0',
+  thText: '#999999',
+  venueText: '#555555',
+  breadcrumbText: '#888888',
+  refreshIcon: '#5685ed',
+  avatarBackground: '#E0E0E0',
+  dashCell: '#AAAAAA',
 } as const;
 
 export type ColorKeys = keyof typeof Colors;
