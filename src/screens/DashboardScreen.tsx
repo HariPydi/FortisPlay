@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import {
-  Dimensions,
   ScrollView,
   StyleSheet,
   Text,
@@ -29,6 +28,7 @@ const horseData: HorseRow[] = [
       { time: '11:45', status: 'red' },
       { time: '12:20', status: 'red' },
       { time: '12:25', status: 'red' },
+      
     ],
   },
   {
@@ -53,8 +53,6 @@ const horseData: HorseRow[] = [
     ],
   },
 ];
-
-// const horseData: HorseRow[] = []
 
 const karambolaData: MeetingRow[] = [
   {
@@ -86,8 +84,6 @@ const karambolaData: MeetingRow[] = [
   },
 ];
 
-// const karambolaData: MeetingRow[] = []
-
 const luckySignData: MeetingRow[] = [
   { name: 'Meeting 1 @ 13:00', draws: [{ time: '13:35', status: 'red' }, null, null] },
   { name: 'Meeting 2 @ 15:00', draws: [{ time: '15:00', status: 'red' }, null, null] },
@@ -96,34 +92,27 @@ const luckySignData: MeetingRow[] = [
 
 const TABS = ['All', 'Horse Racing', 'Karambola', 'Lucky Sign'];
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
-const CARD_PADDING = 16;       // card horizontal padding each side
-const PAGE_PADDING = 16;       // page horizontal padding each side
-const CARD_INNER = SCREEN_WIDTH - PAGE_PADDING * 2 - CARD_PADDING * 2;
-
-// Horse Racing: venue=100, 4 chips share the rest
-const VENUE_W = 100;
-const HORSE_CHIP_W = Math.floor((CARD_INNER - VENUE_W) / 4);
-
-// Karambola / Lucky Sign: meeting=130, 3 chips share the rest
+const CHIP_W = 68;
+const VENUE_W = 110;
 const MEETING_W = 130;
-const DRAW_CHIP_W = Math.floor((CARD_INNER - MEETING_W) / 3);
+const ROW_H = 44;
+const HEADER_H = 36;
 
-const Chip = ({ chip, width }: { chip: RaceChip; width: number }) => {
+// Single Chip
+const Chip = ({ chip }: { chip: RaceChip }) => {
   if (!chip) {
     return (
-      <View style={{ width, alignItems: 'center' }}>
+      <View style={styles.chipSlot}>
         <Text style={styles.dashCell}>—</Text>
       </View>
     );
   }
   return (
-    <View style={{ width, alignItems: 'center', paddingHorizontal: 2 }}>
+    <View style={styles.chipSlot}>
       <View
         style={[
           styles.chip,
           {
-            width: width - 4,
             backgroundColor:
               chip.status === 'green' ? Colors.chipGreen : Colors.chipRed,
           },
@@ -134,13 +123,72 @@ const Chip = ({ chip, width }: { chip: RaceChip; width: number }) => {
   );
 };
 
+// Horse Racing Table - Left VENUE fixed, Right chips scroll
+const HorseRacingTable = ({ data }: { data: HorseRow[] }) => {
+  const maxRaces = Math.max(...data.map(r => r.races.length), 0);
+  const headers = Array.from({ length: maxRaces }, (_, i) => `RACE ${i + 1}`);
+
+  return (
+    <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginHorizontal: -16 }}>
+      <View>
+        <View style={[styles.scrollHeaderRow, { paddingLeft: 12 }]}>
+          <Text style={[styles.th, { width: VENUE_W }]}>VENUE</Text>
+          {headers.map(h => (
+            <Text key={h} style={[styles.th, { width: CHIP_W, textAlign: 'center' }]}>{h}</Text>
+          ))}
+        </View>
+        {data.map((row, i) => (
+          <View key={i} style={[styles.scrollDataRow, { paddingLeft: 12 }]}>
+            <Text style={[styles.cellLabel, { width: VENUE_W }]} numberOfLines={1}>{row.venue}</Text>
+            {row.races.map((chip, j) => (
+              <Chip key={j} chip={chip} />
+            ))}
+            {Array.from({ length: maxRaces - row.races.length }).map((_, k) => (
+              <Chip key={`e-${k}`} chip={null} />
+            ))}
+          </View>
+        ))}
+      </View>
+    </ScrollView>
+  );
+};
+
+// Meeting Table - Left MEETING fixed, Right chips scroll
+const MeetingTable = ({ data }: { data: MeetingRow[] }) => {
+  const maxDraws = Math.max(...data.map(r => r.draws.length), 0);
+  const headers = Array.from({ length: maxDraws }, (_, i) => `DRAW ${i + 1}`);
+
+  return (
+    <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginHorizontal: -16 }}>
+      <View>
+        <View style={[styles.scrollHeaderRow, { paddingLeft: 12 }]}>
+          <Text style={[styles.th, { width: MEETING_W }]}>MEETING</Text>
+          {headers.map((h, i) => (
+            <Text key={i} style={[styles.th, { width: CHIP_W, textAlign: 'center' }]}>{h}</Text>
+          ))}
+        </View>
+        {data.map((row, i) => (
+          <View key={i} style={[styles.scrollDataRow, { paddingLeft: 12 }]}>
+            <Text style={[styles.cellLabel, { width: MEETING_W }]} numberOfLines={1}>{row.name}</Text>
+            {row.draws.map((chip, j) => (
+              <Chip key={j} chip={chip} />
+            ))}
+            {Array.from({ length: maxDraws - row.draws.length }).map((_, k) => (
+              <Chip key={`e-${k}`} chip={null} />
+            ))}
+          </View>
+        ))}
+      </View>
+    </ScrollView>
+  );
+};
+
 const DashboardScreen: React.FC<Props> = ({ navigation }) => {
   const [activeTab, setActiveTab] = useState<string>('All');
-  const [sidebarVisible, setSidebarVisible] = useState<boolean>(false);
-  const [masterModal, setMasterModal] = useState<boolean>(false);   // ← add
+  const [masterModal, setMasterModal] = useState<boolean>(false);
 
-  const openMaster = () => setMasterModal(true);    // ← add
-  const closeMaster = () => setMasterModal(false);  // ← add
+  const openMaster = () => setMasterModal(true);
+  const closeMaster = () => setMasterModal(false);
 
   const showHorse = activeTab === 'All' || activeTab === 'Horse Racing';
   const showKarambola = activeTab === 'All' || activeTab === 'Karambola';
@@ -159,25 +207,20 @@ const DashboardScreen: React.FC<Props> = ({ navigation }) => {
 
         <Text style={styles.pageTitle}>Live Events</Text>
 
-        {/* ── Tabs ── */}
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.tabsRow}>
+        {/* Tabs */}
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.tabsRow}>
           {TABS.map(tab => (
             <TouchableOpacity
               key={tab}
               style={[styles.tab, activeTab === tab && styles.tabActive]}
               onPress={() => setActiveTab(tab)}
               activeOpacity={0.8}>
-              <Text style={[styles.tabText, activeTab === tab && styles.tabTextActive]}>
-                {tab}
-              </Text>
+              <Text style={[styles.tabText, activeTab === tab && styles.tabTextActive]}>{tab}</Text>
             </TouchableOpacity>
           ))}
         </ScrollView>
 
-        {/* ── Legend ── */}
+        {/* Legend */}
         <View style={styles.legend}>
           <View style={styles.legendItem}>
             <View style={[styles.dot, { backgroundColor: Colors.dotGreen }]} />
@@ -192,7 +235,7 @@ const DashboardScreen: React.FC<Props> = ({ navigation }) => {
           </TouchableOpacity>
         </View>
 
-        {/* ── Horse Racing ── */}
+        {/* Horse Racing */}
         {showHorse && (
           <View style={styles.card}>
             <View style={styles.cardHeader}>
@@ -201,38 +244,19 @@ const DashboardScreen: React.FC<Props> = ({ navigation }) => {
                 <Text style={styles.createBtnText}>+ Create Race Card</Text>
               </TouchableOpacity>
             </View>
-
-            {/* Header row */}
-            <View style={styles.throw}>
-              <Text style={[styles.venueLabel, styles.th]}>VENUE</Text>
-              {['RACE 1', 'RACE 2', 'RACE 3', 'RACE 4'].map(h => (
-                <Text key={h} style={[styles.th, styles.colHeader, { width: HORSE_CHIP_W }]}>
-                  {h}
-                </Text>
-              ))}
-            </View>
-
             {horseData.length === 0 ? (
-              <View>
-                <Text style={styles.noDataText}>The
-                  <Text style={styles.masterData}> Master Data </Text>
-                  setup required before creating race cards</Text>
+              <View style={styles.noDataContainer}>
+                <Text style={styles.noDataText}>
+                  The <Text style={styles.masterData}>Master Data</Text> setup required before creating race cards
+                </Text>
               </View>
             ) : (
-              horseData.map((row, i) => (
-                <View key={i} style={styles.row}>
-                  <Text style={styles.venueLabel}>{row.venue}</Text>
-                  {row.races.map((chip, j) => (
-                    <Chip key={j} chip={chip} width={HORSE_CHIP_W} />
-                  ))}
-                </View>
-              ))
+              <HorseRacingTable data={horseData} />
             )}
-
           </View>
         )}
 
-        {/* ── Karambola ── */}
+        {/* Karambola */}
         {showKarambola && (
           <View style={styles.card}>
             <View style={styles.cardHeader}>
@@ -241,36 +265,17 @@ const DashboardScreen: React.FC<Props> = ({ navigation }) => {
                 <Text style={styles.createBtnText}>+ Create Meeting</Text>
               </TouchableOpacity>
             </View>
-
-            <View style={styles.throw}>
-              <Text style={[styles.meetingLabel, styles.th]}>MEETING</Text>
-              {['DRAW 1', 'DRAW 2', 'DRAW 3'].map(h => (
-                <Text key={h} style={[styles.th, styles.colHeader, { width: DRAW_CHIP_W }]}>
-                  {h}
-                </Text>
-              ))}
-            </View>
-
             {karambolaData.length === 0 ? (
-              <View>
-                <Text style={styles.noDataText}>
-                  No draws scheduled for today.
-                </Text>
+              <View style={styles.noDataContainer}>
+                <Text style={styles.noDataText}>No draws scheduled for today.</Text>
               </View>
             ) : (
-              karambolaData.map((row, i) => (
-                <View key={i} style={styles.row}>
-                  <Text style={styles.meetingLabel}>{row.name}</Text>
-                  {row.draws.map((chip, j) => (
-                    <Chip key={j} chip={chip} width={DRAW_CHIP_W} />
-                  ))}
-                </View>
-              ))
+              <MeetingTable data={karambolaData} />
             )}
           </View>
         )}
 
-        {/* ── Lucky Sign ── */}
+        {/* Lucky Sign */}
         {showLucky && (
           <View style={styles.card}>
             <View style={styles.cardHeader}>
@@ -279,24 +284,13 @@ const DashboardScreen: React.FC<Props> = ({ navigation }) => {
                 <Text style={styles.createBtnText}>+ Create Meeting</Text>
               </TouchableOpacity>
             </View>
-
-            <View style={styles.throw}>
-              <Text style={[styles.meetingLabel, styles.th]}>MEETING</Text>
-              {['DRAW 1', '—', '—'].map((h, i) => (
-                <Text key={i} style={[styles.th, styles.colHeader, { width: DRAW_CHIP_W }]}>
-                  {h}
-                </Text>
-              ))}
-            </View>
-
-            {luckySignData.map((row, i) => (
-              <View key={i} style={styles.row}>
-                <Text style={styles.meetingLabel}>{row.name}</Text>
-                {row.draws.map((chip, j) => (
-                  <Chip key={j} chip={chip} width={DRAW_CHIP_W} />
-                ))}
+            {luckySignData.length === 0 ? (
+              <View style={styles.noDataContainer}>
+                <Text style={styles.noDataText}>No draws scheduled for today.</Text>
               </View>
-            ))}
+            ) : (
+              <MeetingTable data={luckySignData} />
+            )}
           </View>
         )}
 
@@ -306,74 +300,13 @@ const DashboardScreen: React.FC<Props> = ({ navigation }) => {
       <MasterDataModal
         visible={masterModal}
         onClose={closeMaster}
-        onGoToMasters={() => {
-          closeMaster();
-          // navigation.navigate('Masters');
-        }}
+        onGoToMasters={() => { closeMaster(); }}
       />
     </ScreenLayout>
   );
 };
 
 const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: Colors.headerBackground,
-  },
-
-  /* Header */
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    backgroundColor: Colors.headerBackground,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-    borderBottomWidth: 0.5,
-    borderBottomColor: Colors.headerBorder,
-  },
-  logoRow: { flexDirection: 'row', alignItems: 'center', gap: 12 },
-  logoBox: {
-    width: 32,
-    height: 32,
-    borderRadius: 8,
-    backgroundColor: Colors.logoBlue,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  logoLetter: { color: '#fff', fontWeight: 'bold', fontSize: 16 },
-  brandName: { fontSize: 16, fontWeight: '700', color: Colors.textDark },
-  headerRight: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderWidth: 2,
-    borderColor: '#a8a1a15c',
-    borderRadius: 8,
-    padding: 4,
-    paddingLeft: 6,
-    paddingRight: 6,
-    gap: 8
-  },
-  userId: { fontSize: 13, color: Colors.venueText },
-  avatar: {
-    width: 30,
-    height: 30,
-    borderRadius: 15,
-    backgroundColor: Colors.avatarBackground,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  avatarIcon: { fontSize: 14 },
-  chevron: { fontSize: 24, color: Colors.venueText },
-
-  /* Breadcrumb */
-  breadcrumb: {
-    paddingHorizontal: 16,
-    paddingVertical: 12,
-  },
-  breadcrumbText: { fontSize: 12, color: Colors.breadcrumbText },
-
-  /* Scroll */
   scroll: { flex: 1 },
   scrollContent: { paddingHorizontal: 16, paddingTop: 16 },
 
@@ -384,28 +317,18 @@ const styles = StyleSheet.create({
     marginBottom: 14,
   },
 
-  /* Tabs */
   tabsRow: { flexDirection: 'row', gap: 8, marginBottom: 14, paddingRight: 4 },
-  tab: {
-    paddingHorizontal: 16,
-    paddingVertical: 7,
-  },
+  tab: { paddingHorizontal: 16, paddingVertical: 7 },
   tabActive: {
     borderRadius: 20,
     borderWidth: 1,
     backgroundColor: Colors.tabActive,
-    borderColor: Colors.tabActive
+    borderColor: Colors.tabActive,
   },
   tabText: { fontSize: 13, fontWeight: '500', color: Colors.tabTextInactive },
   tabTextActive: { color: Colors.tabTextActive },
 
-  /* Legend */
-  legend: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 14,
-    gap: 14,
-  },
+  legend: { flexDirection: 'row', alignItems: 'center', marginBottom: 14, gap: 14 },
   legendItem: { flexDirection: 'row', alignItems: 'center', gap: 5 },
   dot: { width: 9, height: 9, borderRadius: 5 },
   legendText: { fontSize: 12, color: Colors.textGrey },
@@ -420,12 +343,14 @@ const styles = StyleSheet.create({
   },
   refreshIcon: { fontSize: 20, color: Colors.refreshIcon },
 
-  /* Card */
   card: {
     backgroundColor: Colors.cardBackground,
     borderRadius: 14,
-    padding: CARD_PADDING,
+    paddingTop: 16,
+    paddingHorizontal: 16,
+    paddingBottom: 16,
     marginBottom: 14,
+    overflow: 'hidden',
   },
   cardHeader: {
     flexDirection: 'row',
@@ -442,23 +367,31 @@ const styles = StyleSheet.create({
   },
   createBtnText: { color: Colors.createButtonText, fontSize: 12, fontWeight: '600' },
 
-  /* Table */
-  row: {
+  // Table
+  tableWrapper: {
     flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 7,
+    marginHorizontal: -16,
   },
-  throw: {
+
+  // Left Fixed Column
+ 
+
+  // Right Scrollable
+  scrollableCols: { flex: 1 },
+  scrollHeaderRow: {
+    height: HEADER_H,
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#dce3fa',
-
-    marginHorizontal: -16, // CARD_PADDING value
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-
-    marginBottom: 7,
   },
+  scrollDataRow: {
+    height: ROW_H,
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#F0F0F0',
+  },
+
   th: {
     color: Colors.thText,
     fontSize: 10,
@@ -466,30 +399,14 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     letterSpacing: 0.4,
   },
-  colHeader: { textAlign: 'center' },
-  noDataText: {
-    color: '#2a252590',
-    textAlign: 'center'
-  },
-  masterData: {
-    color: '#2837d8ff',
-    textDecorationLine: 'underline'
-  },
-  venueLabel: {
-    width: VENUE_W,
-    fontSize: 12,
-    color: Colors.venueText,
-    fontWeight: '500',
-  },
-  meetingLabel: {
-    width: MEETING_W,
-    fontSize: 12,
-    color: Colors.venueText,
-    fontWeight: '500',
-  },
 
-  /* Chip */
+  chipSlot: {
+    width: CHIP_W,
+    alignItems: 'center',
+    paddingHorizontal: 2,
+  },
   chip: {
+    width: CHIP_W - 6,
     paddingVertical: 7,
     borderRadius: 7,
     alignItems: 'center',
@@ -497,6 +414,10 @@ const styles = StyleSheet.create({
   },
   chipText: { color: Colors.chipText, fontSize: 11, fontWeight: '700' },
   dashCell: { fontSize: 13, color: Colors.dashCell, textAlign: 'center' },
+
+  noDataContainer: { paddingVertical: 16, alignItems: 'center' },
+  noDataText: { color: '#2a252590', textAlign: 'center' },
+  masterData: { color: '#2837d8ff', textDecorationLine: 'underline' },
 });
 
 export default DashboardScreen;
