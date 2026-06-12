@@ -8,7 +8,7 @@ import {
   TouchableWithoutFeedback,
   ScrollView,
 } from 'react-native';
-import {Colors} from '../styles/colors';
+import { Colors } from '../styles/colors';
 
 type Props = {
   visible: boolean;
@@ -23,16 +23,16 @@ type MenuItem = {
 };
 
 const menuItems: MenuItem[] = [
-  {label: 'Dashboard', screen: 'Dashboard',},
-  {label: 'Event Day', screen: 'EventDay', },
-  {label: 'Masters', screen: 'Masters', },
-  {label: 'Allotments', screen: 'Allotments', },
-  {label: 'Reports', screen: 'Reports', },
-  {label: 'CCTV', screen: 'CCTV', },
-  {label: 'Collection Merger', screen: 'CollectionMerger',},
+  { label: 'Dashboard', screen: 'Dashboard', },
+  { label: 'Event Day', screen: 'EventDay', },
+  { label: 'Masters', screen: 'Masters', },
+  { label: 'Allotments', screen: 'Allotments', },
+  { label: 'Reports', screen: 'Reports', },
+  { label: 'CCTV', screen: 'CCTV', },
+  { label: 'Collection Merger', screen: 'CollectionMerger', },
 ];
 
-const Sidebar: React.FC<Props> = ({visible, onClose, navigation, activeScreen}) => {
+const Sidebar: React.FC<Props> = ({ visible, onClose, navigation, activeScreen }) => {
   const handleNavigate = (screen: string): void => {
     onClose();
     navigation.navigate(screen);
@@ -77,7 +77,7 @@ const Sidebar: React.FC<Props> = ({visible, onClose, navigation, activeScreen}) 
                       ]}
                       onPress={() => handleNavigate(item.screen)}
                       activeOpacity={0.7}>
-                      <Text style={styles.menuIcon}>{item.icon}</Text>
+                      {/* <Text style={styles.menuIcon}>{item.icon}</Text> */}
                       <Text
                         style={[
                           styles.menuLabel,
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     height: '100%',
     paddingTop: 50,
     shadowColor: '#000',
-    shadowOffset: {width: 3, height: 0},
+    shadowOffset: { width: 3, height: 0 },
     shadowOpacity: 0.15,
     shadowRadius: 12,
     elevation: 12,
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
   menuItemActive: {
     backgroundColor: '#EEF2FF',
   },
- 
+
   menuLabel: {
     fontSize: 15,
     fontWeight: '500',

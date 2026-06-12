@@ -7,11 +7,14 @@ import {
   StyleSheet,
   StatusBar,
   Dimensions,
+  Modal,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import { Colors } from '../styles/colors';
 import Sidebar from '../components/Sidebar';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import MasterDataModal from '../components/modals/MasterDataModal'
 
 type Props = {
   navigation?: any;
@@ -139,6 +142,10 @@ const Chip = ({ chip, width }: { chip: RaceChip; width: number }) => {
 const DashboardScreen: React.FC<Props> = ({ navigation }) => {
   const [activeTab, setActiveTab] = useState<string>('All');
   const [sidebarVisible, setSidebarVisible] = useState<boolean>(false);
+  const [masterModal, setMasterModal] = useState<boolean>(false);   // ← add
+
+  const openMaster = () => setMasterModal(true);    // ← add
+  const closeMaster = () => setMasterModal(false);  // ← add
 
   const showHorse = activeTab === 'All' || activeTab === 'Horse Racing';
   const showKarambola = activeTab === 'All' || activeTab === 'Karambola';
@@ -265,7 +272,7 @@ const DashboardScreen: React.FC<Props> = ({ navigation }) => {
           <View style={styles.card}>
             <View style={styles.cardHeader}>
               <Text style={styles.cardTitle}>Karambola</Text>
-              <TouchableOpacity style={styles.createBtn}>
+              <TouchableOpacity style={styles.createBtn} onPress={openMaster}>
                 <Text style={styles.createBtnText}>+ Create Meeting</Text>
               </TouchableOpacity>
             </View>
@@ -330,6 +337,15 @@ const DashboardScreen: React.FC<Props> = ({ navigation }) => {
 
         <View style={{ height: 30 }} />
       </ScrollView>
+
+      <MasterDataModal
+        visible={masterModal}
+        onClose={closeMaster}
+        onGoToMasters={() => {
+          closeMaster();
+          // navigation.navigate('Masters');
+        }}
+      />
     </SafeAreaView>
   );
 };
