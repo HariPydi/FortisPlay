@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -8,7 +8,7 @@ import {
   StatusBar,
   Dimensions,
 } from 'react-native';
-import {Colors} from '../styles/colors';
+import { Colors } from '../styles/colors';
 import Sidebar from '../components/Sidebar';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -18,71 +18,82 @@ type Props = {
 };
 
 type ChipStatus = 'red' | 'green';
-type RaceChip = {time: string; status: ChipStatus} | null;
-type HorseRow = {venue: string; races: RaceChip[]};
-type MeetingRow = {name: string; draws: RaceChip[]};
+type RaceChip = { time: string; status: ChipStatus } | null;
+type HorseRow = { venue: string; races: RaceChip[] };
+type MeetingRow = { name: string; draws: RaceChip[] };
 
 const horseData: HorseRow[] = [
   {
     venue: 'Doomben (AUS)',
     races: [
-      {time: '10:35', status: 'red'},
-      {time: '11:10', status: 'red'},
-      {time: '11:45', status: 'red'},
-      {time: '12:20', status: 'red'},
+      { time: '10:35', status: 'red' },
+      { time: '11:10', status: 'red' },
+      { time: '11:45', status: 'red' },
+      { time: '12:20', status: 'red' },
+      { time: '12:25', status: 'red' },
     ],
   },
   {
     venue: 'Randwick (AUS)',
     races: [
-      {time: '10:55', status: 'red'},
-      {time: '11:30', status: 'red'},
-      {time: '12:05', status: 'red'},
-      {time: '12:40', status: 'red'},
+      { time: '10:55', status: 'red' },
+      { time: '11:30', status: 'red' },
+      { time: '12:05', status: 'red' },
+      { time: '12:40', status: 'red' },
+      { time: '12:45', status: 'red' },
     ],
   },
   {
     venue: 'Yarmouth (UK)',
     races: [
-      {time: '18:10', status: 'red'},
-      {time: '18:40', status: 'red'},
-      {time: '19:10', status: 'green'},
-      {time: '19:45', status: 'green'},
+      { time: '18:10', status: 'red' },
+      { time: '18:40', status: 'red' },
+      { time: '19:10', status: 'green' },
+      { time: '19:45', status: 'green' },
+      { time: '19:50', status: 'green' },
+      { time: '19:55', status: 'green' },
     ],
   },
 ];
+
+// const horseData: HorseRow[] = []
 
 const karambolaData: MeetingRow[] = [
   {
     name: 'Meeting 1 @ 13:00',
     draws: [
-      {time: '13:00', status: 'red'},
-      {time: '13:05', status: 'red'},
-      {time: '13:10', status: 'red'},
+      { time: '13:00', status: 'red' },
+      { time: '13:05', status: 'red' },
+      { time: '13:10', status: 'red' },
+      { time: '13:15', status: 'red' },
     ],
   },
   {
     name: 'Meeting 2 @ 15:00',
     draws: [
-      {time: '15:00', status: 'red'},
-      {time: '15:05', status: 'red'},
-      {time: '15:10', status: 'red'},
+      { time: '15:00', status: 'red' },
+      { time: '15:05', status: 'red' },
+      { time: '15:10', status: 'red' },
+      { time: '15:15', status: 'red' },
     ],
   },
   {
     name: 'Meeting 3 @ 19:00',
     draws: [
-      {time: '19:00', status: 'green'},
-      {time: '19:05', status: 'green'},
-      {time: '19:10', status: 'green'},
+      { time: '19:00', status: 'green' },
+      { time: '19:05', status: 'green' },
+      { time: '19:10', status: 'green' },
+      { time: '19:15', status: 'green' },
     ],
   },
 ];
 
+// const karambolaData: MeetingRow[] = []
+
 const luckySignData: MeetingRow[] = [
-  {name: 'Meeting 1 @ 13:00', draws: [{time: '13:35', status: 'red'}, null, null]},
-  {name: 'Meeting 2 @ 15:00', draws: [{time: '15:00', status: 'red'}, null, null]},
-  {name: 'Meeting 3 @ 19:00', draws: [{time: '19:00', status: 'green'}, null, null]},
+  { name: 'Meeting 1 @ 13:00', draws: [{ time: '13:35', status: 'red' }, null, null] },
+  { name: 'Meeting 2 @ 15:00', draws: [{ time: '15:00', status: 'red' }, null, null] },
+  { name: 'Meeting 3 @ 19:00', draws: [{ time: '19:00', status: 'green' }, null, null] },
 ];
 
 const TABS = ['All', 'Horse Racing', 'Karambola', 'Lucky Sign'];
@@ -100,16 +111,16 @@ const HORSE_CHIP_W = Math.floor((CARD_INNER - VENUE_W) / 4);
 const MEETING_W = 130;
 const DRAW_CHIP_W = Math.floor((CARD_INNER - MEETING_W) / 3);
 
-const Chip = ({chip, width}: {chip: RaceChip; width: number}) => {
+const Chip = ({ chip, width }: { chip: RaceChip; width: number }) => {
   if (!chip) {
     return (
-      <View style={{width, alignItems: 'center'}}>
+      <View style={{ width, alignItems: 'center' }}>
         <Text style={styles.dashCell}>—</Text>
       </View>
     );
   }
   return (
-    <View style={{width, alignItems: 'center', paddingHorizontal: 2}}>
+    <View style={{ width, alignItems: 'center', paddingHorizontal: 2 }}>
       <View
         style={[
           styles.chip,
@@ -125,7 +136,7 @@ const Chip = ({chip, width}: {chip: RaceChip; width: number}) => {
   );
 };
 
-const DashboardScreen: React.FC<Props> = ({navigation}) => {
+const DashboardScreen: React.FC<Props> = ({ navigation }) => {
   const [activeTab, setActiveTab] = useState<string>('All');
   const [sidebarVisible, setSidebarVisible] = useState<boolean>(false);
 
@@ -136,20 +147,20 @@ const DashboardScreen: React.FC<Props> = ({navigation}) => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle="dark-content" backgroundColor={Colors.headerBackground} />
-       {/* ── Sidebar ── */}
-    <Sidebar
-      visible={sidebarVisible}
-      onClose={() => setSidebarVisible(false)}
-      navigation={navigation}
-      activeScreen="Dashboard"
-    />
+      {/* ── Sidebar ── */}
+      <Sidebar
+        visible={sidebarVisible}
+        onClose={() => setSidebarVisible(false)}
+        navigation={navigation}
+        activeScreen="Dashboard"
+      />
 
       {/* ── Header ── */}
       <View style={styles.header}>
         <View style={styles.logoRow}>
           <TouchableOpacity onPress={() => setSidebarVisible(true)}>
-  <Text style={{fontSize: 20}}>☰</Text>
-</TouchableOpacity>
+            <Text style={{ fontSize: 20 }}>☰</Text>
+          </TouchableOpacity>
           <View style={styles.logoBox}>
             <Text style={styles.logoLetter}>F</Text>
           </View>
@@ -197,11 +208,11 @@ const DashboardScreen: React.FC<Props> = ({navigation}) => {
         {/* ── Legend ── */}
         <View style={styles.legend}>
           <View style={styles.legendItem}>
-            <View style={[styles.dot, {backgroundColor: Colors.dotGreen}]} />
+            <View style={[styles.dot, { backgroundColor: Colors.dotGreen }]} />
             <Text style={styles.legendText}>Betting in Progress</Text>
           </View>
           <View style={styles.legendItem}>
-            <View style={[styles.dot, {backgroundColor: Colors.dotRed}]} />
+            <View style={[styles.dot, { backgroundColor: Colors.dotRed }]} />
             <Text style={styles.legendText}>Betting Stopped</Text>
           </View>
           <TouchableOpacity style={styles.refreshBtn}>
@@ -223,20 +234,29 @@ const DashboardScreen: React.FC<Props> = ({navigation}) => {
             <View style={styles.throw}>
               <Text style={[styles.venueLabel, styles.th]}>VENUE</Text>
               {['RACE 1', 'RACE 2', 'RACE 3', 'RACE 4'].map(h => (
-                <Text key={h} style={[styles.th, styles.colHeader, {width: HORSE_CHIP_W}]}>
+                <Text key={h} style={[styles.th, styles.colHeader, { width: HORSE_CHIP_W }]}>
                   {h}
                 </Text>
               ))}
             </View>
 
-            {horseData.map((row, i) => (
-              <View key={i} style={styles.row}>
-                <Text style={styles.venueLabel}>{row.venue}</Text>
-                {row.races.map((chip, j) => (
-                  <Chip key={j} chip={chip} width={HORSE_CHIP_W} />
-                ))}
+            {horseData.length === 0 ? (
+              <View>
+                <Text style={styles.noDataText}>The
+                  <Text style={styles.masterData}> Master Data </Text>
+                  setup required before creating race cards</Text>
               </View>
-            ))}
+            ) : (
+              horseData.map((row, i) => (
+                <View key={i} style={styles.row}>
+                  <Text style={styles.venueLabel}>{row.venue}</Text>
+                  {row.races.map((chip, j) => (
+                    <Chip key={j} chip={chip} width={HORSE_CHIP_W} />
+                  ))}
+                </View>
+              ))
+            )}
+
           </View>
         )}
 
@@ -253,20 +273,28 @@ const DashboardScreen: React.FC<Props> = ({navigation}) => {
             <View style={styles.throw}>
               <Text style={[styles.meetingLabel, styles.th]}>MEETING</Text>
               {['DRAW 1', 'DRAW 2', 'DRAW 3'].map(h => (
-                <Text key={h} style={[styles.th, styles.colHeader, {width: DRAW_CHIP_W}]}>
+                <Text key={h} style={[styles.th, styles.colHeader, { width: DRAW_CHIP_W }]}>
                   {h}
                 </Text>
               ))}
             </View>
 
-            {karambolaData.map((row, i) => (
-              <View key={i} style={styles.row}>
-                <Text style={styles.meetingLabel}>{row.name}</Text>
-                {row.draws.map((chip, j) => (
-                  <Chip key={j} chip={chip} width={DRAW_CHIP_W} />
-                ))}
+            {karambolaData.length === 0 ? (
+              <View>
+                <Text style={styles.noDataText}>
+                  No draws scheduled for today.
+                </Text>
               </View>
-            ))}
+            ) : (
+              karambolaData.map((row, i) => (
+                <View key={i} style={styles.row}>
+                  <Text style={styles.meetingLabel}>{row.name}</Text>
+                  {row.draws.map((chip, j) => (
+                    <Chip key={j} chip={chip} width={DRAW_CHIP_W} />
+                  ))}
+                </View>
+              ))
+            )}
           </View>
         )}
 
@@ -283,7 +311,7 @@ const DashboardScreen: React.FC<Props> = ({navigation}) => {
             <View style={styles.throw}>
               <Text style={[styles.meetingLabel, styles.th]}>MEETING</Text>
               {['DRAW 1', '—', '—'].map((h, i) => (
-                <Text key={i} style={[styles.th, styles.colHeader, {width: DRAW_CHIP_W}]}>
+                <Text key={i} style={[styles.th, styles.colHeader, { width: DRAW_CHIP_W }]}>
                   {h}
                 </Text>
               ))}
@@ -300,7 +328,7 @@ const DashboardScreen: React.FC<Props> = ({navigation}) => {
           </View>
         )}
 
-        <View style={{height: 30}} />
+        <View style={{ height: 30 }} />
       </ScrollView>
     </SafeAreaView>
   );
@@ -323,7 +351,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 0.5,
     borderBottomColor: Colors.headerBorder,
   },
-  logoRow: {flexDirection: 'row', alignItems: 'center', gap: 12},
+  logoRow: { flexDirection: 'row', alignItems: 'center', gap: 12 },
   logoBox: {
     width: 32,
     height: 32,
@@ -332,10 +360,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  logoLetter: {color: '#fff', fontWeight: 'bold', fontSize: 16},
-  brandName: {fontSize: 16, fontWeight: '700', color: Colors.textDark},
-  headerRight: {flexDirection: 'row', alignItems: 'center', gap: 8},
-  userId: {fontSize: 13, color: Colors.venueText},
+  logoLetter: { color: '#fff', fontWeight: 'bold', fontSize: 16 },
+  brandName: { fontSize: 16, fontWeight: '700', color: Colors.textDark },
+  headerRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    borderWidth: 2,
+    borderColor: '#a8a1a15c',
+    borderRadius: 8,
+    padding: 4,
+    paddingLeft: 6,
+    paddingRight: 6,
+    gap: 8
+  },
+  userId: { fontSize: 13, color: Colors.venueText },
   avatar: {
     width: 30,
     height: 30,
@@ -344,22 +382,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  avatarIcon: {fontSize: 14},
-  chevron: {fontSize: 12, color: Colors.venueText},
+  avatarIcon: { fontSize: 14 },
+  chevron: { fontSize: 24, color: Colors.venueText },
 
   /* Breadcrumb */
   breadcrumb: {
-    backgroundColor: Colors.headerBackground,
     paddingHorizontal: 16,
-    paddingVertical: 7,
-    borderBottomWidth: 0.5,
-    borderBottomColor: Colors.headerBorder,
+    paddingVertical: 12,
   },
-  breadcrumbText: {fontSize: 12, color: Colors.breadcrumbText},
+  breadcrumbText: { fontSize: 12, color: Colors.breadcrumbText },
 
   /* Scroll */
-  scroll: {flex: 1},
-  scrollContent: {paddingHorizontal: 16, paddingTop: 16},
+  scroll: { flex: 1 },
+  scrollContent: { paddingHorizontal: 16, paddingTop: 16 },
 
   pageTitle: {
     fontSize: 22,
@@ -369,18 +404,19 @@ const styles = StyleSheet.create({
   },
 
   /* Tabs */
-  tabsRow: {flexDirection: 'row', gap: 8, marginBottom: 14, paddingRight: 4},
+  tabsRow: { flexDirection: 'row', gap: 8, marginBottom: 14, paddingRight: 4 },
   tab: {
     paddingHorizontal: 16,
     paddingVertical: 7,
+  },
+  tabActive: {
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: Colors.tabBorder,
-    backgroundColor: Colors.tabInactive,
+    backgroundColor: Colors.tabActive,
+    borderColor: Colors.tabActive
   },
-  tabActive: {backgroundColor: Colors.tabActive, borderColor: Colors.tabActive},
-  tabText: {fontSize: 13, fontWeight: '500', color: Colors.tabTextInactive},
-  tabTextActive: {color: Colors.tabTextActive},
+  tabText: { fontSize: 13, fontWeight: '500', color: Colors.tabTextInactive },
+  tabTextActive: { color: Colors.tabTextActive },
 
   /* Legend */
   legend: {
@@ -389,11 +425,11 @@ const styles = StyleSheet.create({
     marginBottom: 14,
     gap: 14,
   },
-  legendItem: {flexDirection: 'row', alignItems: 'center', gap: 5},
-  dot: {width: 9, height: 9, borderRadius: 5},
-  legendText: {fontSize: 12, color: Colors.textGrey},
+  legendItem: { flexDirection: 'row', alignItems: 'center', gap: 5 },
+  dot: { width: 9, height: 9, borderRadius: 5 },
+  legendText: { fontSize: 12, color: Colors.textGrey },
   refreshBtn: {
-    marginLeft: 'auto', 
+    marginLeft: 'auto',
     paddingLeft: 6,
     paddingRight: 6,
     paddingBottom: 3,
@@ -401,7 +437,7 @@ const styles = StyleSheet.create({
     borderColor: '#5685ed',
     borderRadius: 10,
   },
-  refreshIcon: {fontSize: 20, color: Colors.refreshIcon},
+  refreshIcon: { fontSize: 20, color: Colors.refreshIcon },
 
   /* Card */
   card: {
@@ -416,14 +452,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 12,
   },
-  cardTitle: {fontSize: 16, fontWeight: '700', color: Colors.textDark},
+  cardTitle: { fontSize: 16, fontWeight: '700', color: Colors.textDark },
   createBtn: {
     backgroundColor: Colors.createButton,
     borderRadius: 8,
     paddingHorizontal: 12,
     paddingVertical: 7,
   },
-  createBtnText: {color: Colors.createButtonText, fontSize: 12, fontWeight: '600'},
+  createBtnText: { color: Colors.createButtonText, fontSize: 12, fontWeight: '600' },
 
   /* Table */
   row: {
@@ -449,7 +485,15 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     letterSpacing: 0.4,
   },
-  colHeader: {textAlign: 'center'},
+  colHeader: { textAlign: 'center' },
+  noDataText: {
+    color: '#2a252590',
+    textAlign: 'center'
+  },
+  masterData: {
+    color: '#2837d8ff',
+    textDecorationLine: 'underline'
+  },
   venueLabel: {
     width: VENUE_W,
     fontSize: 12,
@@ -470,8 +514,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  chipText: {color: Colors.chipText, fontSize: 11, fontWeight: '700'},
-  dashCell: {fontSize: 13, color: Colors.dashCell, textAlign: 'center'},
+  chipText: { color: Colors.chipText, fontSize: 11, fontWeight: '700' },
+  dashCell: { fontSize: 13, color: Colors.dashCell, textAlign: 'center' },
 });
 
 export default DashboardScreen;
