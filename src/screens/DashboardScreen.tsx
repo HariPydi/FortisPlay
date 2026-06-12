@@ -9,6 +9,7 @@ import {
   Dimensions,
 } from 'react-native';
 import {Colors} from '../styles/colors';
+import Sidebar from '../components/Sidebar';
 import MaterialIcons from '@react-native-vector-icons/material-icons';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -126,6 +127,7 @@ const Chip = ({chip, width}: {chip: RaceChip; width: number}) => {
 
 const DashboardScreen: React.FC<Props> = ({navigation}) => {
   const [activeTab, setActiveTab] = useState<string>('All');
+  const [sidebarVisible, setSidebarVisible] = useState<boolean>(false);
 
   const showHorse = activeTab === 'All' || activeTab === 'Horse Racing';
   const showKarambola = activeTab === 'All' || activeTab === 'Karambola';
@@ -134,11 +136,20 @@ const DashboardScreen: React.FC<Props> = ({navigation}) => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <StatusBar barStyle="dark-content" backgroundColor={Colors.headerBackground} />
+       {/* ── Sidebar ── */}
+    <Sidebar
+      visible={sidebarVisible}
+      onClose={() => setSidebarVisible(false)}
+      navigation={navigation}
+      activeScreen="Dashboard"
+    />
 
       {/* ── Header ── */}
       <View style={styles.header}>
         <View style={styles.logoRow}>
-          <Text style={{fontSize: 20}}>☰</Text>
+          <TouchableOpacity onPress={() => setSidebarVisible(true)}>
+  <Text style={{fontSize: 20}}>☰</Text>
+</TouchableOpacity>
           <View style={styles.logoBox}>
             <Text style={styles.logoLetter}>F</Text>
           </View>
@@ -298,7 +309,7 @@ const DashboardScreen: React.FC<Props> = ({navigation}) => {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: Colors.dashBackground,
+    backgroundColor: Colors.headerBackground,
   },
 
   /* Header */
