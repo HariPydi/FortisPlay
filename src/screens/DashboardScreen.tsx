@@ -1,20 +1,15 @@
 import React, { useState } from 'react';
 import {
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  StyleSheet,
-  StatusBar,
   Dimensions,
-  Modal,
-  TouchableWithoutFeedback,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
 } from 'react-native';
+import ScreenLayout from '../components/layout/ScreenLayout';
+import MasterDataModal from '../components/modals/MasterDataModal';
 import { Colors } from '../styles/colors';
-import Sidebar from '../components/Sidebar';
-import MaterialIcons from '@react-native-vector-icons/material-icons';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import MasterDataModal from '../components/modals/MasterDataModal'
 
 type Props = {
   navigation?: any;
@@ -152,40 +147,10 @@ const DashboardScreen: React.FC<Props> = ({ navigation }) => {
   const showLucky = activeTab === 'All' || activeTab === 'Lucky Sign';
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <StatusBar barStyle="dark-content" backgroundColor={Colors.headerBackground} />
-      {/* ── Sidebar ── */}
-      <Sidebar
-        visible={sidebarVisible}
-        onClose={() => setSidebarVisible(false)}
-        navigation={navigation}
-        activeScreen="Dashboard"
-      />
-
-      {/* ── Header ── */}
-      <View style={styles.header}>
-        <View style={styles.logoRow}>
-          <TouchableOpacity onPress={() => setSidebarVisible(true)}>
-            <Text style={{ fontSize: 20 }}>☰</Text>
-          </TouchableOpacity>
-          <View style={styles.logoBox}>
-            <Text style={styles.logoLetter}>F</Text>
-          </View>
-          <Text style={styles.brandName}>FortisPlay</Text>
-        </View>
-        <View style={styles.headerRight}>
-          <Text style={styles.userId}>123456 | </Text>
-          <View style={styles.avatar}>
-            <Text style={styles.avatarIcon}>👤</Text>
-          </View>
-          <Text style={styles.chevron}>▾</Text>
-        </View>
-      </View>
-
-      {/* ── Breadcrumb ── */}
-      <View style={styles.breadcrumb}>
-        <Text style={styles.breadcrumbText}>Control Center › Dashboard</Text>
-      </View>
+    <ScreenLayout
+      navigation={navigation}
+      activeScreen="Dashboard"
+      breadcrumbs={['Control Center', 'Dashboard']}>
 
       <ScrollView
         style={styles.scroll}
@@ -346,7 +311,7 @@ const DashboardScreen: React.FC<Props> = ({ navigation }) => {
           // navigation.navigate('Masters');
         }}
       />
-    </SafeAreaView>
+    </ScreenLayout>
   );
 };
 

@@ -8,7 +8,7 @@ import {
   TouchableWithoutFeedback,
   ScrollView,
 } from 'react-native';
-import { Colors } from '../styles/colors';
+import { Colors } from '../../styles/colors';
 
 type Props = {
   visible: boolean;
