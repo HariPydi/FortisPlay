@@ -25,11 +25,9 @@ const AppBreadcrumb: React.FC<Props> = ({ crumbs }) => {
 
 const styles = StyleSheet.create({
     breadcrumb: {
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#F0F2F5',
         paddingHorizontal: 16,
         paddingVertical: 9,
-        borderBottomWidth: 0.5,
-        borderBottomColor: Colors.headerBorder,
     },
     text: {
         fontSize: 12,

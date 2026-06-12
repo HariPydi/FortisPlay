@@ -27,7 +27,7 @@ export const Colors = {
   tabBorder: '#DDDDDD',
   dotGreen: '#2E7D32',
   dotRed: '#D32F2F',
-  createButton: '#1565C0',
+  createButton: '#2563FF',
   createButtonText: '#FFFFFF',
   cardBorder: '#E0E0E0',
   thText: '#999999',

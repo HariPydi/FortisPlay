@@ -5,6 +5,7 @@ import {
     TouchableOpacity,
     StyleSheet,
     StatusBar,
+    Image,
 } from 'react-native';
 import { Colors } from '../../styles/colors';
 
@@ -24,8 +25,15 @@ const AppHeader: React.FC<Props> = ({
             <StatusBar barStyle="dark-content" backgroundColor={Colors.headerBackground} />
             <View style={styles.header}>
                 <View style={styles.left}>
-                    <TouchableOpacity onPress={onMenuPress} activeOpacity={0.7}>
+                    {/* <TouchableOpacity onPress={onMenuPress} activeOpacity={0.7}>
                         <Text style={styles.menuIcon}>☰</Text>
+                    </TouchableOpacity> */}
+                    <TouchableOpacity onPress={onMenuPress} activeOpacity={0.7}>
+                        <Image
+                            source={require('../../assets/icons/MenuIcon.png')}
+                            style={styles.menuIcon}
+                            resizeMode="contain"
+                        />
                     </TouchableOpacity>
                     <View style={styles.logoBox}>
                         <Text style={styles.logoLetter}>F</Text>
@@ -38,10 +46,16 @@ const AppHeader: React.FC<Props> = ({
                     activeOpacity={0.8}>
                     <Text style={styles.userId}>{userId}</Text>
                     <View style={styles.divider} />
-                    <View style={styles.avatar}>
-                        <Text style={styles.avatarIcon}>👤</Text>
-                    </View>
-                    <Text style={styles.chevron}>▾</Text>
+                    <Image
+                        source={require('../../assets/icons/UserIcon.png')}
+                        style={styles.userIcon}
+                        resizeMode="contain"
+                    />
+                    <Image
+                        source={require('../../assets/icons/ChevronIcon.png')}
+                        style={styles.chevronIcon}
+                        resizeMode="contain"
+                    />
                 </TouchableOpacity>
             </View>
         </>
@@ -62,11 +76,11 @@ const styles = StyleSheet.create({
     left: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 10,
+        gap: 14,
     },
     menuIcon: {
-        fontSize: 20,
-        color: Colors.textDark,
+        width: 22,
+        height: 22,
     },
     logoBox: {
         width: 32,
@@ -115,9 +129,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     avatarIcon: { fontSize: 13 },
-    chevron: {
-        fontSize: 11,
-        color: Colors.venueText,
+    userIcon: {
+        width: 16,
+        height: 16,
+    },
+    chevronIcon: {
+        width: 10,
+        height: 10,
     },
 });
 

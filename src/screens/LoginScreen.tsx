@@ -110,7 +110,8 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
                   onPress={() => setShowPassword(prev => !prev)}
                   activeOpacity={0.7}>
                   <Text style={styles.eyeIcon}>
-                    {showPassword ? '🙈' : '👁️'}
+                    {/* {showPassword ? '🙈' : '👁️'} */}
+                    {showPassword ? '🔒' : '👁️'}
                   </Text>
                 </TouchableOpacity>
               </View>

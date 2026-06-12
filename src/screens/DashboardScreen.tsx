@@ -4,7 +4,8 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
-  View
+  View,
+  Image
 } from 'react-native';
 import ScreenLayout from '../components/layout/ScreenLayout';
 import MasterDataModal from '../components/modals/MasterDataModal';
@@ -28,7 +29,7 @@ const horseData: HorseRow[] = [
       { time: '11:45', status: 'red' },
       { time: '12:20', status: 'red' },
       { time: '12:25', status: 'red' },
-      
+
     ],
   },
   {
@@ -231,7 +232,11 @@ const DashboardScreen: React.FC<Props> = ({ navigation }) => {
             <Text style={styles.legendText}>Betting Stopped</Text>
           </View>
           <TouchableOpacity style={styles.refreshBtn}>
-            <Text style={styles.refreshIcon}>↻</Text>
+            <Image
+              source={require('../assets/icons/RefreshIcon.png')}
+              style={styles.refreshIcon}
+              resizeMode="contain"
+            />
           </TouchableOpacity>
         </View>
 
@@ -334,14 +339,17 @@ const styles = StyleSheet.create({
   legendText: { fontSize: 12, color: Colors.textGrey },
   refreshBtn: {
     marginLeft: 'auto',
-    paddingLeft: 6,
-    paddingRight: 6,
-    paddingBottom: 3,
+    padding: 6,
+    paddingLeft: 10,
+    paddingRight: 10,
     borderWidth: 2,
-    borderColor: '#5685ed',
+    borderColor: '#2563FF',
     borderRadius: 10,
   },
-  refreshIcon: { fontSize: 20, color: Colors.refreshIcon },
+  refreshIcon: {
+    width: 15,
+    height: 15,
+  },
 
   card: {
     backgroundColor: Colors.cardBackground,
@@ -351,6 +359,17 @@ const styles = StyleSheet.create({
     paddingBottom: 16,
     marginBottom: 14,
     overflow: 'hidden',
+    // iOS Shadow
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.12,
+    shadowRadius: 8,
+
+    // Android Shadow
+    elevation: 5,
   },
   cardHeader: {
     flexDirection: 'row',
@@ -374,7 +393,7 @@ const styles = StyleSheet.create({
   },
 
   // Left Fixed Column
- 
+
 
   // Right Scrollable
   scrollableCols: { flex: 1 },
@@ -382,7 +401,7 @@ const styles = StyleSheet.create({
     height: HEADER_H,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#dce3fa',
+    backgroundColor: '#EEF3FF',
   },
   scrollDataRow: {
     height: ROW_H,
