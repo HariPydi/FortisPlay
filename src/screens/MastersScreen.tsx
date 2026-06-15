@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   FlatList,
   ScrollView,
@@ -6,10 +6,10 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View
+  View,
 } from 'react-native';
 import ScreenLayout from '../components/layout/ScreenLayout';
-import { Colors } from '../styles/colors';
+import {Colors} from '../styles/colors';
 
 type Props = {
   navigation?: any;
@@ -24,26 +24,25 @@ type Venue = {
 };
 
 const venueData: Venue[] = [
-  { id: '1', sNo: 1, venueCode: 'KB1', venueName: 'KB1', venueClassification: 'Major' },
-  { id: '2', sNo: 2, venueCode: 'KB2', venueName: 'KB2', venueClassification: 'Major' },
-  { id: '3', sNo: 3, venueCode: 'KB3', venueName: 'KB3', venueClassification: 'Major' },
-  { id: '4', sNo: 4, venueCode: 'LSC', venueName: 'LSC', venueClassification: 'Major' },
-  { id: '5', sNo: 5, venueCode: 'LSC36', venueName: 'LSC36', venueClassification: 'Major' },
-  { id: '6', sNo: 6, venueCode: 'LSS', venueName: 'LSS', venueClassification: 'Major' },
-  { id: '7', sNo: 7, venueCode: 'LSS36', venueName: 'LSS36', venueClassification: 'Major' },
-  { id: '8', sNo: 8, venueCode: 'SON', venueName: 'Scone (AUS)', venueClassification: 'Major' },
-  { id: '9', sNo: 9, venueCode: 'SBY', venueName: 'Salisbury (UK)', venueClassification: 'Major' },
-  { id: '10', sNo: 10, venueCode: 'YAR', venueName: 'Yarmouth (UK)', venueClassification: 'Major' },
+  {id: '1', sNo: 1, venueCode: 'KB1', venueName: 'KB1', venueClassification: 'Major'},
+  {id: '2', sNo: 2, venueCode: 'KB2', venueName: 'KB2', venueClassification: 'Major'},
+  {id: '3', sNo: 3, venueCode: 'KB3', venueName: 'KB3', venueClassification: 'Major'},
+  {id: '4', sNo: 4, venueCode: 'LSC', venueName: 'LSC', venueClassification: 'Major'},
+  {id: '5', sNo: 5, venueCode: 'LSC36', venueName: 'LSC36', venueClassification: 'Major'},
+  {id: '6', sNo: 6, venueCode: 'LSS', venueName: 'LSS', venueClassification: 'Major'},
+  {id: '7', sNo: 7, venueCode: 'LSS36', venueName: 'LSS36', venueClassification: 'Major'},
+  {id: '8', sNo: 8, venueCode: 'SON', venueName: 'Scone (AUS)', venueClassification: 'Major'},
+  {id: '9', sNo: 9, venueCode: 'SBY', venueName: 'Salisbury (UK)', venueClassification: 'Major'},
+  {id: '10', sNo: 10, venueCode: 'YAR', venueName: 'Yarmouth (UK)', venueClassification: 'Major'},
 ];
 
 const TABS = ['Venues', 'Pools', 'LS Prize', 'Distributions'];
 
-const MastersScreen: React.FC<Props> = ({ navigation }) => {
+const MastersScreen: React.FC<Props> = ({navigation}) => {
   const [activeTab, setActiveTab] = useState<string>('Venues');
   const [searchText, setSearchText] = useState<string>('');
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [selectAll, setSelectAll] = useState<boolean>(false);
-  const [sidebarVisible, setSidebarVisible] = useState<boolean>(false);
 
   const filteredData = venueData.filter(
     item =>
@@ -74,7 +73,7 @@ const MastersScreen: React.FC<Props> = ({ navigation }) => {
     }
   };
 
-  const Checkbox = ({ checked, onPress }: { checked: boolean; onPress: () => void }) => (
+  const Checkbox = ({checked, onPress}: {checked: boolean; onPress: () => void}) => (
     <TouchableOpacity
       style={[styles.checkbox, checked && styles.checkboxChecked]}
       onPress={onPress}
@@ -83,7 +82,7 @@ const MastersScreen: React.FC<Props> = ({ navigation }) => {
     </TouchableOpacity>
   );
 
-  const renderRow = ({ item }: { item: Venue }) => (
+  const renderRow = ({item}: {item: Venue}) => (
     <View style={styles.tableRow}>
       <View style={styles.colCheck}>
         <Checkbox
@@ -111,10 +110,9 @@ const MastersScreen: React.FC<Props> = ({ navigation }) => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}>
 
-        {/* ── Page Title ── */}
         <Text style={styles.pageTitle}>Masters</Text>
 
-        {/* ── Tabs ── */}
+        {/* Tabs */}
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -132,19 +130,20 @@ const MastersScreen: React.FC<Props> = ({ navigation }) => {
           ))}
         </ScrollView>
 
-        {/* ── Venues Card ── */}
+        {/* Venues Card */}
         {activeTab === 'Venues' && (
           <View style={styles.card}>
 
-            {/* Card Header */}
             <View style={styles.cardHeader}>
               <Text style={styles.cardTitle}>Venues</Text>
-              <TouchableOpacity style={styles.createBtn} activeOpacity={0.8}>
+              <TouchableOpacity
+                style={styles.createBtn}
+                activeOpacity={0.8}
+                onPress={() => navigation?.navigate('AddVenue')}>
                 <Text style={styles.createBtnText}>+ Create New</Text>
               </TouchableOpacity>
             </View>
 
-            {/* Search */}
             <View style={styles.searchContainer}>
               <Text style={styles.searchIcon}>🔍</Text>
               <TextInput
@@ -158,7 +157,6 @@ const MastersScreen: React.FC<Props> = ({ navigation }) => {
               />
             </View>
 
-            {/* Table Header */}
             <View style={styles.tableHeaderRow}>
               <View style={styles.colCheck}>
                 <Checkbox checked={selectAll} onPress={toggleSelectAll} />
@@ -169,7 +167,6 @@ const MastersScreen: React.FC<Props> = ({ navigation }) => {
               <Text style={[styles.colClass, styles.th]}>VENUE{'\n'}CLASSIFIC...</Text>
             </View>
 
-            {/* Table Rows */}
             <FlatList
               data={filteredData}
               keyExtractor={item => item.id}
@@ -180,129 +177,30 @@ const MastersScreen: React.FC<Props> = ({ navigation }) => {
           </View>
         )}
 
-        {/* Other tabs placeholder */}
+        {/* Other Tabs */}
         {activeTab !== 'Venues' && (
           <View style={styles.card}>
             <Text style={styles.cardTitle}>{activeTab}</Text>
-            <Text style={{ color: Colors.textGrey, marginTop: 12 }}>
+            <Text style={{color: Colors.textGrey, marginTop: 12}}>
               {activeTab} content goes here...
             </Text>
           </View>
         )}
 
-        <View style={{ height: 30 }} />
+        <View style={{height: 30}} />
       </ScrollView>
+
     </ScreenLayout>
   );
 };
 
 const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: Colors.headerBackground,
-  },
-
-  // Header
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    backgroundColor: Colors.headerBackground,
-    paddingHorizontal: 16,
-    paddingVertical: 14,
-    borderBottomWidth: 0.5,
-    borderBottomColor: Colors.headerBorder,
-  },
-  headerLeft: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-  },
-  menuIcon: {
-    fontSize: 22,
-    color: Colors.textDark,
-  },
-  logoBox: {
-    width: 34,
-    height: 34,
-    borderRadius: 8,
-    backgroundColor: Colors.logoBlue,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  logoLetter: {
-    color: '#FFFFFF',
-    fontWeight: 'bold',
-    fontSize: 17,
-  },
-  brandName: {
-    fontSize: 17,
-    fontWeight: '700',
-    color: Colors.textDark,
-  },
-  headerRight: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  userPill: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#E0E0E0',
-    borderRadius: 24,
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    gap: 6,
-    backgroundColor: '#FFFFFF',
-  },
-  userId: {
-    fontSize: 13,
-    fontWeight: '500',
-    color: Colors.textDark,
-  },
-  dividerLine: {
-    width: 1,
-    height: 16,
-    backgroundColor: '#D0D0D0',
-  },
-  avatar: {
-    width: 26,
-    height: 26,
-    borderRadius: 13,
-    backgroundColor: Colors.avatarBackground,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  avatarIcon: { fontSize: 13 },
-  chevron: {
-    fontSize: 11,
-    color: Colors.textGrey,
-  },
-
-  // Breadcrumb
-  breadcrumb: {
-    backgroundColor: '#FFFFFF',
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderBottomWidth: 0.5,
-    borderBottomColor: Colors.headerBorder,
-  },
-  breadcrumbText: {
-    fontSize: 13,
-    color: Colors.breadcrumbText,
-  },
-  breadcrumbSep: {
-    color: Colors.breadcrumbText,
-  },
-
-  // Scroll
-  scroll: { flex: 1 },
+  scroll: {flex: 1},
   scrollContent: {
     paddingHorizontal: 16,
     paddingTop: 20,
   },
 
-  // Page Title
   pageTitle: {
     fontSize: 26,
     fontWeight: '800',
@@ -310,7 +208,6 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
 
-  // Tabs
   tabsRow: {
     flexDirection: 'row',
     gap: 6,
@@ -335,14 +232,13 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
   },
 
-  // Card
   card: {
     backgroundColor: '#FFFFFF',
     borderRadius: 16,
     padding: 16,
     marginBottom: 16,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.06,
     shadowRadius: 8,
     elevation: 3,
@@ -373,7 +269,6 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
 
-  // Search
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -394,7 +289,6 @@ const styles = StyleSheet.create({
     height: 44,
   },
 
-  // Table
   tableHeaderRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -414,7 +308,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#F0F0F0',
   },
 
-  // Columns
   colCheck: {
     width: 36,
     alignItems: 'center',
@@ -452,7 +345,6 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
 
-  // Checkbox
   checkbox: {
     width: 18,
     height: 18,

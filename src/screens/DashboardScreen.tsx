@@ -130,27 +130,41 @@ const HorseRacingTable = ({ data }: { data: HorseRow[] }) => {
   const headers = Array.from({ length: maxRaces }, (_, i) => `RACE ${i + 1}`);
 
   return (
-    <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginHorizontal: -16 }}>
-      <View>
-        <View style={[styles.scrollHeaderRow, { paddingLeft: 12 }]}>
-          <Text style={[styles.th, { width: VENUE_W }]}>VENUE</Text>
-          {headers.map(h => (
-            <Text key={h} style={[styles.th, { width: CHIP_W, textAlign: 'center' }]}>{h}</Text>
-          ))}
+    <View style={styles.tableWrapper}>
+
+      {/* LEFT - VENUE fixed */}
+      <View style={{ width: VENUE_W }}>
+        <View style={styles.fixedHeaderCell}>
+          <Text style={styles.th}>VENUE</Text>
         </View>
         {data.map((row, i) => (
-          <View key={i} style={[styles.scrollDataRow, { paddingLeft: 12 }]}>
-            <Text style={[styles.cellLabel, { width: VENUE_W }]} numberOfLines={1}>{row.venue}</Text>
-            {row.races.map((chip, j) => (
-              <Chip key={j} chip={chip} />
-            ))}
-            {Array.from({ length: maxRaces - row.races.length }).map((_, k) => (
-              <Chip key={`e-${k}`} chip={null} />
-            ))}
+          <View key={i} style={styles.fixedDataCell}>
+            <Text style={styles.cellLabel} numberOfLines={2}>{row.venue}</Text>
           </View>
         ))}
       </View>
-    </ScrollView>
+
+      {/* RIGHT - chips scroll */}
+      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+        <View>
+          <View style={styles.scrollHeaderRow}>
+            {headers.map(h => (
+              <Text key={h} style={[styles.th, { width: CHIP_W, textAlign: 'center' }]}>{h}</Text>
+            ))}
+          </View>
+          {data.map((row, i) => (
+            <View key={i} style={styles.scrollDataRow}>
+              {row.races.map((chip, j) => (
+                <Chip key={j} chip={chip} />
+              ))}
+              {Array.from({ length: maxRaces - row.races.length }).map((_, k) => (
+                <Chip key={`e-${k}`} chip={null} />
+              ))}
+            </View>
+          ))}
+        </View>
+      </ScrollView>
+    </View>
   );
 };
 
@@ -160,27 +174,41 @@ const MeetingTable = ({ data }: { data: MeetingRow[] }) => {
   const headers = Array.from({ length: maxDraws }, (_, i) => `DRAW ${i + 1}`);
 
   return (
-    <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{ marginHorizontal: -16 }}>
-      <View>
-        <View style={[styles.scrollHeaderRow, { paddingLeft: 12 }]}>
-          <Text style={[styles.th, { width: MEETING_W }]}>MEETING</Text>
-          {headers.map((h, i) => (
-            <Text key={i} style={[styles.th, { width: CHIP_W, textAlign: 'center' }]}>{h}</Text>
-          ))}
+    <View style={styles.tableWrapper}>
+
+      {/* LEFT - MEETING fixed */}
+      <View style={{ width: MEETING_W }}>
+        <View style={styles.fixedHeaderCell}>
+          <Text style={styles.th}>MEETING</Text>
         </View>
         {data.map((row, i) => (
-          <View key={i} style={[styles.scrollDataRow, { paddingLeft: 12 }]}>
-            <Text style={[styles.cellLabel, { width: MEETING_W }]} numberOfLines={1}>{row.name}</Text>
-            {row.draws.map((chip, j) => (
-              <Chip key={j} chip={chip} />
-            ))}
-            {Array.from({ length: maxDraws - row.draws.length }).map((_, k) => (
-              <Chip key={`e-${k}`} chip={null} />
-            ))}
+          <View key={i} style={styles.fixedDataCell}>
+            <Text style={styles.cellLabel} numberOfLines={2}>{row.name}</Text>
           </View>
         ))}
       </View>
-    </ScrollView>
+
+      {/* RIGHT - chips scroll */}
+      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+        <View>
+          <View style={styles.scrollHeaderRow}>
+            {headers.map((h, i) => (
+              <Text key={i} style={[styles.th, { width: CHIP_W, textAlign: 'center' }]}>{h}</Text>
+            ))}
+          </View>
+          {data.map((row, i) => (
+            <View key={i} style={styles.scrollDataRow}>
+              {row.draws.map((chip, j) => (
+                <Chip key={j} chip={chip} />
+              ))}
+              {Array.from({ length: maxDraws - row.draws.length }).map((_, k) => (
+                <Chip key={`e-${k}`} chip={null} />
+              ))}
+            </View>
+          ))}
+        </View>
+      </ScrollView>
+    </View>
   );
 };
 
@@ -437,6 +465,28 @@ const styles = StyleSheet.create({
   noDataContainer: { paddingVertical: 16, alignItems: 'center' },
   noDataText: { color: '#2a252590', textAlign: 'center' },
   masterData: { color: '#2837d8ff', textDecorationLine: 'underline' },
+  tableWrapper: {
+  flexDirection: 'row',
+  marginHorizontal: -16,
+},
+fixedHeaderCell: {
+  height: 36,
+  backgroundColor: '#dce3fa',
+  justifyContent: 'center',
+  paddingHorizontal: 12,
+},
+fixedDataCell: {
+  height: 44,
+  justifyContent: 'center',
+  paddingHorizontal: 12,
+  borderBottomWidth: 0.5,
+  borderBottomColor: '#F0F0F0',
+},
+cellLabel: {
+  fontSize: 12,
+  color: Colors.venueText,
+  fontWeight: '500',
+},
 });
 
 export default DashboardScreen;
