@@ -5,12 +5,13 @@ export const Colors = {
   cardBackground: '#FFFFFF',
   primaryBlue: '#2979FF',
   primaryBlueHover: '#1565C0',
-  textDark: '#1A1A2E',
+  textDark: '#353A51',
   textGrey: '#888888',
   textLabel: '#333333',
   inputBackground: '#F8F9FA',
   inputBorder: '#E0E0E0',
-  inputPlaceholder: '#BBBBBB',
+  inputPlaceholder: 'rgba(53, 58, 81, 0.6)',
+  passwordPlaceholder: '#ABADAF',
   logoBlue: '#1E3A5F',
 
   // dashboard

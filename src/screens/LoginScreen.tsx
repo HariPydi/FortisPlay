@@ -11,7 +11,8 @@ import {
   Platform,
   ScrollView,
   ActivityIndicator,
-  ImageBackground
+  ImageBackground,
+  Image,
 } from 'react-native';
 import { Colors } from '../styles/colors';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -63,15 +64,12 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
             keyboardShouldPersistTaps="handled"
             showsVerticalScrollIndicator={false}>
 
-            {/* Logo + Brand */}
-            <View style={styles.topSection}>
-              <View style={styles.logoOuter}>
-                <View style={styles.logoInner}>
-                  <Text style={styles.logoLetter}>F</Text>
-                </View>
-              </View>
-              <Text style={styles.brandName}>FortisPlay</Text>
-            </View>
+            {/* Logo */}
+            <Image
+              source={require('../assets/images/headerLogo.png')}
+              style={styles.headerLogo}
+              resizeMode="contain"
+            />
 
             {/* Card */}
             <View style={styles.card}>
@@ -98,7 +96,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
                 <TextInput
                   style={styles.textInput}
                   placeholder="••••••••"
-                  placeholderTextColor={Colors.inputPlaceholder}
+                  placeholderTextColor={Colors.passwordPlaceholder}
                   value={password}
                   onChangeText={(text: string) => setPassword(text)}
                   secureTextEntry={!showPassword}
@@ -161,50 +159,12 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     alignItems: 'center',
     paddingHorizontal: 24,
+    paddingTop: 20,
     paddingBottom: 40,
   },
-  topSection: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    gap: 10,
-    marginTop: 30
-  },
-  logoContainer: {
-    marginBottom: 14,
-  },
-  logoOuter: {
-    width: 40,
-    height: 40,
-    borderRadius: 16,
-    backgroundColor: Colors.logoBlue,
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.25,
-    shadowRadius: 8,
-    elevation: 8,
-  },
-  logoInner: {
-    width: 28,
-    height: 28,
-    borderRadius: 10,
-    borderWidth: 2,
-    borderColor: 'rgba(255,255,255,0.55)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  logoLetter: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: 'bold',
-  },
-  brandName: {
-    fontSize: 22,
-    fontWeight: '600',
-    color: Colors.textDark,
-    letterSpacing: 0.5,
+  headerLogo: {
+    minHeight: 40,
+    width: 326,
   },
   card: {
     width: '100%',
@@ -219,22 +179,32 @@ const styles = StyleSheet.create({
     elevation: 10,
   },
   cardTitle: {
-    fontSize: 26,
-    fontWeight: 'bold',
+    fontFamily: 'Manrope',
+    fontSize: 24,
+    fontWeight: '700',
+    lineHeight: 36,
+    letterSpacing: -0.4,
     color: Colors.textDark,
     textAlign: 'center',
     marginBottom: 6,
   },
   cardSubtitle: {
-    fontSize: 13,
-    color: Colors.textGrey,
+    fontFamily: 'Inter',
+    fontSize: 14,
+    fontWeight: '400',
+    lineHeight: 18.2,
+    letterSpacing: 0,
+    color: '#4A4E64',
     textAlign: 'center',
     marginBottom: 28,
   },
   inputLabel: {
-    fontSize: 13,
-    fontWeight: '500',
-    color: Colors.textLabel,
+    fontFamily: 'Manrope',
+    fontSize: 14,
+    fontWeight: '600',
+    lineHeight: 20,
+    letterSpacing: 0,
+    color: Colors.textDark,
     marginBottom: 7,
     marginTop: 2,
   },
@@ -243,8 +213,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: Colors.inputBackground,
     borderWidth: 1,
-    borderColor: Colors.inputBorder,
-    borderRadius: 10,
+    borderColor: 'rgba(53, 58, 81, 0.3)',
+    borderRadius: 8,
     marginBottom: 18,
     paddingHorizontal: 14,
   },
@@ -262,8 +232,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   loginButton: {
-    backgroundColor: Colors.primaryBlue,
-    borderRadius: 10,
+    backgroundColor: Colors.createButton,
+    borderRadius: 8,
     height: 52,
     justifyContent: 'center',
     alignItems: 'center',
@@ -279,14 +249,19 @@ const styles = StyleSheet.create({
     elevation: 0,
   },
   loginButtonText: {
-    color: '#FFFFFF',
-    fontSize: 17,
-    fontWeight: '600',
-    letterSpacing: 0.5,
+    fontFamily: 'Manrope',
+    color: Colors.createButtonText,
+    fontSize: 16,
+    fontWeight: '700',
+    lineHeight: 24,
+    letterSpacing: 0,
   },
   footerText: {
+    fontFamily: 'Inter',
     marginTop: 36,
-    fontSize: 12,
+    fontSize: 13,
+    fontWeight: '400',
+    lineHeight: 16,
     color: Colors.textGrey,
     textAlign: 'center',
   },
