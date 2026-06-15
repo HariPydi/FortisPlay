@@ -25,9 +25,6 @@ const AppHeader: React.FC<Props> = ({
             <StatusBar barStyle="dark-content" backgroundColor={Colors.headerBackground} />
             <View style={styles.header}>
                 <View style={styles.left}>
-                    {/* <TouchableOpacity onPress={onMenuPress} activeOpacity={0.7}>
-                        <Text style={styles.menuIcon}>☰</Text>
-                    </TouchableOpacity> */}
                     <TouchableOpacity onPress={onMenuPress} activeOpacity={0.7}>
                         <Image
                             source={require('../../assets/icons/MenuIcon.png')}
@@ -35,10 +32,11 @@ const AppHeader: React.FC<Props> = ({
                             resizeMode="contain"
                         />
                     </TouchableOpacity>
-                    <View style={styles.logoBox}>
-                        <Text style={styles.logoLetter}>F</Text>
-                    </View>
-                    <Text style={styles.brandName}>FortisPlay</Text>
+                    <Image
+                        source={require('../../assets/images/FortisPlayLogo.png')}
+                        style={styles.headerLogo}
+                        resizeMode="contain"
+                    />
                 </View>
                 <TouchableOpacity
                     style={styles.userPill}
@@ -70,55 +68,44 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.headerBackground,
         paddingHorizontal: 16,
         paddingVertical: 12,
-        borderBottomWidth: 0.5,
-        borderBottomColor: Colors.headerBorder,
+        borderBottomWidth: 0.57,
+        borderBottomColor: '#E2E8F0',
     },
     left: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 14,
+        gap: 12,
     },
     menuIcon: {
         width: 22,
         height: 22,
+        padding: 4,
     },
-    logoBox: {
-        width: 32,
-        height: 32,
-        borderRadius: 8,
-        backgroundColor: Colors.logoBlue,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    logoLetter: {
-        color: '#fff',
-        fontWeight: 'bold',
-        fontSize: 16,
-    },
-    brandName: {
-        fontSize: 16,
-        fontWeight: '700',
-        color: Colors.textDark,
+    headerLogo: {
+        minHeight: 34,
+        width: 120,
     },
     userPill: {
         flexDirection: 'row',
         alignItems: 'center',
-        borderWidth: 1.5,
-        borderColor: '#a8a1a15c',
+        borderWidth: 0.57,
+        borderColor: 'rgba(31, 35, 43, 0.2)',
         borderRadius: 8,
-        paddingHorizontal: 8,
-        paddingVertical: 5,
-        gap: 6,
+        paddingHorizontal: 10,
+        paddingVertical: 6,
+        gap: 10,
     },
     userId: {
-        fontSize: 13,
-        color: Colors.venueText,
-        fontWeight: '500',
+        fontFamily: 'Manrope',
+        fontSize: 14,
+        color: '#1F232B',
+        fontWeight: '600',
+        lineHeight: 18,
     },
     divider: {
         width: 1,
         height: 16,
-        backgroundColor: '#D0D0D0',
+        backgroundColor: 'rgba(31, 35, 43, 0.4)',
     },
     avatar: {
         width: 26,
@@ -130,12 +117,12 @@ const styles = StyleSheet.create({
     },
     avatarIcon: { fontSize: 13 },
     userIcon: {
-        width: 16,
-        height: 16,
+        width: 18,
+        height: 18,
     },
     chevronIcon: {
         width: 10,
-        height: 10,
+        height: 5,
     },
 });
 

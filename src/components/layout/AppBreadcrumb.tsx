@@ -27,19 +27,26 @@ const styles = StyleSheet.create({
     breadcrumb: {
         backgroundColor: '#F0F2F5',
         paddingHorizontal: 16,
-        paddingVertical: 9,
+        paddingTop: 12,
+        paddingBottom: 9,
     },
     text: {
         fontSize: 12,
-        color: Colors.breadcrumbText,
+        fontWeight: 500,
+        fontFamily: 'Manrope',
+        lineHeight: 16,
+        color: '#586065',
     },
     sep: {
-        color: Colors.breadcrumbText,
+        fontSize: 14,
+        color: '#586065',
     },
     active: {
         fontSize: 12,
-        color: Colors.breadcrumbText,
-        fontWeight: '600',
+        fontWeight: 500,
+        lineHeight: 16,
+        fontFamily: 'Manrope',
+        color: '#2B3438',
     },
 });
 
