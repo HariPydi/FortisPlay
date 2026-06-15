@@ -453,9 +453,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 2,
   },
   chip: {
-    width: CHIP_W - 6,
+    width: CHIP_W - 25,
     paddingVertical: 7,
-    borderRadius: 7,
+    borderRadius: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -471,7 +471,7 @@ const styles = StyleSheet.create({
 },
 fixedHeaderCell: {
   height: 36,
-  backgroundColor: '#dce3fa',
+  backgroundColor: '#EEF3FF',
   justifyContent: 'center',
   paddingHorizontal: 12,
 },

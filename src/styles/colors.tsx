@@ -3,7 +3,7 @@ export const Colors = {
   backgroundTop: '#B8E8F7',
   backgroundBottom: '#E8F4F8',
   cardBackground: '#FFFFFF',
-  primaryBlue: '#2979FF',
+  primaryBlue: '#2563FF',
   primaryBlueHover: '#1565C0',
   textDark: '#353A51',
   textGrey: '#888888',
