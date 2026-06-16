@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
   headerTitle: {
     fontSize: 22,
     fontWeight: '700',
-    color: '#1A1A2E',
+    color: '#1F232B',
   },
   closeBtn: {
     width: 32,
@@ -287,7 +287,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#1A1A2E',
+    color: '#353A51',
     marginBottom: 8,
   },
 

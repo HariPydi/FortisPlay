@@ -5,7 +5,7 @@ export const Colors = {
   cardBackground: '#FFFFFF',
   primaryBlue: '#2563FF',
   primaryBlueHover: '#1565C0',
-  textDark: '#353A51',
+  textDark: '#1F232B',
   textGrey: '#888888',
   textLabel: '#333333',
   inputBackground: '#F8F9FA',

@@ -23,13 +23,13 @@ type MenuItem = {
 };
 
 const menuItems: MenuItem[] = [
-  { label: 'Dashboard', screen: 'Dashboard', },
-  { label: 'Event Day', screen: 'EventDay', },
-  { label: 'Masters', screen: 'Masters', },
-  { label: 'Allotments', screen: 'Allotments', },
-  { label: 'Reports', screen: 'Reports', },
-  { label: 'CCTV', screen: 'CCTV', },
-  { label: 'Collection Merger', screen: 'CollectionMerger', },
+  {label: 'Dashboard', screen: 'Dashboard'},
+  {label: 'Event Day', screen: 'EventDay'},
+  {label: 'Masters', screen: 'Masters'},
+  {label: 'Allotments', screen: 'Allotments'},
+  {label: 'Reports', screen: 'Reports'},
+  {label: 'CCTV', screen: 'CCTV'},
+  {label: 'Collection Merger', screen: 'CollectionMerger'},
 ];
 
 const Sidebar: React.FC<Props> = ({ visible, onClose, navigation, activeScreen }) => {

@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {
-  FlatList,
   ScrollView,
   StyleSheet,
   Text,
@@ -21,22 +20,34 @@ type Venue = {
   venueCode: string;
   venueName: string;
   venueClassification: string;
+  combined: string;
+  status: string;
 };
 
 const venueData: Venue[] = [
-  {id: '1', sNo: 1, venueCode: 'KB1', venueName: 'KB1', venueClassification: 'Major'},
-  {id: '2', sNo: 2, venueCode: 'KB2', venueName: 'KB2', venueClassification: 'Major'},
-  {id: '3', sNo: 3, venueCode: 'KB3', venueName: 'KB3', venueClassification: 'Major'},
-  {id: '4', sNo: 4, venueCode: 'LSC', venueName: 'LSC', venueClassification: 'Major'},
-  {id: '5', sNo: 5, venueCode: 'LSC36', venueName: 'LSC36', venueClassification: 'Major'},
-  {id: '6', sNo: 6, venueCode: 'LSS', venueName: 'LSS', venueClassification: 'Major'},
-  {id: '7', sNo: 7, venueCode: 'LSS36', venueName: 'LSS36', venueClassification: 'Major'},
-  {id: '8', sNo: 8, venueCode: 'SON', venueName: 'Scone (AUS)', venueClassification: 'Major'},
-  {id: '9', sNo: 9, venueCode: 'SBY', venueName: 'Salisbury (UK)', venueClassification: 'Major'},
-  {id: '10', sNo: 10, venueCode: 'YAR', venueName: 'Yarmouth (UK)', venueClassification: 'Major'},
+  {id: '1', sNo: 1, venueCode: 'KB1', venueName: 'KB1', venueClassification: 'Major', combined: 'N', status: 'Active'},
+  {id: '2', sNo: 2, venueCode: 'KB2', venueName: 'KB2', venueClassification: 'Major', combined: 'N', status: 'Active'},
+  {id: '3', sNo: 3, venueCode: 'KB3', venueName: 'KB3', venueClassification: 'Major', combined: 'N', status: 'Active'},
+  {id: '4', sNo: 4, venueCode: 'LSC', venueName: 'LSC', venueClassification: 'Major', combined: 'N', status: 'Active'},
+  {id: '5', sNo: 5, venueCode: 'LSC36', venueName: 'LSC36', venueClassification: 'Major', combined: 'N', status: 'Active'},
+  {id: '6', sNo: 6, venueCode: 'LSS', venueName: 'LSS', venueClassification: 'Major', combined: 'N', status: 'Active'},
+  {id: '7', sNo: 7, venueCode: 'LSS36', venueName: 'LSS36', venueClassification: 'Major', combined: 'N', status: 'Active'},
+  {id: '8', sNo: 8, venueCode: 'SON', venueName: 'Scone (AUS)', venueClassification: 'Major', combined: 'No', status: 'Active'},
+  {id: '9', sNo: 9, venueCode: 'SBY', venueName: 'Salisbury (UK)', venueClassification: 'Major', combined: 'No', status: 'Active'},
+  {id: '10', sNo: 10, venueCode: 'YAR', venueName: 'Yarmouth (UK)', venueClassification: 'Major', combined: 'No', status: 'Active'},
 ];
 
-const TABS = ['Venues', 'Pools', 'LS Prize', 'Distributions'];
+const TABS = ['Venues', 'Pools', 'LS Prize', 'Distributions', 'Enclosures', 'Terminals', 'Users', 'Users KYC', 'Locations'];
+
+const COL = {
+  check: 36,
+  sno: 44,
+  code: 90,
+  name: 120,
+  classification: 140,
+  combined: 90,
+  status: 80,
+};
 
 const MastersScreen: React.FC<Props> = ({navigation}) => {
   const [activeTab, setActiveTab] = useState<string>('Venues');
@@ -82,23 +93,6 @@ const MastersScreen: React.FC<Props> = ({navigation}) => {
     </TouchableOpacity>
   );
 
-  const renderRow = ({item}: {item: Venue}) => (
-    <View style={styles.tableRow}>
-      <View style={styles.colCheck}>
-        <Checkbox
-          checked={selectedIds.includes(item.id)}
-          onPress={() => toggleSelect(item.id)}
-        />
-      </View>
-      <Text style={styles.colSno}>{item.sNo}</Text>
-      <TouchableOpacity style={styles.colCode}>
-        <Text style={styles.linkText}>{item.venueCode}</Text>
-      </TouchableOpacity>
-      <Text style={styles.colName}>{item.venueName}</Text>
-      <Text style={styles.colClass}>{item.venueClassification}</Text>
-    </View>
-  );
-
   return (
     <ScreenLayout
       navigation={navigation}
@@ -121,7 +115,13 @@ const MastersScreen: React.FC<Props> = ({navigation}) => {
             <TouchableOpacity
               key={tab}
               style={[styles.tab, activeTab === tab && styles.tabActive]}
-              onPress={() => setActiveTab(tab)}
+              onPress={() => {
+                if (tab === 'Users KYC') {
+                  navigation?.navigate('KYCPersonalInfo');
+                } else {
+                  setActiveTab(tab);
+                }
+              }}
               activeOpacity={0.8}>
               <Text style={[styles.tabText, activeTab === tab && styles.tabTextActive]}>
                 {tab}
@@ -134,6 +134,7 @@ const MastersScreen: React.FC<Props> = ({navigation}) => {
         {activeTab === 'Venues' && (
           <View style={styles.card}>
 
+            {/* Card Header */}
             <View style={styles.cardHeader}>
               <Text style={styles.cardTitle}>Venues</Text>
               <TouchableOpacity
@@ -144,6 +145,7 @@ const MastersScreen: React.FC<Props> = ({navigation}) => {
               </TouchableOpacity>
             </View>
 
+            {/* Search */}
             <View style={styles.searchContainer}>
               <Text style={styles.searchIcon}>🔍</Text>
               <TextInput
@@ -157,23 +159,48 @@ const MastersScreen: React.FC<Props> = ({navigation}) => {
               />
             </View>
 
-            <View style={styles.tableHeaderRow}>
-              <View style={styles.colCheck}>
-                <Checkbox checked={selectAll} onPress={toggleSelectAll} />
-              </View>
-              <Text style={[styles.colSno, styles.th]}>S.NO</Text>
-              <Text style={[styles.colCode, styles.th]}>VENUE{'\n'}CODE</Text>
-              <Text style={[styles.colName, styles.th]}>VENUE{'\n'}NAME</Text>
-              <Text style={[styles.colClass, styles.th]}>VENUE{'\n'}CLASSIFIC...</Text>
-            </View>
+            {/* Table - Horizontal Scroll */}
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={{marginHorizontal: -16}}>
+              <View>
 
-            <FlatList
-              data={filteredData}
-              keyExtractor={item => item.id}
-              renderItem={renderRow}
-              scrollEnabled={false}
-              ItemSeparatorComponent={() => <View style={styles.separator} />}
-            />
+                {/* Table Header */}
+                <View style={styles.tableHeaderRow}>
+                  <View style={{width: COL.check, alignItems: 'center'}}>
+                    <Checkbox checked={selectAll} onPress={toggleSelectAll} />
+                  </View>
+                  <Text style={[styles.th, {width: COL.sno}]}>S.NO</Text>
+                  <Text style={[styles.th, {width: COL.code}]}>VENUE CODE</Text>
+                  <Text style={[styles.th, {width: COL.name}]}>VENUE NAME</Text>
+                  <Text style={[styles.th, {width: COL.classification}]}>VENUE CLASSIFICATION</Text>
+                  <Text style={[styles.th, {width: COL.combined}]}>COMBINED</Text>
+                  <Text style={[styles.th, {width: COL.status}]}>STATUS</Text>
+                </View>
+
+                {/* Table Rows */}
+                {filteredData.map((item, index) => (
+                  <View key={item.id}>
+                    <View style={[styles.tableRow, index % 2 === 0 && styles.tableRowEven]}>
+                      <View style={{width: COL.check, alignItems: 'center'}}>
+                        <Checkbox
+                          checked={selectedIds.includes(item.id)}
+                          onPress={() => toggleSelect(item.id)}
+                        />
+                      </View>
+                      <Text style={[styles.cellText, {width: COL.sno, textAlign: 'center'}]}>{item.sNo}</Text>
+                      <TouchableOpacity style={{width: COL.code}}>
+                        <Text style={styles.linkText}>{item.venueCode}</Text>
+                      </TouchableOpacity>
+                      <Text style={[styles.cellText, {width: COL.name}]}>{item.venueName}</Text>
+                      <Text style={[styles.cellText, {width: COL.classification}]}>{item.venueClassification}</Text>
+                      <Text style={[styles.cellText, {width: COL.combined}]}>{item.combined}</Text>
+                      <Text style={[styles.cellText, {width: COL.status}]}>{item.status}</Text>
+                    </View>
+                    {index < filteredData.length - 1 && <View style={styles.separator} />}
+                  </View>
+                ))}
+
+              </View>
+            </ScrollView>
           </View>
         )}
 
@@ -259,9 +286,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingHorizontal: 16,
     paddingVertical: 9,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
   },
   createBtnText: {
     color: '#FFFFFF',
@@ -289,55 +313,39 @@ const styles = StyleSheet.create({
     height: 44,
   },
 
+  // Table
   tableHeaderRow: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#F0F3FB',
-    marginHorizontal: -16,
     paddingHorizontal: 16,
-    paddingVertical: 10,
-    marginBottom: 4,
+    paddingVertical: 12,
   },
   tableRow: {
     flexDirection: 'row',
     alignItems: 'center',
+    paddingHorizontal: 16,
     paddingVertical: 14,
+    backgroundColor: '#FFFFFF',
+  },
+  tableRowEven: {
+    backgroundColor: '#FAFBFF',
   },
   separator: {
     height: 1,
     backgroundColor: '#F0F0F0',
   },
 
-  colCheck: {
-    width: 36,
-    alignItems: 'center',
-  },
-  colSno: {
-    width: 40,
-    fontSize: 13,
-    color: Colors.textDark,
-    textAlign: 'center',
-  },
-  colCode: {
-    flex: 1,
-    fontSize: 13,
-  },
-  colName: {
-    flex: 1.2,
-    fontSize: 13,
-    color: Colors.textDark,
-  },
-  colClass: {
-    flex: 1.2,
-    fontSize: 13,
-    color: Colors.textDark,
-  },
   th: {
     fontSize: 11,
     fontWeight: '700',
     color: '#6B7280',
     textTransform: 'uppercase',
     letterSpacing: 0.3,
+  },
+  cellText: {
+    fontSize: 13,
+    color: Colors.textDark,
   },
   linkText: {
     color: Colors.primaryBlue,
