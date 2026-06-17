@@ -106,7 +106,7 @@ const Chip = ({ chip }: { chip: RaceChip }) => {
   if (!chip) {
     return (
       <View style={styles.chipSlot}>
-        <Text style={styles.dashCell}>—</Text>
+        <Text style={styles.dashCell}>-</Text>
       </View>
     );
   }
@@ -140,7 +140,7 @@ const HorseRacingTable = ({ data }: { data: HorseRow[] }) => {
           <Text style={styles.th}>VENUE</Text>
         </View>
         {data.map((row, i) => (
-          <View key={i} style={styles.fixedDataCell}>
+          <View key={i} style={[styles.fixedDataCell, { width: VENUE_W }]}>
             <Text style={styles.cellLabel} numberOfLines={2}>{row.venue}</Text>
           </View>
         ))}
@@ -248,63 +248,80 @@ const DashboardScreen: React.FC<Props> = ({ navigation }) => {
         />
 
         {/* Horse Racing */}
-        {showHorse && (
-          <View style={styles.card}>
-            <View style={styles.cardHeader}>
-              <Text style={styles.cardTitle}>Horse Racing</Text>
-              <TouchableOpacity style={styles.createBtn}>
-                <Text style={styles.createBtnText}>+ Create Race Card</Text>
-              </TouchableOpacity>
-            </View>
-            {horseData.length === 0 ? (
-              <View style={styles.noDataContainer}>
-                <Text style={styles.noDataText}>
-                  The <Text style={styles.masterData}>Master Data</Text> setup required before creating race cards
-                </Text>
+        <View style={styles.cardWrapper}>
+          {showHorse && (
+            <View style={styles.card}>
+              <View style={styles.cardHeader}>
+                <Text style={styles.cardTitle}>Horse Racing</Text>
+                <TouchableOpacity style={styles.createBtn}>
+                  <Image
+                    source={require('../assets/icons/PlusIcon.png')}
+                    style={styles.plusIcon}
+                    resizeMode="contain"
+                  />
+                  <Text style={styles.createBtnText}>Create Race Card</Text>
+                </TouchableOpacity>
               </View>
-            ) : (
-              <HorseRacingTable data={horseData} />
-            )}
-          </View>
-        )}
+              {horseData.length === 0 ? (
+                <View style={styles.noDataContainer}>
+                  <Text style={styles.noDataText}>
+                    The <Text style={styles.masterData}>Master Data</Text> setup required before creating race cards
+                  </Text>
+                </View>
+              ) : (
+                <HorseRacingTable data={horseData} />
+              )}
+            </View>
+          )}
 
-        {/* Karambola */}
-        {showKarambola && (
-          <View style={styles.card}>
-            <View style={styles.cardHeader}>
-              <Text style={styles.cardTitle}>Karambola</Text>
-              <TouchableOpacity style={styles.createBtn} onPress={openMaster}>
-                <Text style={styles.createBtnText}>+ Create Meeting</Text>
-              </TouchableOpacity>
-            </View>
-            {karambolaData.length === 0 ? (
-              <View style={styles.noDataContainer}>
-                <Text style={styles.noDataText}>No draws scheduled for today.</Text>
+          {/* Karambola */}
+          {showKarambola && (
+            <View style={styles.card}>
+              <View style={styles.cardHeader}>
+                <Text style={styles.cardTitle}>Karambola</Text>
+                <TouchableOpacity style={styles.createBtn} onPress={openMaster}>
+                  <Image
+                    source={require('../assets/icons/PlusIcon.png')}
+                    style={styles.plusIcon}
+                    resizeMode="contain"
+                  />
+                  <Text style={styles.createBtnText}>Create Meeting</Text>
+                </TouchableOpacity>
               </View>
-            ) : (
-              <MeetingTable data={karambolaData} />
-            )}
-          </View>
-        )}
+              {karambolaData.length === 0 ? (
+                <View style={styles.noDataContainer}>
+                  <Text style={styles.noDataText}>No draws scheduled for today.</Text>
+                </View>
+              ) : (
+                <MeetingTable data={karambolaData} />
+              )}
+            </View>
+          )}
 
-        {/* Lucky Sign */}
-        {showLucky && (
-          <View style={styles.card}>
-            <View style={styles.cardHeader}>
-              <Text style={styles.cardTitle}>Lucky Sign</Text>
-              <TouchableOpacity style={styles.createBtn}>
-                <Text style={styles.createBtnText}>+ Create Meeting</Text>
-              </TouchableOpacity>
-            </View>
-            {luckySignData.length === 0 ? (
-              <View style={styles.noDataContainer}>
-                <Text style={styles.noDataText}>No draws scheduled for today.</Text>
+          {/* Lucky Sign */}
+          {showLucky && (
+            <View style={styles.card}>
+              <View style={styles.cardHeader}>
+                <Text style={styles.cardTitle}>Lucky Sign</Text>
+                <TouchableOpacity style={styles.createBtn}>
+                  <Image
+                    source={require('../assets/icons/PlusIcon.png')}
+                    style={styles.plusIcon}
+                    resizeMode="contain"
+                  />
+                  <Text style={styles.createBtnText}>Create Meeting</Text>
+                </TouchableOpacity>
               </View>
-            ) : (
-              <MeetingTable data={luckySignData} />
-            )}
-          </View>
-        )}
+              {luckySignData.length === 0 ? (
+                <View style={styles.noDataContainer}>
+                  <Text style={styles.noDataText}>No draws scheduled for today.</Text>
+                </View>
+              ) : (
+                <MeetingTable data={luckySignData} />
+              )}
+            </View>
+          )}
+        </View>
 
         <View style={{ height: 30 }} />
       </ScrollView>
@@ -322,104 +339,65 @@ const styles = StyleSheet.create({
   scroll: { flex: 1 },
   scrollContent: { paddingHorizontal: 16, paddingTop: 16 },
 
-  pageTitle: {
-    fontFamily: 'Manrope',
-    fontSize: 22,
-    fontWeight: '800',
-    color: '#1F232B',
-    lineHeight: 36,
-    letterSpacing: -0.75,
-    marginBottom: 14,
+  cardWrapper: {
+    paddingTop: 16,
+    gap: 16
   },
-
-  tabsRow: {
-    flexDirection: 'row',
-    backgroundColor: 'rgba(248, 250, 247, 0.8)',
-    borderTopWidth: 0.57,
-    borderTopColor: '#F1F5F9',
-    gap: 4,
-    paddingTop: 2,
-    paddingBottom: 2,
-    marginBottom: 14,
-    paddingRight: 4
-  },
-  tab: {
-    paddingHorizontal: 16,
-    paddingVertical: 7
-  },
-  tabActive: {
-    borderRadius: 20,
-    backgroundColor: '#1F232B',
-  },
-  tabText: {
-    fontFamily: 'Manrope',
-    fontSize: 13,
-    fontWeight: '700',
-    color: 'rgba(31, 35, 43, 0.8)',
-    lineHeight: 20,
-    letterSpacing: -0.4,
-  },
-  tabTextActive: { color: '#FFFFFF' },
-
-  legend: { flexDirection: 'row', alignItems: 'center', marginBottom: 14, gap: 14 },
-  legendItem: { flexDirection: 'row', alignItems: 'center', gap: 5 },
-  dot: { width: 9, height: 9, borderRadius: 5 },
-  legendText: { fontSize: 12, color: Colors.textGrey },
-  refreshBtn: {
-    marginLeft: 'auto',
-    padding: 6,
-    paddingLeft: 10,
-    paddingRight: 10,
-    borderWidth: 2,
-    borderColor: '#2563FF',
-    borderRadius: 10,
-  },
-  refreshIcon: {
-    width: 15,
-    height: 15,
-  },
-
   card: {
     backgroundColor: Colors.cardBackground,
-    borderRadius: 14,
-    paddingTop: 16,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: 'rgba(15, 23, 42, 0.1)',
+    paddingVertical: 16,
     paddingHorizontal: 16,
-    paddingBottom: 16,
-    marginBottom: 14,
     overflow: 'hidden',
-    // iOS Shadow
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 4,
+      height: 1,
     },
-    shadowOpacity: 0.12,
-    shadowRadius: 8,
-
-    // Android Shadow
-    elevation: 5,
+    shadowOpacity: 0.05,
+    shadowRadius: 1,
+    elevation: 1,
   },
   cardHeader: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 12,
+    marginBottom: 14,
   },
-  cardTitle: { fontSize: 16, fontWeight: '700', color: Colors.textDark },
+  cardTitle: {
+    fontFamily: 'Manrope',
+    fontSize: 17,
+    fontWeight: '700',
+    lineHeight: 25,
+    letterSpacing: 0,
+    color: Colors.textDark
+  },
   createBtn: {
     backgroundColor: Colors.createButton,
     borderRadius: 8,
-    paddingHorizontal: 12,
-    paddingVertical: 7,
+    paddingRight: 12,
+    paddingLeft: 10,
+    paddingVertical: 6,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
   },
-  createBtnText: { color: Colors.createButtonText, fontSize: 12, fontWeight: '600' },
+  plusIcon: {
+    width: 16,
+    height: 16,
+  },
+  createBtnText: {
+    fontFamily: 'Manrope',
+    color: Colors.createButtonText,
+    fontSize: 11,
+    fontWeight: '700',
+    lineHeight: 16,
+    letterSpacing: 0,
+  },
 
   // Table
-  tableWrapper: {
-    flexDirection: 'row',
-    marginHorizontal: -16,
-  },
-
   // Left Fixed Column
 
 
@@ -440,11 +418,13 @@ const styles = StyleSheet.create({
   },
 
   th: {
-    color: Colors.thText,
+    fontFamily: 'Manrope',
     fontSize: 10,
-    fontWeight: '600',
+    lineHeight: 15,
+    fontWeight: '700',
+    letterSpacing: 0.55,
+    color: 'rgba(31, 35, 43, 0.8)',
     textTransform: 'uppercase',
-    letterSpacing: 0.4,
   },
 
   chipSlot: {
@@ -453,14 +433,30 @@ const styles = StyleSheet.create({
     paddingHorizontal: 2,
   },
   chip: {
-    width: CHIP_W - 25,
-    paddingVertical: 7,
-    borderRadius: 1,
+    minWidth: 52,
+    paddingVertical: 6,
+    paddingHorizontal: 4,
+    borderRadius: 2,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  chipText: { color: Colors.chipText, fontSize: 11, fontWeight: '700' },
-  dashCell: { fontSize: 13, color: Colors.dashCell, textAlign: 'center' },
+  chipText: {
+    fontFamily: 'Manrope',
+    color: Colors.chipText,
+    fontSize: 11,
+    fontWeight: '700',
+    lineHeight: 16,
+    letterSpacing: 0,
+  },
+  dashCell: {
+    fontFamily: 'Manrope',
+    fontSize: 13,
+    lineHeight: 19,
+    fontWeight: '700',
+    letterSpacing: 0,
+    color: Colors.textDark,
+    textAlign: 'center'
+  },
 
   noDataContainer: { paddingVertical: 16, alignItems: 'center' },
   noDataText: { color: '#2a252590', textAlign: 'center' },
@@ -471,7 +467,7 @@ const styles = StyleSheet.create({
   },
   fixedHeaderCell: {
     height: 36,
-    backgroundColor: '#EEF3FF',
+    backgroundColor: 'rgba(37, 99, 255, 0.1)',
     justifyContent: 'center',
     paddingHorizontal: 12,
   },
@@ -483,9 +479,12 @@ const styles = StyleSheet.create({
     borderBottomColor: '#F0F0F0',
   },
   cellLabel: {
+    fontFamily: 'Manrope',
     fontSize: 12,
-    color: Colors.venueText,
-    fontWeight: '500',
+    lineHeight: 18,
+    fontWeight: '700',
+    letterSpacing: 0,
+    color: Colors.textDark,
   },
 });
 
