@@ -25,7 +25,11 @@ const AppHeader: React.FC<Props> = ({
             <StatusBar barStyle="dark-content" backgroundColor={Colors.headerBackground} />
             <View style={styles.header}>
                 <View style={styles.left}>
-                    <TouchableOpacity onPress={onMenuPress} activeOpacity={0.7}>
+                    <TouchableOpacity
+                        onPress={onMenuPress}
+                        activeOpacity={0.7}
+                        style={styles.menuWrapper}
+                    >
                         <Image
                             source={require('../../assets/icons/MenuIcon.png')}
                             style={styles.menuIcon}
@@ -62,12 +66,12 @@ const AppHeader: React.FC<Props> = ({
 
 const styles = StyleSheet.create({
     header: {
+        height: 56,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
         backgroundColor: Colors.headerBackground,
         paddingHorizontal: 16,
-        paddingVertical: 12,
         borderBottomWidth: 0.57,
         borderBottomColor: '#E2E8F0',
     },
@@ -76,13 +80,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         gap: 12,
     },
+    menuWrapper: {
+        padding: 4
+    },
     menuIcon: {
-        width: 22,
-        height: 22,
-        padding: 4,
+        width: 24,
+        height: 24,
     },
     headerLogo: {
-        minHeight: 34,
+        height: 34,
         width: 120,
     },
     userPill: {
@@ -90,32 +96,27 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderWidth: 0.57,
         borderColor: 'rgba(31, 35, 43, 0.2)',
-        borderRadius: 8,
+        borderRadius: 4,
         paddingHorizontal: 10,
         paddingVertical: 6,
         gap: 10,
     },
     userId: {
+        height: 18,
+        width: 48,
+        top: 0.43,
         fontFamily: 'Manrope',
         fontSize: 14,
         color: '#1F232B',
         fontWeight: '600',
         lineHeight: 18,
+        letterSpacing: 0,
     },
     divider: {
         width: 1,
         height: 16,
         backgroundColor: 'rgba(31, 35, 43, 0.4)',
     },
-    avatar: {
-        width: 26,
-        height: 26,
-        borderRadius: 13,
-        backgroundColor: Colors.avatarBackground,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    avatarIcon: { fontSize: 13 },
     userIcon: {
         width: 18,
         height: 18,
