@@ -10,6 +10,8 @@ import {
 import ScreenLayout from '../components/layout/ScreenLayout';
 import MasterDataModal from '../components/modals/MasterDataModal';
 import { Colors } from '../styles/colors';
+import AppBreadcrumb from '../components/common/AppBreadcrumb';
+import PageHeader from '../components/common/PageHeader';
 
 type Props = {
   navigation?: any;
@@ -226,47 +228,24 @@ const DashboardScreen: React.FC<Props> = ({ navigation }) => {
   return (
     <ScreenLayout
       navigation={navigation}
-      activeScreen="Dashboard"
-      breadcrumbs={['Control Center', 'Dashboard']}>
+      activeScreen="Dashboard">
 
       <ScrollView
         style={styles.scroll}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}>
 
-        <Text style={styles.pageTitle}>Live Events</Text>
+        <AppBreadcrumb crumbs={['Control Center', 'Dashboard']} />
 
-        {/* Tabs */}
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.tabsRow}>
-          {TABS.map(tab => (
-            <TouchableOpacity
-              key={tab}
-              style={[styles.tab, activeTab === tab && styles.tabActive]}
-              onPress={() => setActiveTab(tab)}
-              activeOpacity={0.8}>
-              <Text style={[styles.tabText, activeTab === tab && styles.tabTextActive]}>{tab}</Text>
-            </TouchableOpacity>
-          ))}
-        </ScrollView>
-
-        {/* Legend */}
-        <View style={styles.legend}>
-          <View style={styles.legendItem}>
-            <View style={[styles.dot, { backgroundColor: Colors.dotGreen }]} />
-            <Text style={styles.legendText}>Betting in Progress</Text>
-          </View>
-          <View style={styles.legendItem}>
-            <View style={[styles.dot, { backgroundColor: Colors.dotRed }]} />
-            <Text style={styles.legendText}>Betting Stopped</Text>
-          </View>
-          <TouchableOpacity style={styles.refreshBtn}>
-            <Image
-              source={require('../assets/icons/RefreshIcon.png')}
-              style={styles.refreshIcon}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
-        </View>
+        <PageHeader
+          title="Live Events"
+          tabs={TABS}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          onRefresh={() => {
+            console.log('refresh');
+          }}
+        />
 
         {/* Horse Racing */}
         {showHorse && (

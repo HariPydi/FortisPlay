@@ -3,14 +3,13 @@ import { View, StyleSheet } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Colors } from '../../styles/colors';
 import AppHeader from './AppHeader';
-import AppBreadcrumb from './AppBreadcrumb';
+import AppBreadcrumb from '../common/AppBreadcrumb';
 import Sidebar from './Sidebar';
 
 type Props = {
     children: React.ReactNode;
     navigation?: any;
     activeScreen: string;
-    breadcrumbs: string[];
     userId?: string;
 };
 
@@ -18,7 +17,6 @@ const ScreenLayout: React.FC<Props> = ({
     children,
     navigation,
     activeScreen,
-    breadcrumbs,
     userId,
 }) => {
     const [sidebarVisible, setSidebarVisible] = React.useState(false);
@@ -35,7 +33,6 @@ const ScreenLayout: React.FC<Props> = ({
                 userId={userId}
                 onMenuPress={() => setSidebarVisible(true)}
             />
-            <AppBreadcrumb crumbs={breadcrumbs} />
             <View style={styles.content}>
                 {children}
             </View>
@@ -51,6 +48,7 @@ const styles = StyleSheet.create({
     content: {
         flex: 1,
         backgroundColor: Colors.dashBackground,
+        padding: 16,
     },
 });
 

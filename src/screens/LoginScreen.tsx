@@ -84,7 +84,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
                 <View style={styles.inputGroup}>
                   <View style={styles.formRow}>
                     <Text style={styles.inputLabel}>User ID</Text>
-                    <View style={styles.inputContainer}>
+                    <View style={[styles.baseInputContainer, styles.inputContainer]}>
                       <TextInput
                         style={styles.textInput}
                         placeholder="Card ID"
@@ -99,7 +99,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
 
                   <View style={styles.formRow}>
                     <Text style={styles.inputLabel}>Password</Text>
-                    <View style={styles.inputContainer}>
+                    <View style={[styles.baseInputContainer, styles.passwordContainer]}>
                       <TextInput
                         style={styles.textInput}
                         placeholder="••••••••"
@@ -230,14 +230,20 @@ const styles = StyleSheet.create({
     letterSpacing: 0,
     color: '#353A51',
   },
-  inputContainer: {
+  baseInputContainer: {
+    height: 44,
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#FFFFFF',
     borderWidth: 1,
     borderColor: 'rgba(53, 58, 81, 0.3)',
     borderRadius: 8,
-    paddingHorizontal: 14,
+    paddingHorizontal: 16,
+  },
+  inputContainer: {
+    paddingVertical: 12,
+  },
+  passwordContainer: {
   },
   textInput: {
     fontFamily: 'Manrope',
