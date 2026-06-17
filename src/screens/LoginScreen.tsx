@@ -73,61 +73,71 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
 
             {/* Card */}
             <View style={styles.card}>
-              <Text style={styles.cardTitle}>Admin</Text>
-              <Text style={styles.cardSubtitle}>
-                Enter your credentials to continue
-              </Text>
-
-              <Text style={styles.inputLabel}>User ID</Text>
-              <View style={styles.inputContainer}>
-                <TextInput
-                  style={styles.textInput}
-                  placeholder="Card ID"
-                  placeholderTextColor={Colors.inputPlaceholder}
-                  value={userId}
-                  onChangeText={(text: string) => setUserId(text)}
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                />
+              <View style={styles.textContainer}>
+                <Text style={styles.cardTitle}>Admin</Text>
+                <Text style={styles.cardSubtitle}>
+                  Enter your credentials to continue
+                </Text>
               </View>
 
-              <Text style={styles.inputLabel}>Password</Text>
-              <View style={styles.inputContainer}>
-                <TextInput
-                  style={styles.textInput}
-                  placeholder="••••••••"
-                  placeholderTextColor={Colors.passwordPlaceholder}
-                  value={password}
-                  onChangeText={(text: string) => setPassword(text)}
-                  secureTextEntry={!showPassword}
-                  autoCapitalize="none"
-                  autoCorrect={false}
-                />
+              <View style={styles.formContainer}>
+                <View style={styles.inputGroup}>
+                  <View style={styles.formRow}>
+                    <Text style={styles.inputLabel}>User ID</Text>
+                    <View style={styles.inputContainer}>
+                      <TextInput
+                        style={styles.textInput}
+                        placeholder="Card ID"
+                        placeholderTextColor={Colors.inputPlaceholder}
+                        value={userId}
+                        onChangeText={(text: string) => setUserId(text)}
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                      />
+                    </View>
+                  </View>
+
+                  <View style={styles.formRow}>
+                    <Text style={styles.inputLabel}>Password</Text>
+                    <View style={styles.inputContainer}>
+                      <TextInput
+                        style={styles.textInput}
+                        placeholder="••••••••"
+                        placeholderTextColor={Colors.passwordPlaceholder}
+                        value={password}
+                        onChangeText={(text: string) => setPassword(text)}
+                        secureTextEntry={!showPassword}
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                      />
+                      <TouchableOpacity
+                        style={styles.eyeButton}
+                        onPress={() => setShowPassword(prev => !prev)}
+                        activeOpacity={0.7}>
+                        <Text style={styles.eyeIcon}>
+                          {/* {showPassword ? '🙈' : '👁️'} */}
+                          {showPassword ? '🔒' : '👁️'}
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+
                 <TouchableOpacity
-                  style={styles.eyeButton}
-                  onPress={() => setShowPassword(prev => !prev)}
-                  activeOpacity={0.7}>
-                  <Text style={styles.eyeIcon}>
-                    {/* {showPassword ? '🙈' : '👁️'} */}
-                    {showPassword ? '🔒' : '👁️'}
-                  </Text>
+                  style={[
+                    styles.loginButton,
+                    loading && styles.loginButtonDisabled,
+                  ]}
+                  onPress={handleLogin}
+                  disabled={loading}
+                  activeOpacity={0.85}>
+                  {loading ? (
+                    <ActivityIndicator color="#FFFFFF" size="small" />
+                  ) : (
+                    <Text style={styles.loginButtonText}>Login</Text>
+                  )}
                 </TouchableOpacity>
               </View>
-
-              <TouchableOpacity
-                style={[
-                  styles.loginButton,
-                  loading && styles.loginButtonDisabled,
-                ]}
-                onPress={handleLogin}
-                disabled={loading}
-                activeOpacity={0.85}>
-                {loading ? (
-                  <ActivityIndicator color="#FFFFFF" size="small" />
-                ) : (
-                  <Text style={styles.loginButtonText}>Login</Text>
-                )}
-              </TouchableOpacity>
             </View>
 
             <Text style={styles.footerText}>© 2026 FortisPlay.</Text>
@@ -158,25 +168,32 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexGrow: 1,
     alignItems: 'center',
-    paddingHorizontal: 24,
-    paddingTop: 20,
-    paddingBottom: 40,
+    padding: 32,
   },
   headerLogo: {
-    minHeight: 40,
-    width: 326,
+    width: '100%',
   },
   card: {
     width: '100%',
+    maxWidth: 448,
     backgroundColor: Colors.cardBackground,
-    borderRadius: 22,
-    paddingHorizontal: 28,
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.5)',
+    borderRadius: 20,
+    paddingHorizontal: 20,
     paddingVertical: 32,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.09,
-    shadowRadius: 18,
-    elevation: 10,
+    gap: 40,
+    shadowColor: '#2C2F31',
+    shadowOffset: {
+      width: 0,
+      height: 20,
+    },
+    shadowOpacity: 0.06,
+    shadowRadius: 20,
+    elevation: 8,
+  },
+  textContainer: {
+    gap: 16,
   },
   cardTitle: {
     fontFamily: 'Manrope',
@@ -184,19 +201,26 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     lineHeight: 36,
     letterSpacing: -0.4,
-    color: Colors.textDark,
     textAlign: 'center',
-    marginBottom: 6,
+    color: '#353A51',
   },
   cardSubtitle: {
     fontFamily: 'Inter',
     fontSize: 14,
     fontWeight: '400',
-    lineHeight: 18.2,
+    lineHeight: 18,
     letterSpacing: 0,
-    color: '#4A4E64',
     textAlign: 'center',
-    marginBottom: 28,
+    color: '#4A4E64',
+  },
+  formContainer: {
+    gap: 32,
+  },
+  inputGroup: {
+    gap: 24,
+  },
+  formRow: {
+    gap: 6.5,
   },
   inputLabel: {
     fontFamily: 'Manrope',
@@ -204,21 +228,19 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     lineHeight: 20,
     letterSpacing: 0,
-    color: Colors.textDark,
-    marginBottom: 7,
-    marginTop: 2,
+    color: '#353A51',
   },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: Colors.inputBackground,
+    backgroundColor: '#FFFFFF',
     borderWidth: 1,
     borderColor: 'rgba(53, 58, 81, 0.3)',
     borderRadius: 8,
-    marginBottom: 18,
     paddingHorizontal: 14,
   },
   textInput: {
+    fontFamily: 'Manrope',
     flex: 1,
     height: 50,
     fontSize: 15,
@@ -232,25 +254,18 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   loginButton: {
-    backgroundColor: Colors.createButton,
+    backgroundColor: '#2563FF',
     borderRadius: 8,
-    height: 52,
+    height: 48,
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 6,
-    shadowColor: Colors.primaryBlue,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.35,
-    shadowRadius: 10,
-    elevation: 7,
   },
   loginButtonDisabled: {
     backgroundColor: '#90CAF9',
-    elevation: 0,
   },
   loginButtonText: {
     fontFamily: 'Manrope',
-    color: Colors.createButtonText,
+    color: '#FFFFFF',
     fontSize: 16,
     fontWeight: '700',
     lineHeight: 24,
@@ -258,11 +273,11 @@ const styles = StyleSheet.create({
   },
   footerText: {
     fontFamily: 'Inter',
-    marginTop: 36,
     fontSize: 13,
     fontWeight: '400',
     lineHeight: 16,
-    color: Colors.textGrey,
+    letterSpacing: 0,
+    color: 'rgba(53, 58, 81, 0.6',
     textAlign: 'center',
   },
 });
