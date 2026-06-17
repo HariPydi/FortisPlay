@@ -344,22 +344,43 @@ const styles = StyleSheet.create({
   scrollContent: { paddingHorizontal: 16, paddingTop: 16 },
 
   pageTitle: {
+    fontFamily: 'Manrope',
     fontSize: 22,
-    fontWeight: '700',
-    color: Colors.textDark,
+    fontWeight: '800',
+    color: '#1F232B',
+    lineHeight: 36,
+    letterSpacing: -0.75,
     marginBottom: 14,
   },
 
-  tabsRow: { flexDirection: 'row', gap: 8, marginBottom: 14, paddingRight: 4 },
-  tab: { paddingHorizontal: 16, paddingVertical: 7 },
+  tabsRow: {
+    flexDirection: 'row',
+    backgroundColor: 'rgba(248, 250, 247, 0.8)',
+    borderTopWidth: 0.57,
+    borderTopColor: '#F1F5F9',
+    gap: 4,
+    paddingTop: 2,
+    paddingBottom: 2,
+    marginBottom: 14,
+    paddingRight: 4
+  },
+  tab: {
+    paddingHorizontal: 16,
+    paddingVertical: 7
+  },
   tabActive: {
     borderRadius: 20,
-    borderWidth: 1,
-    backgroundColor: Colors.tabActive,
-    borderColor: Colors.tabActive,
+    backgroundColor: '#1F232B',
   },
-  tabText: { fontSize: 13, fontWeight: '500', color: Colors.tabTextInactive },
-  tabTextActive: { color: Colors.tabTextActive },
+  tabText: {
+    fontFamily: 'Manrope',
+    fontSize: 13,
+    fontWeight: '700',
+    color: 'rgba(31, 35, 43, 0.8)',
+    lineHeight: 20,
+    letterSpacing: -0.4,
+  },
+  tabTextActive: { color: '#FFFFFF' },
 
   legend: { flexDirection: 'row', alignItems: 'center', marginBottom: 14, gap: 14 },
   legendItem: { flexDirection: 'row', alignItems: 'center', gap: 5 },
@@ -466,27 +487,27 @@ const styles = StyleSheet.create({
   noDataText: { color: '#2a252590', textAlign: 'center' },
   masterData: { color: '#2837d8ff', textDecorationLine: 'underline' },
   tableWrapper: {
-  flexDirection: 'row',
-  marginHorizontal: -16,
-},
-fixedHeaderCell: {
-  height: 36,
-  backgroundColor: '#EEF3FF',
-  justifyContent: 'center',
-  paddingHorizontal: 12,
-},
-fixedDataCell: {
-  height: 44,
-  justifyContent: 'center',
-  paddingHorizontal: 12,
-  borderBottomWidth: 0.5,
-  borderBottomColor: '#F0F0F0',
-},
-cellLabel: {
-  fontSize: 12,
-  color: Colors.venueText,
-  fontWeight: '500',
-},
+    flexDirection: 'row',
+    marginHorizontal: -16,
+  },
+  fixedHeaderCell: {
+    height: 36,
+    backgroundColor: '#EEF3FF',
+    justifyContent: 'center',
+    paddingHorizontal: 12,
+  },
+  fixedDataCell: {
+    height: 44,
+    justifyContent: 'center',
+    paddingHorizontal: 12,
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#F0F0F0',
+  },
+  cellLabel: {
+    fontSize: 12,
+    color: Colors.venueText,
+    fontWeight: '500',
+  },
 });
 
 export default DashboardScreen;

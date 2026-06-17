@@ -15,7 +15,7 @@ export const Colors = {
   logoBlue: '#1E3A5F',
 
   // dashboard
-  dashBackground: '#F0F2F5',
+  dashBackground: '#F8FAFC',
   headerBackground: '#FFFFFF',
   headerBorder: '#E0E0E0',
   chipRed: '#D32F2F',
