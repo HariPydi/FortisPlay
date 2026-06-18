@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -7,8 +7,9 @@ import {
   StyleSheet,
   ScrollView,
   StatusBar,
+  Image,
 } from 'react-native';
-import {Colors} from '../styles/colors';
+import { Colors } from '../styles/colors';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 type Props = {
@@ -26,14 +27,15 @@ type VenueFormData = {
 const classificationOptions = ['Major', 'Minor', 'Local'];
 const combinedOptions = ['Yes', 'No'];
 
-const AddVenueScreen: React.FC<Props> = ({navigation}) => {
+const AddVenueScreen: React.FC<Props> = ({ navigation }) => {
   const [venueCode, setVenueCode] = useState<string>('');
   const [venueName, setVenueName] = useState<string>('');
   const [venueClassification, setVenueClassification] = useState<string>('');
   const [combined, setCombined] = useState<string>('');
   const [status, setStatus] = useState<'Active' | 'Deactive'>('Active');
   const [showClassDropdown, setShowClassDropdown] = useState<boolean>(false);
-  const [showCombinedDropdown, setShowCombinedDropdown] = useState<boolean>(false);
+  const [showCombinedDropdown, setShowCombinedDropdown] =
+    useState<boolean>(false);
 
   const handleSubmit = (): void => {
     const data: VenueFormData = {
@@ -57,8 +59,13 @@ const AddVenueScreen: React.FC<Props> = ({navigation}) => {
         <TouchableOpacity
           style={styles.closeBtn}
           onPress={() => navigation?.goBack()}
-          activeOpacity={0.7}>
-          <Text style={styles.closeIcon}>✕</Text>
+          activeOpacity={0.7}
+        >
+          <Image
+            source={require('../assets/icons/CloseIcon.png')}
+            style={styles.closeIcon}
+            resizeMode="contain"
+          />
         </TouchableOpacity>
       </View>
 
@@ -68,8 +75,8 @@ const AddVenueScreen: React.FC<Props> = ({navigation}) => {
         style={styles.scroll}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}
-        keyboardShouldPersistTaps="handled">
-
+        keyboardShouldPersistTaps="handled"
+      >
         {/* Venue Code + Venue Name Row */}
         <View style={styles.row}>
           <View style={styles.halfField}>
@@ -77,7 +84,7 @@ const AddVenueScreen: React.FC<Props> = ({navigation}) => {
             <TextInput
               style={styles.input}
               placeholder="eg: MDS"
-              placeholderTextColor="#BBBBBB"
+              placeholderTextColor="#353A5199"
               value={venueCode}
               onChangeText={setVenueCode}
               autoCapitalize="characters"
@@ -89,7 +96,7 @@ const AddVenueScreen: React.FC<Props> = ({navigation}) => {
             <TextInput
               style={styles.input}
               placeholder="eg: Madras"
-              placeholderTextColor="#BBBBBB"
+              placeholderTextColor="#353A5199"
               value={venueName}
               onChangeText={setVenueName}
               autoCorrect={false}
@@ -106,11 +113,21 @@ const AddVenueScreen: React.FC<Props> = ({navigation}) => {
               setShowClassDropdown(!showClassDropdown);
               setShowCombinedDropdown(false);
             }}
-            activeOpacity={0.8}>
-            <Text style={[styles.dropdownText, !venueClassification && styles.placeholder]}>
+            activeOpacity={0.8}
+          >
+            <Text
+              style={[
+                styles.dropdownText,
+                !venueClassification && styles.placeholder,
+              ]}
+            >
               {venueClassification || 'Select'}
             </Text>
-            <Text style={styles.dropdownArrow}>▼</Text>
+            <Image
+              source={require('../assets/icons/chevron-down.png')}
+              style={styles.chevronDownIcon}
+              resizeMode="contain"
+            />
           </TouchableOpacity>
           {showClassDropdown && (
             <View style={styles.dropdownList}>
@@ -125,12 +142,15 @@ const AddVenueScreen: React.FC<Props> = ({navigation}) => {
                     setVenueClassification(option);
                     setShowClassDropdown(false);
                   }}
-                  activeOpacity={0.7}>
+                  activeOpacity={0.7}
+                >
                   <Text
                     style={[
                       styles.dropdownItemText,
-                      venueClassification === option && styles.dropdownItemTextActive,
-                    ]}>
+                      venueClassification === option &&
+                        styles.dropdownItemTextActive,
+                    ]}
+                  >
                     {option}
                   </Text>
                 </TouchableOpacity>
@@ -148,11 +168,18 @@ const AddVenueScreen: React.FC<Props> = ({navigation}) => {
               setShowCombinedDropdown(!showCombinedDropdown);
               setShowClassDropdown(false);
             }}
-            activeOpacity={0.8}>
-            <Text style={[styles.dropdownText, !combined && styles.placeholder]}>
+            activeOpacity={0.8}
+          >
+            <Text
+              style={[styles.dropdownText, !combined && styles.placeholder]}
+            >
               {combined || 'Select'}
             </Text>
-            <Text style={styles.dropdownArrow}>▼</Text>
+            <Image
+              source={require('../assets/icons/chevron-down.png')}
+              style={styles.chevronDownIcon}
+              resizeMode="contain"
+            />
           </TouchableOpacity>
           {showCombinedDropdown && (
             <View style={styles.dropdownList}>
@@ -167,12 +194,14 @@ const AddVenueScreen: React.FC<Props> = ({navigation}) => {
                     setCombined(option);
                     setShowCombinedDropdown(false);
                   }}
-                  activeOpacity={0.7}>
+                  activeOpacity={0.7}
+                >
                   <Text
                     style={[
                       styles.dropdownItemText,
                       combined === option && styles.dropdownItemTextActive,
-                    ]}>
+                    ]}
+                  >
                     {option}
                   </Text>
                 </TouchableOpacity>
@@ -188,8 +217,14 @@ const AddVenueScreen: React.FC<Props> = ({navigation}) => {
             <TouchableOpacity
               style={styles.radioOption}
               onPress={() => setStatus('Active')}
-              activeOpacity={0.7}>
-              <View style={[styles.radioOuter, status === 'Active' && styles.radioOuterActive]}>
+              activeOpacity={0.7}
+            >
+              <View
+                style={[
+                  styles.radioOuter,
+                  status === 'Active' && styles.radioOuterActive,
+                ]}
+              >
                 {status === 'Active' && <View style={styles.radioInner} />}
               </View>
               <Text style={styles.radioLabel}>Active</Text>
@@ -198,8 +233,14 @@ const AddVenueScreen: React.FC<Props> = ({navigation}) => {
             <TouchableOpacity
               style={styles.radioOption}
               onPress={() => setStatus('Deactive')}
-              activeOpacity={0.7}>
-              <View style={[styles.radioOuter, status === 'Deactive' && styles.radioOuterActive]}>
+              activeOpacity={0.7}
+            >
+              <View
+                style={[
+                  styles.radioOuter,
+                  status === 'Deactive' && styles.radioOuterActive,
+                ]}
+              >
                 {status === 'Deactive' && <View style={styles.radioInner} />}
               </View>
               <Text style={styles.radioLabel}>Deactive</Text>
@@ -207,7 +248,7 @@ const AddVenueScreen: React.FC<Props> = ({navigation}) => {
           </View>
         </View>
 
-        <View style={{height: 100}} />
+        <View style={{ height: 100 }} />
       </ScrollView>
 
       {/* Footer Submit Button */}
@@ -217,12 +258,12 @@ const AddVenueScreen: React.FC<Props> = ({navigation}) => {
           <TouchableOpacity
             style={styles.submitBtn}
             onPress={handleSubmit}
-            activeOpacity={0.85}>
+            activeOpacity={0.85}
+          >
             <Text style={styles.submitBtnText}>+ Submit</Text>
           </TouchableOpacity>
         </View>
       </View>
-
     </SafeAreaView>
   );
 };
@@ -233,18 +274,38 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFFFFF',
   },
 
+  // header: {
+  //   flexDirection: 'row',
+  //   alignItems: 'center',
+  //   justifyContent: 'space-between',
+  //   paddingHorizontal: 20,
+  //   paddingVertical: 18,
+  //   backgroundColor: '#FFFFFF',
+  // },
   header: {
+    height: 69,
     flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 20,
-    paddingVertical: 18,
+    alignItems: 'center',
+
+    paddingTop: 16,
+    paddingRight: 16,
+    paddingBottom: 16,
+    paddingLeft: 20,
+
+    borderBottomWidth: 1,
+    borderBottomColor: '#1F232B14',
+
     backgroundColor: '#FFFFFF',
   },
   headerTitle: {
-    fontSize: 22,
+    fontFamily: 'Manrope-Bold',
+    fontSize: 20,
     fontWeight: '700',
     color: '#1F232B',
+    lineHeight: 36,
+    letterSpacing: -0.75,
+    textAlignVertical: 'center',
   },
   closeBtn: {
     width: 32,
@@ -258,6 +319,8 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#555555',
     fontWeight: '600',
+    width: 24,
+    height: 24,
   },
 
   divider: {
@@ -265,7 +328,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#EEEEEE',
   },
 
-  scroll: {flex: 1},
+  scroll: { flex: 1 },
   scrollContent: {
     paddingHorizontal: 20,
     paddingTop: 24,
@@ -274,29 +337,34 @@ const styles = StyleSheet.create({
 
   row: {
     flexDirection: 'row',
-    gap: 12,
+    gap: 16,
     marginBottom: 20,
   },
   halfField: {
     flex: 1,
+    gap: 6,
   },
   field: {
-    marginBottom: 20,
+    gap: 16,
   },
 
   label: {
+    fontFamily: 'Manrope-SemiBold',
     fontSize: 14,
     fontWeight: '600',
+    lineHeight: 20,
+    letterSpacing: 0,
     color: '#353A51',
-    marginBottom: 8,
   },
 
   input: {
-    borderWidth: 1.5,
-    borderColor: '#E0E0E0',
-    borderRadius: 10,
-    paddingHorizontal: 14,
-    paddingVertical: 12,
+    borderWidth: 1,
+    borderColor: '#353A514D',
+    borderRadius: 8,
+
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+
     fontSize: 14,
     color: '#1A1A2E',
     backgroundColor: '#FFFFFF',
@@ -319,7 +387,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   placeholder: {
-    color: '#BBBBBB',
+    color: '#353A514D',
+  },
+  chevronDownIcon: {
+    width: 20,
+    height: 20,
   },
   dropdownArrow: {
     fontSize: 12,
@@ -334,7 +406,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     elevation: 4,
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.08,
     shadowRadius: 8,
   },
@@ -358,13 +430,15 @@ const styles = StyleSheet.create({
 
   radioRow: {
     flexDirection: 'row',
-    gap: 28,
-    marginTop: 4,
+    gap: 16,
+    paddingTop: 8,
+    paddingBottom: 8,
+    borderRadius: 8,
   },
   radioOption: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 8,
+    gap: 6,
   },
   radioOuter: {
     width: 22,
@@ -408,7 +482,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 28,
     paddingVertical: 14,
     shadowColor: Colors.primaryBlue,
-    shadowOffset: {width: 0, height: 4},
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,
     elevation: 6,
