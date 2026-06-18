@@ -7,11 +7,11 @@ import {
   View,
   Image
 } from 'react-native';
-import ScreenLayout from '../components/layout/ScreenLayout';
-import MasterDataModal from '../components/modals/MasterDataModal';
-import { Colors } from '../styles/colors';
-import AppBreadcrumb from '../components/common/AppBreadcrumb';
-import PageHeader from '../components/common/PageHeader';
+import ScreenLayout from '../../components/layout/ScreenLayout';
+import MasterDataModal from './MasterDataModal';
+import { Colors } from '../../styles/colors';
+import AppBreadcrumb from '../../components/common/AppBreadcrumb';
+import PageHeader from '../../components/common/PageHeader';
 
 type Props = {
   navigation?: any;
@@ -255,7 +255,7 @@ const DashboardScreen: React.FC<Props> = ({ navigation }) => {
                 <Text style={styles.cardTitle}>Horse Racing</Text>
                 <TouchableOpacity style={styles.createBtn}>
                   <Image
-                    source={require('../assets/icons/PlusIcon.png')}
+                    source={require('../../assets/icons/PlusIcon.png')}
                     style={styles.plusIcon}
                     resizeMode="contain"
                   />
@@ -281,7 +281,7 @@ const DashboardScreen: React.FC<Props> = ({ navigation }) => {
                 <Text style={styles.cardTitle}>Karambola</Text>
                 <TouchableOpacity style={styles.createBtn} onPress={openMaster}>
                   <Image
-                    source={require('../assets/icons/PlusIcon.png')}
+                    source={require('../../assets/icons/PlusIcon.png')}
                     style={styles.plusIcon}
                     resizeMode="contain"
                   />
@@ -305,7 +305,7 @@ const DashboardScreen: React.FC<Props> = ({ navigation }) => {
                 <Text style={styles.cardTitle}>Lucky Sign</Text>
                 <TouchableOpacity style={styles.createBtn}>
                   <Image
-                    source={require('../assets/icons/PlusIcon.png')}
+                    source={require('../../assets/icons/PlusIcon.png')}
                     style={styles.plusIcon}
                     resizeMode="contain"
                   />
