@@ -39,4 +39,9 @@ export const Colors = {
   dashCell: '#AAAAAA',
 } as const;
 
+export const FontFamily = {
+  primaryFont: "Manrope",
+  secondaryFont: "Intel"
+}
+
 export type ColorKeys = keyof typeof Colors;
