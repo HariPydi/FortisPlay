@@ -37,43 +37,45 @@ const PageHeader: React.FC<Props> = ({ title, tabs, activeTab, setActiveTab, onR
                 </ScrollView>
             </View>
 
-            <View style={styles.legend}>
-                <View style={styles.legendRow}>
-                    <View style={styles.legendItem}>
-                        <View
-                            style={[
-                                styles.dot,
-                                { backgroundColor: Colors.dotGreen },
-                            ]}
-                        />
-                        <Text style={styles.legendText}>
-                            Betting in Progress
-                        </Text>
+            {title === 'Live Events' && (
+                <View style={styles.legend}>
+                    <View style={styles.legendRow}>
+                        <View style={styles.legendItem}>
+                            <View
+                                style={[
+                                    styles.dot,
+                                    { backgroundColor: Colors.dotGreen },
+                                ]}
+                            />
+                            <Text style={styles.legendText}>
+                                Betting in Progress
+                            </Text>
+                        </View>
+
+                        <View style={styles.legendItem}>
+                            <View
+                                style={[
+                                    styles.dot,
+                                    { backgroundColor: Colors.dotRed },
+                                ]}
+                            />
+                            <Text style={styles.legendText}>
+                                Betting Stopped
+                            </Text>
+                        </View>
                     </View>
 
-                    <View style={styles.legendItem}>
-                        <View
-                            style={[
-                                styles.dot,
-                                { backgroundColor: Colors.dotRed },
-                            ]}
+                    <TouchableOpacity
+                        style={styles.refreshBtn}
+                        onPress={onRefresh}>
+                        <Image
+                            source={require('../../assets/icons/RefreshIcon.png')}
+                            style={styles.refreshIcon}
+                            resizeMode="contain"
                         />
-                        <Text style={styles.legendText}>
-                            Betting Stopped
-                        </Text>
-                    </View>
+                    </TouchableOpacity>
                 </View>
-
-                <TouchableOpacity
-                    style={styles.refreshBtn}
-                    onPress={onRefresh}>
-                    <Image
-                        source={require('../../assets/icons/RefreshIcon.png')}
-                        style={styles.refreshIcon}
-                        resizeMode="contain"
-                    />
-                </TouchableOpacity>
-            </View>
+            )}
         </View>
     );
 };
