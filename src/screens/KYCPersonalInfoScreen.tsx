@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -8,8 +8,9 @@ import {
   ScrollView,
   StatusBar,
   Platform,
+  Image,
 } from 'react-native';
-import {Colors} from '../styles/colors';
+import { Colors, FontFamily } from '../styles/colors';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 type Props = {
@@ -37,8 +38,19 @@ type KYCFormData = {
 
 const countryCodeOptions = ['+91 India', '+1 USA', '+44 UK', '+61 Australia'];
 const nearestOutletOptions = ['Outlet 1', 'Outlet 2', 'Outlet 3'];
-const documentTypeOptions = ['Passport', 'Aadhar Card', 'Driving License', 'Voter ID'];
-const occupationOptions = ['Employed', 'Self Employed', 'Business', 'Student', 'Retired'];
+const documentTypeOptions = [
+  'Passport',
+  'Aadhar Card',
+  'Driving License',
+  'Voter ID',
+];
+const occupationOptions = [
+  'Employed',
+  'Self Employed',
+  'Business',
+  'Student',
+  'Retired',
+];
 const sourceOfIncomeOptions = ['Salary', 'Business', 'Investment', 'Other'];
 const incomeOptions = ['Below 1L', '1L - 5L', '5L - 10L', 'Above 10L'];
 const nationalityOptions = ['Indian', 'American', 'British', 'Australian'];
@@ -53,7 +65,7 @@ type DropdownField =
   | 'nationality'
   | null;
 
-const KYCPersonalInfoScreen: React.FC<Props> = ({navigation}) => {
+const KYCPersonalInfoScreen: React.FC<Props> = ({ navigation }) => {
   const [firstName, setFirstName] = useState<string>('');
   const [middleName, setMiddleName] = useState<string>('');
   const [lastName, setLastName] = useState<string>('');
@@ -74,10 +86,22 @@ const KYCPersonalInfoScreen: React.FC<Props> = ({navigation}) => {
 
   const handleSubmit = (): void => {
     const data: KYCFormData = {
-      firstName, middleName, lastName, email,
-      countryCode, mobileNumber, dateOfBirth, nearestOutlet,
-      documentType, documentId, uploadDocument, uploadSelfie,
-      occupation, sourceOfIncome, income, nationality,
+      firstName,
+      middleName,
+      lastName,
+      email,
+      countryCode,
+      mobileNumber,
+      dateOfBirth,
+      nearestOutlet,
+      documentType,
+      documentId,
+      uploadDocument,
+      uploadSelfie,
+      occupation,
+      sourceOfIncome,
+      income,
+      nationality,
     };
     console.log('KYC Data:', data);
     navigation?.goBack();
@@ -102,11 +126,16 @@ const KYCPersonalInfoScreen: React.FC<Props> = ({navigation}) => {
       <TouchableOpacity
         style={styles.dropdown}
         onPress={() => toggleDropdown(field)}
-        activeOpacity={0.8}>
+        activeOpacity={0.8}
+      >
         <Text style={[styles.dropdownText, !value && styles.placeholder]}>
           {value || 'Select'}
         </Text>
-        <Text style={styles.dropdownArrow}>▼</Text>
+        <Image
+          source={require('../assets/icons/chevron-down.png')}
+          style={styles.chevronDownIcon}
+          resizeMode="contain"
+        />
       </TouchableOpacity>
       {openDropdown === field && (
         <View style={styles.dropdownList}>
@@ -121,12 +150,14 @@ const KYCPersonalInfoScreen: React.FC<Props> = ({navigation}) => {
                 onSelect(option);
                 setOpenDropdown(null);
               }}
-              activeOpacity={0.7}>
+              activeOpacity={0.7}
+            >
               <Text
                 style={[
                   styles.dropdownItemText,
                   value === option && styles.dropdownItemTextActive,
-                ]}>
+                ]}
+              >
                 {option}
               </Text>
             </TouchableOpacity>
@@ -136,7 +167,7 @@ const KYCPersonalInfoScreen: React.FC<Props> = ({navigation}) => {
     </View>
   );
 
-  const FileUpload = ({label, value}: {label: string; value: string}) => (
+  const FileUpload = ({ value }: { label: string; value: string }) => (
     <View style={styles.fileUploadContainer}>
       <TouchableOpacity style={styles.chooseFileBtn} activeOpacity={0.8}>
         <Text style={styles.chooseFileBtnText}>Choose File</Text>
@@ -157,19 +188,22 @@ const KYCPersonalInfoScreen: React.FC<Props> = ({navigation}) => {
         <TouchableOpacity
           style={styles.closeBtn}
           onPress={() => navigation?.goBack()}
-          activeOpacity={0.7}>
-          <Text style={styles.closeIcon}>✕</Text>
+          activeOpacity={0.7}
+        >
+          <Image
+            source={require('../assets/icons/CloseIcon.png')}
+            style={styles.closeIcon}
+            resizeMode="contain"
+          />
         </TouchableOpacity>
       </View>
-
-      <View style={styles.divider} />
 
       <ScrollView
         style={styles.scroll}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}
-        keyboardShouldPersistTaps="handled">
-
+        keyboardShouldPersistTaps="handled"
+      >
         {/* First Name + Middle Name */}
         <View style={styles.row}>
           <View style={styles.halfField}>
@@ -261,7 +295,11 @@ const KYCPersonalInfoScreen: React.FC<Props> = ({navigation}) => {
                 onChangeText={setDateOfBirth}
                 keyboardType="numeric"
               />
-              <Text style={styles.calendarIcon}>📅</Text>
+              <Image
+                source={require('../assets/icons/calendar.png')}
+                style={styles.calendarIcon}
+                resizeMode="contain"
+              />
             </View>
           </View>
           <View style={styles.halfField}>
@@ -355,22 +393,25 @@ const KYCPersonalInfoScreen: React.FC<Props> = ({navigation}) => {
           </View>
         </View>
 
-        <View style={{height: 100}} />
+        <View style={{ height: 100 }} />
       </ScrollView>
 
       {/* Footer Submit */}
+      <View style={styles.footerDivider} />
       <View style={styles.footer}>
-        <View style={styles.footerDivider} />
-        <View style={styles.footerContent}>
-          <TouchableOpacity
-            style={styles.submitBtn}
-            onPress={handleSubmit}
-            activeOpacity={0.85}>
-            <Text style={styles.submitBtnText}>+ Submit</Text>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity
+          style={styles.submitBtn}
+          onPress={handleSubmit}
+          activeOpacity={0.85}
+        >
+          <Image
+            source={require('../assets/icons/PlusIcon.png')}
+            style={styles.PlusIcon}
+            resizeMode="contain"
+          />
+          <Text style={styles.submitBtnText}> Submit</Text>
+        </TouchableOpacity>
       </View>
-
     </SafeAreaView>
   );
 };
@@ -382,17 +423,30 @@ const styles = StyleSheet.create({
   },
 
   header: {
+    height: 69,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingHorizontal: 20,
-    paddingVertical: 18,
+    paddingTop: 16,
+    paddingRight: 16,
+    paddingBottom: 16,
+    paddingLeft: 20,
     backgroundColor: '#FFFFFF',
+    borderBottomWidth: 1,
+    borderBottomColor: '#1F232B14',
   },
   headerTitle: {
-    fontSize: 22,
+    fontFamily: 'Manrope-Bold',
+    fontSize: 20,
     fontWeight: '700',
-    color: '#1A1A2E',
+    color: '#1F232B',
+    lineHeight: 36,
+    letterSpacing: -0.75,
+    textAlignVertical: 'center',
+  },
+  closeIcon: {
+    width: 24,
+    height: 24,
   },
   closeBtn: {
     width: 32,
@@ -402,50 +456,46 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  closeIcon: {
-    fontSize: 14,
-    color: '#555555',
-    fontWeight: '600',
-  },
 
-  divider: {
-    height: 1,
-    backgroundColor: '#EEEEEE',
-  },
-
-  scroll: {flex: 1},
+  scroll: { flex: 1 },
   scrollContent: {
-    paddingHorizontal: 20,
-    paddingTop: 24,
-    paddingBottom: 16,
+    padding: 20,
   },
 
   row: {
     flexDirection: 'row',
-    gap: 12,
-    marginBottom: 20,
+    gap: 16,
+    // marginBottom: 20,
   },
   halfField: {
     flex: 1,
+    gap: 6,
   },
 
   label: {
+    fontFamily: 'Manrope-SemiBold',
     fontSize: 14,
     fontWeight: '600',
-    color: '#1A1A2E',
+    lineHeight: 20,
+    letterSpacing: 0,
+    color: '#353A51',
     marginBottom: 8,
+    textAlignVertical: 'center',
   },
 
   input: {
-    borderWidth: 1.5,
-    borderColor: '#E0E0E0',
-    borderRadius: 10,
-    paddingHorizontal: 14,
-    paddingVertical: 12,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderWidth: 1,
+    borderColor: '#353A514D',
+    borderRadius: 8,
+    backgroundColor: '#FFFFFF',
     fontSize: 14,
     color: '#1A1A2E',
-    backgroundColor: '#FFFFFF',
-    height: 50,
+  },
+  chevronDownIcon: {
+    width: 20,
+    height: 20,
   },
 
   dateContainer: {
@@ -460,11 +510,16 @@ const styles = StyleSheet.create({
   },
   dateInput: {
     flex: 1,
+    fontFamily: 'Manrope-Regular',
     fontSize: 14,
-    color: '#1A1A2E',
+    fontWeight: '400',
+    color: '#353A5199',
+    lineHeight: 14,
+    letterSpacing: 0,
   },
   calendarIcon: {
-    fontSize: 16,
+    width: 20,
+    height: 20,
   },
 
   dropdown: {
@@ -499,7 +554,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     elevation: 5,
     shadowColor: '#000',
-    shadowOffset: {width: 0, height: 2},
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.08,
     shadowRadius: 8,
     zIndex: 999,
@@ -522,62 +577,96 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
 
+  // fileUploadContainer: {
+  //   flexDirection: 'row',
+  //   alignItems: 'center',
+  //   borderWidth: 1.5,
+  //   borderColor: '#E0E0E0',
+  //   borderRadius: 10,
+  //   paddingHorizontal: 8,
+  //   height: 50,
+  //   backgroundColor: '#FFFFFF',
+  //   gap: 8,
+  // },
   fileUploadContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderWidth: 1.5,
-    borderColor: '#E0E0E0',
-    borderRadius: 10,
-    paddingHorizontal: 8,
-    height: 50,
+
+    paddingTop: 8,
+    paddingRight: 12,
+    paddingBottom: 8,
+    paddingLeft: 8,
+
+    borderWidth: 1,
+    borderRadius: 8,
+    borderColor: '#353A514D',
+
     backgroundColor: '#FFFFFF',
+
     gap: 8,
   },
   chooseFileBtn: {
-    borderWidth: 1.5,
+    paddingTop: 4,
+    paddingRight: 8,
+    paddingBottom: 4,
+    paddingLeft: 8,
+
+    borderWidth: 1,
     borderColor: Colors.primaryBlue,
-    borderRadius: 6,
-    paddingHorizontal: 10,
-    paddingVertical: 6,
+    borderRadius: 8,
+
+    alignItems: 'center',
+    justifyContent: 'center',
   },
+
   chooseFileBtnText: {
     fontSize: 12,
     fontWeight: '600',
     color: Colors.primaryBlue,
+    borderRadius: 8,
   },
   fileNameText: {
-    fontSize: 12,
+    fontSize: 14,
     color: '#BBBBBB',
+    fontWeight: 400,
+    lineHeight: 14,
     flex: 1,
   },
 
   footer: {
+    alignItems: 'flex-end',
+    paddingVertical: 16,
+    paddingHorizontal: 32,
     backgroundColor: '#FFFFFF',
   },
   footerDivider: {
     height: 1,
-    backgroundColor: '#EEEEEE',
+    backgroundColor: '#1F232B14',
   },
-  footerContent: {
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    alignItems: 'flex-end',
-  },
+
   submitBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
     backgroundColor: Colors.primaryBlue,
-    borderRadius: 12,
-    paddingHorizontal: 28,
-    paddingVertical: 14,
-    shadowColor: Colors.primaryBlue,
-    shadowOffset: {width: 0, height: 4},
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 6,
+    borderWidth: 1.5,
+    borderRadius: 8,
+    borderColor: Colors.primaryBlue,
+    paddingRight: 16,
+    paddingLeft: 12,
+    paddingVertical: 8,
+  },
+  plusIcon: {
+    width: 20,
+    height: 20,
   },
   submitBtnText: {
+    fontFamily: FontFamily.primaryFont,
+    fontSize: 13,
+    fontWeight: '700',
+    lineHeight: 16,
+    letterSpacing: 0,
     color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: '600',
   },
 });
 
