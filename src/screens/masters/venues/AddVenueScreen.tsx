@@ -9,7 +9,7 @@ import {
   StatusBar,
   Image,
 } from 'react-native';
-import { Colors } from '../../../styles/colors';
+import { Colors, FontFamily } from '../../../styles/colors';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 type Props = {
@@ -57,7 +57,6 @@ const AddVenueScreen: React.FC<Props> = ({ navigation }) => {
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Add Venue</Text>
         <TouchableOpacity
-          style={styles.closeBtn}
           onPress={() => navigation?.goBack()}
           activeOpacity={0.7}
         >
@@ -68,8 +67,6 @@ const AddVenueScreen: React.FC<Props> = ({ navigation }) => {
           />
         </TouchableOpacity>
       </View>
-
-      <View style={styles.divider} />
 
       <ScrollView
         style={styles.scroll}
@@ -104,114 +101,116 @@ const AddVenueScreen: React.FC<Props> = ({ navigation }) => {
           </View>
         </View>
 
-        {/* Venue Classification Dropdown */}
-        <View style={styles.field}>
-          <Text style={styles.label}>Venue Classification</Text>
-          <TouchableOpacity
-            style={styles.dropdown}
-            onPress={() => {
-              setShowClassDropdown(!showClassDropdown);
-              setShowCombinedDropdown(false);
-            }}
-            activeOpacity={0.8}
-          >
-            <Text
-              style={[
-                styles.dropdownText,
-                !venueClassification && styles.placeholder,
-              ]}
+        <View style={styles.inputRow}>
+          {/* Venue Classification Dropdown */}
+          <View style={styles.field}>
+            <Text style={styles.label}>Venue Classification</Text>
+            <TouchableOpacity
+              style={styles.dropdown}
+              onPress={() => {
+                setShowClassDropdown(!showClassDropdown);
+                setShowCombinedDropdown(false);
+              }}
+              activeOpacity={0.8}
             >
-              {venueClassification || 'Select'}
-            </Text>
-            <Image
-              source={require('../../../assets/icons/chevron-down.png')}
-              style={styles.chevronDownIcon}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
-          {showClassDropdown && (
-            <View style={styles.dropdownList}>
-              {classificationOptions.map(option => (
-                <TouchableOpacity
-                  key={option}
-                  style={[
-                    styles.dropdownItem,
-                    venueClassification === option && styles.dropdownItemActive,
-                  ]}
-                  onPress={() => {
-                    setVenueClassification(option);
-                    setShowClassDropdown(false);
-                  }}
-                  activeOpacity={0.7}
-                >
-                  <Text
+              <Text
+                style={[
+                  styles.dropdownText,
+                  !venueClassification && styles.placeholder,
+                ]}
+              >
+                {venueClassification || 'Select'}
+              </Text>
+              <Image
+                source={require('../../../assets/icons/chevron-down.png')}
+                style={styles.chevronDownIcon}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
+            {showClassDropdown && (
+              <View style={styles.dropdownList}>
+                {classificationOptions.map(option => (
+                  <TouchableOpacity
+                    key={option}
                     style={[
-                      styles.dropdownItemText,
-                      venueClassification === option &&
-                      styles.dropdownItemTextActive,
+                      styles.dropdownItem,
+                      venueClassification === option && styles.dropdownItemActive,
                     ]}
+                    onPress={() => {
+                      setVenueClassification(option);
+                      setShowClassDropdown(false);
+                    }}
+                    activeOpacity={0.7}
                   >
-                    {option}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          )}
-        </View>
+                    <Text
+                      style={[
+                        styles.dropdownItemText,
+                        venueClassification === option &&
+                        styles.dropdownItemTextActive,
+                      ]}
+                    >
+                      {option}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            )}
+          </View>
 
-        {/* Combined Dropdown */}
-        <View style={styles.field}>
-          <Text style={styles.label}>Combined</Text>
-          <TouchableOpacity
-            style={styles.dropdown}
-            onPress={() => {
-              setShowCombinedDropdown(!showCombinedDropdown);
-              setShowClassDropdown(false);
-            }}
-            activeOpacity={0.8}
-          >
-            <Text
-              style={[styles.dropdownText, !combined && styles.placeholder]}
+          {/* Combined Dropdown */}
+          <View style={styles.field}>
+            <Text style={styles.label}>Combined</Text>
+            <TouchableOpacity
+              style={styles.dropdown}
+              onPress={() => {
+                setShowCombinedDropdown(!showCombinedDropdown);
+                setShowClassDropdown(false);
+              }}
+              activeOpacity={0.8}
             >
-              {combined || 'Select'}
-            </Text>
-            <Image
-              source={require('../../../assets/icons/chevron-down.png')}
-              style={styles.chevronDownIcon}
-              resizeMode="contain"
-            />
-          </TouchableOpacity>
-          {showCombinedDropdown && (
-            <View style={styles.dropdownList}>
-              {combinedOptions.map(option => (
-                <TouchableOpacity
-                  key={option}
-                  style={[
-                    styles.dropdownItem,
-                    combined === option && styles.dropdownItemActive,
-                  ]}
-                  onPress={() => {
-                    setCombined(option);
-                    setShowCombinedDropdown(false);
-                  }}
-                  activeOpacity={0.7}
-                >
-                  <Text
+              <Text
+                style={[styles.dropdownText, !combined && styles.placeholder]}
+              >
+                {combined || 'Select'}
+              </Text>
+              <Image
+                source={require('../../../assets/icons/chevron-down.png')}
+                style={styles.chevronDownIcon}
+                resizeMode="contain"
+              />
+            </TouchableOpacity>
+            {showCombinedDropdown && (
+              <View style={styles.dropdownList}>
+                {combinedOptions.map(option => (
+                  <TouchableOpacity
+                    key={option}
                     style={[
-                      styles.dropdownItemText,
-                      combined === option && styles.dropdownItemTextActive,
+                      styles.dropdownItem,
+                      combined === option && styles.dropdownItemActive,
                     ]}
+                    onPress={() => {
+                      setCombined(option);
+                      setShowCombinedDropdown(false);
+                    }}
+                    activeOpacity={0.7}
                   >
-                    {option}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          )}
+                    <Text
+                      style={[
+                        styles.dropdownItemText,
+                        combined === option && styles.dropdownItemTextActive,
+                      ]}
+                    >
+                      {option}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            )}
+          </View>
         </View>
 
         {/* Status Radio Buttons */}
-        <View style={styles.field}>
+        <View style={styles.radioContainer}>
           <Text style={styles.label}>Status</Text>
           <View style={styles.radioRow}>
             <TouchableOpacity
@@ -252,17 +251,20 @@ const AddVenueScreen: React.FC<Props> = ({ navigation }) => {
       </ScrollView>
 
       {/* Footer Submit Button */}
+      <View style={styles.footerDivider} />
       <View style={styles.footer}>
-        <View style={styles.footerDivider} />
-        <View style={styles.footerContent}>
-          <TouchableOpacity
-            style={styles.submitBtn}
-            onPress={handleSubmit}
-            activeOpacity={0.85}
-          >
-            <Text style={styles.submitBtnText}>+ Submit</Text>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity
+          style={styles.submitBtn}
+          onPress={handleSubmit}
+          activeOpacity={0.85}
+        >
+          <Image
+            source={require('../../../assets/icons/PlusIcon.png')}
+            style={styles.plusIcon}
+            resizeMode="contain"
+          />
+          <Text style={styles.submitBtnText}>Submit</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
@@ -272,34 +274,31 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     backgroundColor: '#FFFFFF',
-  },
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 25,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 25,
 
-  // header: {
-  //   flexDirection: 'row',
-  //   alignItems: 'center',
-  //   justifyContent: 'space-between',
-  //   paddingHorizontal: 20,
-  //   paddingVertical: 18,
-  //   backgroundColor: '#FFFFFF',
-  // },
+    elevation: 16,
+  },
   header: {
     height: 69,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
 
-    paddingTop: 16,
+    paddingVertical: 16,
     paddingRight: 16,
-    paddingBottom: 16,
     paddingLeft: 20,
 
     borderBottomWidth: 1,
     borderBottomColor: '#1F232B14',
-
-    backgroundColor: '#FFFFFF',
   },
   headerTitle: {
-    fontFamily: 'Manrope-Bold',
+    fontFamily: FontFamily.primaryFont,
     fontSize: 20,
     fontWeight: '700',
     color: '#1F232B',
@@ -307,18 +306,7 @@ const styles = StyleSheet.create({
     letterSpacing: -0.75,
     textAlignVertical: 'center',
   },
-  closeBtn: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    backgroundColor: '#F4F4F4',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   closeIcon: {
-    fontSize: 14,
-    color: '#555555',
-    fontWeight: '600',
     width: 24,
     height: 24,
   },
@@ -330,26 +318,27 @@ const styles = StyleSheet.create({
 
   scroll: { flex: 1 },
   scrollContent: {
-    paddingHorizontal: 20,
-    paddingTop: 24,
-    paddingBottom: 16,
+    padding: 20,
+    gap: 20,
   },
 
   row: {
     flexDirection: 'row',
     gap: 16,
-    marginBottom: 20,
+  },
+  inputRow: {
+    gap: 16,
   },
   halfField: {
     flex: 1,
     gap: 6,
   },
   field: {
-    gap: 16,
+    gap: 6,
   },
 
   label: {
-    fontFamily: 'Manrope-SemiBold',
+    fontFamily: FontFamily.primaryFont,
     fontSize: 14,
     fontWeight: '600',
     lineHeight: 20,
@@ -374,28 +363,32 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    borderWidth: 1.5,
-    borderColor: '#E0E0E0',
-    borderRadius: 10,
-    paddingHorizontal: 14,
-    paddingVertical: 14,
+    borderWidth: 1,
+    borderColor: '#353A514D',
+    borderRadius: 8,
+    paddingRight: 12,
+    paddingLeft: 16,
+    paddingVertical: 8,
     backgroundColor: '#FFFFFF',
   },
   dropdownText: {
+    fontFamily: FontFamily.primaryFont,
     fontSize: 14,
+    fontWeight: '600',
     color: '#1A1A2E',
     flex: 1,
   },
   placeholder: {
-    color: '#353A514D',
+    fontFamily: FontFamily.primaryFont,
+    fontSize: 14,
+    fontWeight: '400',
+    lineHeight: 14,
+    letterSpacing: 0,
+    color: '#3551354d',
   },
   chevronDownIcon: {
     width: 20,
     height: 20,
-  },
-  dropdownArrow: {
-    fontSize: 12,
-    color: '#555555',
   },
   dropdownList: {
     borderWidth: 1.5,
@@ -428,11 +421,13 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
 
+  radioContainer: {
+    gap: 16,
+  },
   radioRow: {
     flexDirection: 'row',
     gap: 16,
-    paddingTop: 8,
-    paddingBottom: 8,
+    paddingVertical: 8,
     borderRadius: 8,
   },
   radioOption: {
@@ -445,7 +440,7 @@ const styles = StyleSheet.create({
     height: 22,
     borderRadius: 11,
     borderWidth: 2,
-    borderColor: '#C0C0C0',
+    borderColor: '#1F232B4D',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -459,38 +454,47 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.primaryBlue,
   },
   radioLabel: {
-    fontSize: 15,
-    color: '#1A1A2E',
+    fontFamily: FontFamily.primaryFont,
+    fontSize: 14,
     fontWeight: '500',
+    lineHeight: 20,
+    letterSpacing: 0,
+    color: '#1F232B',
   },
 
   footer: {
+    alignItems: 'flex-end',
     backgroundColor: '#FFFFFF',
+    paddingVertical: 16,
+    paddingHorizontal: 32,
   },
   footerDivider: {
     height: 1,
-    backgroundColor: '#EEEEEE',
-  },
-  footerContent: {
-    paddingHorizontal: 20,
-    paddingVertical: 16,
-    alignItems: 'flex-end',
+    backgroundColor: '#1F232B14',
   },
   submitBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
     backgroundColor: Colors.primaryBlue,
-    borderRadius: 12,
-    paddingHorizontal: 28,
-    paddingVertical: 14,
-    shadowColor: Colors.primaryBlue,
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 6,
+    borderWidth: 1.5,
+    borderRadius: 8,
+    borderColor: Colors.primaryBlue,
+    paddingRight: 16,
+    paddingLeft: 12,
+    paddingVertical: 8,
+  },
+  plusIcon: {
+    width: 20,
+    height: 20,
   },
   submitBtnText: {
+    fontFamily: FontFamily.primaryFont,
+    fontSize: 13,
+    fontWeight: '700',
+    lineHeight: 16,
+    letterSpacing: 0,
     color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: '600',
   },
 });
 
