@@ -5,14 +5,14 @@ import {
   Text,
   View,
 } from 'react-native';
-import AppBreadcrumb from '../components/common/AppBreadcrumb';
-import PageHeader from '../components/common/PageHeader';
-import ScreenLayout from '../components/layout/ScreenLayout';
-import { MASTERTABS } from '../data/dummyData';
-import { Colors, FontFamily } from '../styles/colors';
-import DistributionsTab from './masters/distributions/DistributionsTab';
-import UsersKYCTab from './masters/users-kyc/UsersKYCTab';
-import VenuesTab from './masters/venues/VenuesTab';
+import AppBreadcrumb from '../../components/common/AppBreadcrumb';
+import PageHeader from '../../components/common/PageHeader';
+import ScreenLayout from '../../components/layout/ScreenLayout';
+import { MASTERTABS } from '../../data/dummyData';
+import { Colors, FontFamily } from '../../styles/colors';
+import DistributionsTab from './distributions/DistributionsTab';
+import UsersKYCTab from './users-kyc/UsersKYCTab';
+import VenuesTab from './venues/VenuesTab';
 
 const TAB_COMPONENTS = {
   Venues: VenuesTab,

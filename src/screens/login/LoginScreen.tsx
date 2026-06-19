@@ -14,9 +14,9 @@ import {
   ImageBackground,
   Image,
 } from 'react-native';
-import { Colors } from '../styles/colors';
+import { Colors } from '../../styles/colors';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../App';
+import { RootStackParamList } from '../../../App';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 type Props = {
@@ -47,7 +47,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
 
   return (
     <ImageBackground
-      source={require('../assets/images/login-bg.jpg')}
+      source={require('../../assets/images/login-bg.jpg')}
       style={styles.bgImage}
       resizeMode="cover">
       <SafeAreaView style={styles.safeArea}>
@@ -66,7 +66,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
 
             {/* Logo */}
             <Image
-              source={require('../assets/images/headerLogo.png')}
+              source={require('../../assets/images/headerLogo.png')}
               style={styles.headerLogo}
               resizeMode="contain"
             />

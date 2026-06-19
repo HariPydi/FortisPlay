@@ -1,10 +1,10 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import LoginScreen from './src/screens/LoginScreen';
+import LoginScreen from './src/screens/login/LoginScreen';
 import DashboardScreen from './src/screens/dashboard/DashboardScreen';
-import MastersScreen from './src/screens/MastersScreen';
-import AddVenueScreen from './src/screens/AddVenueScreen';
+import MastersScreen from './src/screens/masters/MastersScreen';
+import AddVenueScreen from './src/screens/masters/venues/AddVenueScreen';
 import KYCPersonalInfoScreen from './src/screens/KYCPersonalInfoScreen';
 
 export type RootStackParamList = {

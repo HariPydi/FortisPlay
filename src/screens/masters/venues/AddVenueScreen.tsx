@@ -9,7 +9,7 @@ import {
   StatusBar,
   Image,
 } from 'react-native';
-import { Colors } from '../styles/colors';
+import { Colors } from '../../../styles/colors';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 type Props = {
@@ -62,7 +62,7 @@ const AddVenueScreen: React.FC<Props> = ({ navigation }) => {
           activeOpacity={0.7}
         >
           <Image
-            source={require('../assets/icons/CloseIcon.png')}
+            source={require('../../../assets/icons/CloseIcon.png')}
             style={styles.closeIcon}
             resizeMode="contain"
           />
@@ -124,7 +124,7 @@ const AddVenueScreen: React.FC<Props> = ({ navigation }) => {
               {venueClassification || 'Select'}
             </Text>
             <Image
-              source={require('../assets/icons/chevron-down.png')}
+              source={require('../../../assets/icons/chevron-down.png')}
               style={styles.chevronDownIcon}
               resizeMode="contain"
             />
@@ -148,7 +148,7 @@ const AddVenueScreen: React.FC<Props> = ({ navigation }) => {
                     style={[
                       styles.dropdownItemText,
                       venueClassification === option &&
-                        styles.dropdownItemTextActive,
+                      styles.dropdownItemTextActive,
                     ]}
                   >
                     {option}
@@ -176,7 +176,7 @@ const AddVenueScreen: React.FC<Props> = ({ navigation }) => {
               {combined || 'Select'}
             </Text>
             <Image
-              source={require('../assets/icons/chevron-down.png')}
+              source={require('../../../assets/icons/chevron-down.png')}
               style={styles.chevronDownIcon}
               resizeMode="contain"
             />
