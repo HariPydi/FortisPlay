@@ -446,8 +446,48 @@ const MastersScreen: React.FC<Props> = ({ navigation }) => {
           </View>
         )}
 
+        {/* ── USERS KYC TAB ── */}
+        {activeTab === 'Users KYC' && (
+          <View style={styles.card}>
+            <View style={styles.cardHeaderContainer}>
+              <View style={styles.cardHeader}>
+                <Text style={styles.cardTitle}>Users KYC</Text>
+                <TouchableOpacity
+                  style={styles.createBtn}
+                  activeOpacity={0.8}
+                  onPress={() => navigation?.navigate('KYCPersonalInfo')}>
+                  <Image
+                    source={require('../assets/icons/PlusIcon.png')}
+                    style={styles.plusIcon}
+                    resizeMode="contain"
+                  />
+                  <Text style={styles.createBtnText}>Create New</Text>
+                </TouchableOpacity>
+              </View>
+
+
+              <View style={styles.searchContainer}>
+                <Image
+                  source={require('../assets/icons/search-lg.png')}
+                  style={styles.searchIcon}
+                  resizeMode="contain"
+                />
+                <TextInput
+                  style={styles.searchInput}
+                  placeholder="Search"
+                  placeholderTextColor="#1F232B99"
+                  value={searchText}
+                  onChangeText={setSearchText}
+                  autoCapitalize="none"
+                  autoCorrect={false}
+                />
+              </View>
+            </View>
+          </View>
+        )}
+
         {/* ── OTHER TABS ── */}
-        {activeTab !== 'Venues' && activeTab !== 'Distributions' && (
+        {activeTab !== 'Venues' && activeTab !== 'Distributions' && activeTab !== 'Users KYC' && (
           <View style={styles.card}>
             <Text style={styles.cardTitle}>{activeTab}</Text>
             <Text style={{ color: Colors.textGrey, marginTop: 12 }}>
