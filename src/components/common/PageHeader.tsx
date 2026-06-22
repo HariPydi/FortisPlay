@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.primaryFont,
     fontSize: 13,
     fontWeight: '800',
-    color: Colors.testDark80,
+    color: Colors.textDark80,
     lineHeight: 20,
     letterSpacing: -0.4,
   },

@@ -1,6 +1,7 @@
 // Full corrected DashboardTable.tsx
 import React, { useRef } from 'react';
 import { ScrollView, View, Text, StyleSheet } from 'react-native';
+import { Colors, FontFamily } from '../../styles/colors';
 
 const CHIP_W = 68;
 const VENUE_W = 122;   // 12px padding each side + label space
@@ -17,13 +18,13 @@ const Chip = ({ chip }: { chip: RaceChip }) => {
     if (!chip) {
         return (
             <View style={styles.colCell}>
-                <Text style={styles.dash}>—</Text>
+                <Text style={styles.dash}>-</Text>
             </View>
         );
     }
     return (
         <View style={styles.colCell}>
-            <View style={[styles.chip, { backgroundColor: chip.status === 'green' ? '#1D9E75' : '#E24B4A' }]}>
+            <View style={[styles.chip, chip.status === 'green' ? styles.chipColorGreen : styles.chipColorRed]}>
                 <Text style={styles.chipText}>{chip.time}</Text>
             </View>
         </View>
@@ -78,7 +79,6 @@ const SyncedTable = ({
                 <View style={[fixedCellStyle, styles.headerBg]}>
                     <Text style={styles.th}>{fixedLabel}</Text>
                 </View>
-                <View style={styles.divider} />
                 <ScrollView
                     ref={headerRef}
                     horizontal
@@ -101,14 +101,21 @@ const SyncedTable = ({
                 const chips = renderChips(row);
                 const maxCols = headers.length;
                 return (
-                    <View key={rowIdx} style={styles.dataOuter}>
+                    <View
+                        key={rowIdx}
+                        style={[
+                            styles.dataOuter,
+                            rowIdx % 2 === 0
+                                ? styles.rowWhite
+                                : styles.rowGrey,
+                        ]}
+                    >
                         {/* Fixed label — uses SAME fixedCellStyle as header */}
                         <View style={fixedCellStyle}>
                             <Text style={styles.cellLabel} numberOfLines={2}>
                                 {renderFixed(row)}
                             </Text>
                         </View>
-                        <View style={styles.divider} />
                         <ScrollView
                             ref={ref => { scrollRefs.current[rowIdx] = ref; }}
                             horizontal
@@ -146,9 +153,29 @@ export const HorseRacingTable = ({ data }: { data: HorseRow[] }) => {
     );
 };
 
-export const MeetingTable = ({ data }: { data: MeetingRow[] }) => {
+export const MeetingTable = ({
+    data,
+    isLuckySign = false,
+}: {
+    data: MeetingRow[],
+    isLuckySign?: boolean;
+}) => {
     const maxCols = Math.max(...data.map(r => r.draws.length), 0);
-    const headers = Array.from({ length: maxCols }, (_, i) => `Draw ${i + 1}`);
+
+    const headers = Array.from({ length: maxCols }, (_, colIndex) => {
+        if (!isLuckySign) {
+            return `Draw ${colIndex + 1}`;
+        }
+
+        const hasDataInColumn = data.some(
+            row => row.draws[colIndex] !== null
+        );
+
+        return hasDataInColumn
+            ? `Draw ${colIndex + 1}`
+            : '-';
+    });
+
     return (
         <SyncedTable
             fixedWidth={MEETING_W}
@@ -175,12 +202,7 @@ const styles = StyleSheet.create({
         borderBottomColor: '#F0F0F0',
     },
     headerBg: {
-        backgroundColor: 'rgba(37, 99, 255, 0.08)',
-    },
-    divider: {
-        width: 0.5,
-        backgroundColor: '#E0E0E0',
-        alignSelf: 'stretch',
+        backgroundColor: Colors.blue8,
     },
     colCell: {
         width: CHIP_W,
@@ -189,33 +211,55 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     th: {
+        fontFamily: FontFamily.primaryFont,
         fontSize: 10,
         fontWeight: '700',
-        letterSpacing: 0.5,
+        lineHeight: 15,
+        letterSpacing: 0.55,
         textTransform: 'uppercase',
-        color: 'rgba(31, 35, 43, 0.7)',
+        color: Colors.textDark80,
     },
     cellLabel: {
-        fontSize: 11,
+        fontFamily: FontFamily.primaryFont,
+        fontSize: 12,
         fontWeight: '700',
-        color: '#1F232B',
-        lineHeight: 16,
+        lineHeight: 18,
+        letterSpacing: 0,
+        color: Colors.textDark,
+    },
+    rowWhite: {
+        backgroundColor: Colors.white
+    },
+    rowGrey: {
+        backgroundColor: Colors.bgGrey,
     },
     chip: {
         minWidth: 52,
-        paddingVertical: 5,
+        paddingVertical: 6,
         paddingHorizontal: 4,
-        borderRadius: 3,
+        borderRadius: 2,
         alignItems: 'center',
     },
     chipText: {
-        color: '#fff',
+        fontFamily: FontFamily.primaryFont,
+        color: Colors.white,
         fontSize: 11,
         fontWeight: '700',
+        lineHeight: 16.5,
+        letterSpacing: 0,
+    },
+    chipColorRed: {
+        backgroundColor: Colors.dotRed
+    },
+    chipColorGreen: {
+        backgroundColor: Colors.dotGreen
     },
     dash: {
+        fontFamily: FontFamily.primaryFont,
+        color: Colors.textDark,
         fontSize: 13,
         fontWeight: '700',
-        color: '#888',
+        lineHeight: 19.5,
+        letterSpacing: 0,
     },
 });

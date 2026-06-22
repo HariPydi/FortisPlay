@@ -3,6 +3,7 @@ export const Colors = {
   white50: '#FFFFFF80',
   black: '#000000',
   blue: '#2563FF',
+  blue8: '#2563FF14',
 
   shadowColorBlack: '#2C2F31',
 
@@ -15,7 +16,7 @@ export const Colors = {
   textDark15: '#1F232B26',
   textDark40: '#1F232B66',
   textDark60: '#1F232B99',
-  testDark80: '#1F232BCC',
+  textDark80: '#1F232BCC',
   textSlate: '#0F172A',
   textSlate10: '#0F172A1A',
   textSlate60: '#0F172A99',
@@ -29,6 +30,8 @@ export const Colors = {
 
   dashBackground: '#F8FAFC',
   dashBackground80: '#F8FAFCCC',
+
+  bgGrey: '#F1F4F7',
 
   dotGreen: '#10B981',
   dotRed: '#EF4444',

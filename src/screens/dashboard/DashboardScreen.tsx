@@ -120,7 +120,10 @@ const DashboardScreen: React.FC<Props> = ({ navigation }) => {
                   <Text style={styles.noDataText}>No draws scheduled for today.</Text>
                 </View>
               ) : (
-                <MeetingTable data={luckySignData} />
+                <MeetingTable
+                  data={luckySignData}
+                  isLuckySign={true}
+                />
               )}
             </View>
           )}
