@@ -406,10 +406,10 @@ const KYCPersonalInfoScreen: React.FC<Props> = ({ navigation }) => {
         >
           <Image
             source={require('../assets/icons/PlusIcon.png')}
-            style={styles.PlusIcon}
+            style={styles.plusIcon}
             resizeMode="contain"
           />
-          <Text style={styles.submitBtnText}> Submit</Text>
+          <Text style={styles.submitBtnText}>Submit</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -460,12 +460,12 @@ const styles = StyleSheet.create({
   scroll: { flex: 1 },
   scrollContent: {
     padding: 20,
+    gap: 20,
   },
 
   row: {
     flexDirection: 'row',
     gap: 16,
-    // marginBottom: 20,
   },
   halfField: {
     flex: 1,
@@ -576,33 +576,17 @@ const styles = StyleSheet.create({
     color: Colors.primaryBlue,
     fontWeight: '600',
   },
-
-  // fileUploadContainer: {
-  //   flexDirection: 'row',
-  //   alignItems: 'center',
-  //   borderWidth: 1.5,
-  //   borderColor: '#E0E0E0',
-  //   borderRadius: 10,
-  //   paddingHorizontal: 8,
-  //   height: 50,
-  //   backgroundColor: '#FFFFFF',
-  //   gap: 8,
-  // },
   fileUploadContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-
     paddingTop: 8,
     paddingRight: 12,
     paddingBottom: 8,
     paddingLeft: 8,
-
     borderWidth: 1,
     borderRadius: 8,
     borderColor: '#353A514D',
-
     backgroundColor: '#FFFFFF',
-
     gap: 8,
   },
   chooseFileBtn: {
@@ -620,16 +604,20 @@ const styles = StyleSheet.create({
   },
 
   chooseFileBtnText: {
-    fontSize: 12,
-    fontWeight: '600',
+    fontFamily: FontFamily.primaryFont,
+    fontSize: 11,
+    fontWeight: '700',
+    lineHeight: 16.5,
+    letterSpacing: 0,
     color: Colors.primaryBlue,
-    borderRadius: 8,
   },
   fileNameText: {
+    fontFamily: FontFamily.primaryFont,
     fontSize: 14,
-    color: '#BBBBBB',
-    fontWeight: 400,
+    fontWeight: '400',
     lineHeight: 14,
+    letterSpacing: 0,
+    color: '#353A5199',
     flex: 1,
   },
 
