@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
-import { Colors } from '../../styles/colors';
+import { Colors, FontFamily } from '../../styles/colors';
 import { ScrollView } from 'react-native-gesture-handler';
 
 type Props = {
@@ -20,7 +20,7 @@ const PageHeader: React.FC<Props> = ({
 }) => {
   return (
     <View style={styles.container}>
-      <View>
+      <View style={styles.topContainer}>
         <View style={styles.titleRow}>
           <Text style={styles.pageTitle}>{title}</Text>
           {title === 'Live Events' && (
@@ -30,7 +30,7 @@ const PageHeader: React.FC<Props> = ({
                 style={styles.signalIcon}
                 resizeMode="contain"
               />
-              <View style ={styles.livesem}>
+              <View style={styles.livesem}>
                 <Text style={styles.liveText}>LIVE</Text>
                 <Text style={styles.liveDateText}>
                   {new Date()
@@ -81,13 +81,13 @@ const PageHeader: React.FC<Props> = ({
           <View style={styles.legendRow}>
             <View style={styles.legendItem}>
               <View
-                style={[styles.dot, { backgroundColor: Colors.dotGreen }]}
+                style={[styles.dot, styles.greendot]}
               />
               <Text style={styles.legendText}>Betting in Progress</Text>
             </View>
 
             <View style={styles.legendItem}>
-              <View style={[styles.dot, { backgroundColor: Colors.dotRed }]} />
+              <View style={[styles.dot, styles.redDot]} />
               <Text style={styles.legendText}>Betting Stopped</Text>
             </View>
           </View>
@@ -107,64 +107,63 @@ const PageHeader: React.FC<Props> = ({
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 16,
     gap: 20,
   },
+  topContainer: {
+    gap: 12,
+  },
   pageTitle: {
-    fontFamily: 'Manrope',
+    fontFamily: FontFamily.primaryFont,
     fontSize: 22,
     fontWeight: '800',
-    color: '#1F232B',
+    color: Colors.textDark,
     lineHeight: 36,
     letterSpacing: -0.75,
-  },
-
-  signalIcon: {
-    width: 20,
-    height: 20,
-  },
-  livesem:{
-    gap:4,
-
-  },
-  titleRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 14,
   },
   liveContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 6,
   },
-
+  signalIcon: {
+    width: 20,
+    height: 20,
+  },
+  livesem: {
+    // gap: 4,
+  },
   liveText: {
-  fontFamily: 'Manrope-SemiBold',
-  fontSize: 10,
-  fontWeight: '600',
-  lineHeight: 16,
-  letterSpacing: 0,
-  textTransform: 'uppercase',
-},
- liveDateText: {
-  fontFamily: 'Manrope-SemiBold',
-  fontSize: 12,
-  fontWeight: '600',
-  lineHeight: 16,
-  letterSpacing: 0,
-  textAlign: 'center',
-  color: '#1F232B',
-},
+    fontFamily: FontFamily.primaryFont,
+    fontSize: 10,
+    fontWeight: '600',
+    lineHeight: 16,
+    letterSpacing: 0,
+    textTransform: 'uppercase',
+    color: Colors.textDark60,
+  },
+  liveDateText: {
+    fontFamily: FontFamily.primaryFont,
+    fontSize: 12,
+    fontWeight: '600',
+    lineHeight: 16,
+    letterSpacing: 0,
+    textAlign: 'center',
+    color: Colors.textDark,
+  },
+  titleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
 
   tabsRow: {
     flexDirection: 'row',
-    backgroundColor: 'rgba(248, 250, 247, 0.8)',
+    backgroundColor: Colors.dashBackground80,
     borderTopWidth: 0.57,
-    borderTopColor: '#F1F5F9',
+    borderTopColor: Colors.tabsBorder,
+    borderRadius: 4,
     gap: 4,
     paddingVertical: 2,
-    paddingRight: 4,
   },
   tab: {
     paddingHorizontal: 16,
@@ -172,23 +171,22 @@ const styles = StyleSheet.create({
   },
   tabActive: {
     borderRadius: 20,
-    backgroundColor: '#1F232B',
+    backgroundColor: Colors.textDark,
   },
   tabText: {
-    fontFamily: 'Manrope',
+    fontFamily: FontFamily.primaryFont,
     fontSize: 13,
-    fontWeight: '700',
-    color: 'rgba(31, 35, 43, 0.8)',
+    fontWeight: '800',
+    color: Colors.testDark80,
     lineHeight: 20,
     letterSpacing: -0.4,
   },
-  tabTextActive: { color: '#FFFFFF' },
+  tabTextActive: { color: Colors.white },
 
   legend: {
     flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: 14,
-    gap: 14,
   },
   legendRow: {
     gap: 12,
@@ -196,30 +194,40 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
   },
-
   legendItem: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
   },
-
   dot: {
     width: 9,
     height: 9,
     borderRadius: 5,
+    shadowOffset: {
+      width: 0,
+      height: 0,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
+    elevation: 4,
   },
-
+  greendot: {
+    backgroundColor: Colors.dotGreen,
+    shadowColor: Colors.dotGreen,
+  },
+  redDot: {
+    backgroundColor: Colors.dotRed,
+    shadowColor: Colors.dotRed,
+  },
   legendText: {
-    fontFamily: 'Manrope',
+    fontFamily: FontFamily.primaryFont,
     fontSize: 10,
-    fontWeight: '500',
+    fontWeight: '700',
     lineHeight: 15,
     letterSpacing: 0,
-    color: 'rgba(15, 23, 42, 0.6)',
+    color: Colors.textSlate60,
   },
-
   refreshBtn: {
-    marginLeft: 'auto',
     paddingVertical: 4,
     paddingHorizontal: 8,
     borderWidth: 1,
@@ -227,7 +235,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     gap: 6,
   },
-
   refreshIcon: {
     width: 18,
     height: 18,

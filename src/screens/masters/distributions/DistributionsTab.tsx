@@ -40,70 +40,81 @@ const DistributionsTab = () => {
         <View style={styles.card}>
 
             {/* Card Header */}
-            <View style={styles.cardHeader}>
-                <Text style={styles.cardTitle}>Distributions</Text>
+            <View style={styles.cardContent}>
+                <View style={styles.cardHeader}>
+                    <Text style={styles.cardTitle}>Distributions</Text>
 
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <TouchableOpacity
-                        style={{ marginRight: 12 }}
-                        onPress={() => setShowSearch(!showSearch)}>
-                        <Text>🔍</Text>
-                    </TouchableOpacity>
+                    <View style={styles.cardHeaderActions}>
+                        <TouchableOpacity
+                            style={styles.searchWrapper}
+                            onPress={() => setShowSearch(!showSearch)}>
+                            <Image
+                                source={require('../../../assets/icons/search-lg.png')}
+                                style={styles.searchIcon}
+                                resizeMode="contain"
+                            />
+                        </TouchableOpacity>
 
-                    <TouchableOpacity style={styles.createBtn}>
-                        <Text style={styles.createBtnText}>+ Create New</Text>
-                    </TouchableOpacity>
+                        <TouchableOpacity style={styles.createBtn}>
+                            <Image
+                                source={require('../../../assets/icons/PlusIcon.png')}
+                                style={styles.plusIcon}
+                                resizeMode="contain"
+                            />
+                            <Text style={styles.createBtnText}>Create New</Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
-            </View>
-            {showSearch && (
-                <View style={styles.searchContainer}>
-                    <Text style={styles.searchIcon}></Text>
+                {showSearch && (
+                    <View style={styles.searchContainer}>
+                        <Text style={styles.searchIcon}></Text>
 
-                    <TextInput
-                        style={styles.searchInput}
-                        placeholder="Search Distribution"
-                        value={searchText}
-                        onChangeText={setSearchText}
-                        placeholderTextColor="#999"
-                    />
-                </View>
-            )}
+                        <TextInput
+                            style={styles.searchInput}
+                            placeholder="Search Distribution"
+                            value={searchText}
+                            onChangeText={setSearchText}
+                            placeholderTextColor="#999"
+                        />
+                    </View>
+                )}
 
-            {/* Venue Dropdown */}
-            <View style={styles.venueRow}>
-                <Text style={styles.venueLabel}>Venue</Text>
-                <View style={styles.venueDropdownWrapper}>
-                    <TouchableOpacity
-                        style={styles.venueDropdown}
-                        onPress={() => setShowVenueDropdown(!showVenueDropdown)}
-                        activeOpacity={0.8}>
-                        <Text style={styles.venueDropdownText}>{selectedVenue}</Text>
-                        <Text style={styles.dropdownArrow}>▼</Text>
-                    </TouchableOpacity>
-                    {showVenueDropdown && (
-                        <View style={styles.dropdownList}>
-                            {venueOptions.map(venue => (
-                                <TouchableOpacity
-                                    key={venue}
-                                    style={[
-                                        styles.dropdownItem,
-                                        selectedVenue === venue && styles.dropdownItemActive,
-                                    ]}
-                                    onPress={() => {
-                                        setSelectedVenue(venue);
-                                        setShowVenueDropdown(false);
-                                    }}
-                                    activeOpacity={0.7}>
-                                    <Text style={[
-                                        styles.dropdownItemText,
-                                        selectedVenue === venue && styles.dropdownItemTextActive,
-                                    ]}>
-                                        {venue}
-                                    </Text>
-                                </TouchableOpacity>
-                            ))}
-                        </View>
-                    )}
+                {/* Venue Dropdown */}
+                <View style={styles.venueRow}>
+                    <Text style={styles.venueLabel}>Venue</Text>
+                    <View style={styles.venueDropdownWrapper}>
+                        <TouchableOpacity
+                            style={styles.venueDropdown}
+                            onPress={() => setShowVenueDropdown(!showVenueDropdown)}
+                            activeOpacity={0.8}>
+                            <Text style={styles.venueDropdownText}>{selectedVenue}</Text>
+                            <Text style={styles.dropdownArrow}>▼</Text>
+                        </TouchableOpacity>
+                        {showVenueDropdown && (
+                            <View style={styles.dropdownList}>
+                                {venueOptions.map(venue => (
+                                    <TouchableOpacity
+                                        key={venue}
+                                        style={[
+                                            styles.dropdownItem,
+                                            selectedVenue === venue && styles.dropdownItemActive,
+                                        ]}
+                                        onPress={() => {
+                                            setSelectedVenue(venue);
+                                            setShowVenueDropdown(false);
+                                        }}
+                                        activeOpacity={0.7}>
+                                        <Text style={[
+                                            styles.dropdownItemText,
+                                            selectedVenue === venue && styles.dropdownItemTextActive,
+                                        ]}>
+                                            {venue}
+                                        </Text>
+                                    </TouchableOpacity>
+                                ))}
+                            </View>
+                        )}
+                    </View>
                 </View>
             </View>
 
@@ -191,15 +202,23 @@ const DistributionsTab = () => {
 const styles = StyleSheet.create({
     card: {
         backgroundColor: '#FFFFFF',
-        borderRadius: 16,
-        padding: 16,
-        marginBottom: 16,
+        borderWidth: 1,
+        borderColor: '#0F172A1A',
+        borderRadius: 12,
+        paddingTop: 16,
+        // paddingHorizontal: 16,
+
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.06,
-        shadowRadius: 8,
-        elevation: 3,
-        marginTop: 16,
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.05,
+        shadowRadius: 1,
+        elevation: 1,
+    },
+    cardContent: {
+        borderBottomWidth: 0.57,
+        borderBottomColor: '#EAEEF2',
+        padding: 12,
+        gap: 12,
     },
     cardHeader: {
         flexDirection: 'row',
@@ -213,6 +232,11 @@ const styles = StyleSheet.create({
         lineHeight: 25.5,
         letterSpacing: 0,
         color: Colors.textDark,
+    },
+    cardHeaderActions: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 8,
     },
     createBtn: {
         backgroundColor: Colors.primaryBlue,
@@ -249,6 +273,9 @@ const styles = StyleSheet.create({
         height: 39,
         gap: 12
     },
+    searchWrapper: {
+        paddingHorizontal: 8,
+    },
     searchIcon: {
         width: 20,
         height: 20,
@@ -264,14 +291,15 @@ const styles = StyleSheet.create({
     venueRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 16,
-        gap: 12,
-        zIndex: 100,
+        gap: 8,
     },
     venueLabel: {
-        fontSize: 14,
+        fontFamily: FontFamily.primaryFont,
         fontWeight: '600',
-        color: '#1A1A2E',
+        fontSize: 14,
+        lineHeight: 18,
+        letterSpacing: 0,
+        color: '#000',
     },
     venueDropdownWrapper: {
         flex: 1,
@@ -280,11 +308,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        borderWidth: 1.5,
-        borderColor: '#E0E0E0',
-        borderRadius: 10,
-        paddingHorizontal: 14,
-        paddingVertical: 10,
+        borderWidth: 1,
+        borderColor: '#353A514D',
+        borderRadius: 8,
+        paddingRight: 8,
+        paddingLeft: 12,
+        paddingVertical: 8,
         backgroundColor: '#FFFFFF',
     },
     venueDropdownText: {

@@ -1,5 +1,84 @@
-// Master Tabs
+// Tabs
+export const DASHBOARDTABS = ['All', 'Horse Racing', 'Karambola', 'Lucky Sign'];
 export const MASTERTABS = ['Venues', 'Pools', 'LS Prize', 'Distributions', 'Enclosures', 'Terminals', 'Users', 'Users KYC', 'Locations'];
+
+
+// Dashboard Data
+type ChipStatus = 'red' | 'green';
+type RaceChip = { time: string; status: ChipStatus } | null;
+type HorseRow = { venue: string; races: RaceChip[] };
+type MeetingRow = { name: string; draws: RaceChip[] };
+
+export const horseData: HorseRow[] = [
+    {
+        venue: 'Doomben (AUS)',
+        races: [
+            { time: '10:35', status: 'red' },
+            { time: '11:10', status: 'red' },
+            { time: '11:45', status: 'red' },
+            { time: '12:20', status: 'red' },
+            { time: '12:25', status: 'red' },
+
+        ],
+    },
+    {
+        venue: 'Randwick (AUS)',
+        races: [
+            { time: '10:55', status: 'red' },
+            { time: '11:30', status: 'red' },
+            { time: '12:05', status: 'red' },
+            { time: '12:40', status: 'red' },
+            { time: '12:45', status: 'red' },
+        ],
+    },
+    {
+        venue: 'Yarmouth (UK)',
+        races: [
+            { time: '18:10', status: 'red' },
+            { time: '18:40', status: 'red' },
+            { time: '19:10', status: 'green' },
+            { time: '19:45', status: 'green' },
+            { time: '19:50', status: 'green' },
+            { time: '19:55', status: 'green' },
+        ],
+    },
+];
+
+export const karambolaData: MeetingRow[] = [
+    {
+        name: 'Meeting 1 @ 13:00',
+        draws: [
+            { time: '13:00', status: 'red' },
+            { time: '13:05', status: 'red' },
+            { time: '13:10', status: 'red' },
+            { time: '13:15', status: 'red' },
+        ],
+    },
+    {
+        name: 'Meeting 2 @ 15:00',
+        draws: [
+            { time: '15:00', status: 'red' },
+            { time: '15:05', status: 'red' },
+            { time: '15:10', status: 'red' },
+            { time: '15:15', status: 'red' },
+        ],
+    },
+    {
+        name: 'Meeting 3 @ 19:00',
+        draws: [
+            { time: '19:00', status: 'green' },
+            { time: '19:05', status: 'green' },
+            { time: '19:10', status: 'green' },
+            { time: '19:15', status: 'green' },
+        ],
+    },
+];
+
+export const luckySignData: MeetingRow[] = [
+    { name: 'Meeting 1 @ 13:00', draws: [{ time: '13:35', status: 'red' }, null, null] },
+    { name: 'Meeting 2 @ 15:00', draws: [{ time: '15:00', status: 'red' }, null, null] },
+    { name: 'Meeting 3 @ 19:00', draws: [{ time: '19:00', status: 'green' }, null, null] },
+];
 
 // Venues Data
 export const venueOptions = ['KB1', 'KB2', 'KB3', 'LSC', 'LSC36', 'LSS'];

@@ -14,18 +14,24 @@ export const Colors = {
   textDark: '#1F232B',
   textDark15: '#1F232B26',
   textDark40: '#1F232B66',
+  textDark60: '#1F232B99',
+  testDark80: '#1F232BCC',
+  textSlate: '#0F172A',
+  textSlate10: '#0F172A1A',
+  textSlate60: '#0F172A99',
 
   grey1: '#4A4E64',
 
   passwordPlaceholderText: '#ABADAF',
 
-  // App Header colors
   headerBorder: '#E2E8F0',
+  tabsBorder: '#F1F5F9',
 
-  // Dashboard colors
   dashBackground: '#F8FAFC',
-  dashBorder: '#E0E0E0',
+  dashBackground80: '#F8FAFCCC',
 
+  dotGreen: '#10B981',
+  dotRed: '#EF4444',
 
 
 
@@ -43,7 +49,6 @@ export const Colors = {
   logoBlue: '#1E3A5F',
 
   // dashboard
-  headerBackground: '#FFFFFF',
   chipRed: '#EF4444',
   chipGreen: '#10B981',
   chipText: '#FFFFFF',
@@ -52,8 +57,6 @@ export const Colors = {
   tabTextActive: '#FFFFFF',
   tabTextInactive: '#666666',
   tabBorder: '#DDDDDD',
-  dotGreen: '#10B981',
-  dotRed: '#EF4444',
   createButton: '#2563FF',
   createButtonText: '#FFFFFF',
   cardBorder: '#E0E0E0',

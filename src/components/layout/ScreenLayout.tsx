@@ -43,12 +43,14 @@ const ScreenLayout: React.FC<Props> = ({
 const styles = StyleSheet.create({
     safeArea: {
         flex: 1,
-        backgroundColor: Colors.headerBackground,
+        backgroundColor: Colors.white,
     },
     content: {
         flex: 1,
         backgroundColor: Colors.dashBackground,
-        padding: 16,
+        paddingTop: 8,
+        paddingBottom: 16,
+        paddingHorizontal: 16,
     },
 });
 
