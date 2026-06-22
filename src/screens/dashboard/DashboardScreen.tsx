@@ -235,7 +235,6 @@ const DashboardScreen: React.FC<Props> = ({ navigation }) => {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollContent}>
 
-        <AppBreadcrumb crumbs={['Control Center', 'Dashboard']} />
 
         <PageHeader
           title="Live Events"
@@ -337,7 +336,7 @@ const DashboardScreen: React.FC<Props> = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   scroll: { flex: 1 },
-  scrollContent: { paddingHorizontal: 16, paddingTop: 16 },
+  scrollContent: { paddingHorizontal: 16, paddingTop: 8,paddingBottom:16, },
 
   cardWrapper: {
     paddingTop: 16,
