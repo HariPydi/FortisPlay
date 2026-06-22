@@ -1,23 +1,49 @@
 export const Colors = {
+  white: '#FFFFFF',
+  white50: '#FFFFFF80',
+  black: '#000000',
+  blue: '#2563FF',
+
+  shadowColorBlack: '#2C2F31',
+
+  // Login page colors
+
+  textPrimary: '#353A51',
+  textPrimary30: '#353A514D',
+  textPrimary60: '#353A5199',
+  textDark: '#1F232B',
+  textDark15: '#1F232B26',
+  textDark40: '#1F232B66',
+
+  grey1: '#4A4E64',
+
+  passwordPlaceholderText: '#ABADAF',
+
+  // App Header colors
+  headerBorder: '#E2E8F0',
+
+  // Dashboard colors
+  dashBackground: '#F8FAFC',
+  dashBorder: '#E0E0E0',
+
+
+
+
+
   // existing
   backgroundTop: '#B8E8F7',
   backgroundBottom: '#E8F4F8',
   cardBackground: '#FFFFFF',
   primaryBlue: '#2563FF',
   primaryBlueHover: '#1565C0',
-  textDark: '#1F232B',
   textGrey: '#888888',
   textLabel: '#333333',
   inputBackground: '#F8F9FA',
   inputBorder: '#E0E0E0',
-  inputPlaceholder: 'rgba(53, 58, 81, 0.6)',
-  passwordPlaceholder: '#ABADAF',
   logoBlue: '#1E3A5F',
 
   // dashboard
-  dashBackground: '#F8FAFC',
   headerBackground: '#FFFFFF',
-  headerBorder: '#E0E0E0',
   chipRed: '#EF4444',
   chipGreen: '#10B981',
   chipText: '#FFFFFF',
@@ -41,7 +67,7 @@ export const Colors = {
 
 export const FontFamily = {
   primaryFont: "Manrope",
-  secondaryFont: "Intel"
+  secondaryFont: "Inter"
 }
 
 export type ColorKeys = keyof typeof Colors;

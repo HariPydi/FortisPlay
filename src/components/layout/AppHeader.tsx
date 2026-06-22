@@ -7,7 +7,7 @@ import {
   StatusBar,
   Image,
 } from 'react-native';
-import { Colors } from '../../styles/colors';
+import { Colors, FontFamily } from '../../styles/colors';
 
 type Props = {
   userId?: string;
@@ -24,7 +24,7 @@ const AppHeader: React.FC<Props> = ({
     <>
       <StatusBar
         barStyle="dark-content"
-        backgroundColor={Colors.headerBackground}
+        backgroundColor={Colors.white}
       />
       <View style={styles.header}>
         <View style={styles.left}>
@@ -74,10 +74,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: Colors.headerBackground,
+    backgroundColor: Colors.white,
     paddingHorizontal: 16,
     borderBottomWidth: 0.57,
-    borderBottomColor: '#E2E8F0',
+    borderBottomColor: Colors.headerBorder,
   },
   left: {
     flexDirection: 'row',
@@ -99,19 +99,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     borderWidth: 0.57,
-    borderColor: 'rgba(31, 35, 43, 0.2)',
+    borderColor: Colors.textDark15,
     borderRadius: 4,
     paddingHorizontal: 10,
     paddingVertical: 6,
     gap: 10,
   },
   userId: {
-    height: 18,
-    width: 48,
-    top: 0.43,
-    fontFamily: 'Manrope',
+    fontFamily: FontFamily.primaryFont,
     fontSize: 14,
-    color: '#1F232B',
+    color: Colors.textDark,
     fontWeight: '600',
     lineHeight: 18,
     letterSpacing: 0,
@@ -119,7 +116,7 @@ const styles = StyleSheet.create({
   divider: {
     width: 1,
     height: 16,
-    backgroundColor: 'rgba(31, 35, 43, 0.4)',
+    backgroundColor: Colors.textDark40,
   },
   userIcon: {
     width: 18,

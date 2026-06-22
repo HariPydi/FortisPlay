@@ -14,7 +14,7 @@ import {
   ImageBackground,
   Image,
 } from 'react-native';
-import { Colors } from '../../styles/colors';
+import { Colors, FontFamily } from '../../styles/colors';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../App';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -49,6 +49,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
     <ImageBackground
       source={require('../../assets/images/login-bg.jpg')}
       style={styles.bgImage}
+      imageStyle={styles.bgImageStyle}
       resizeMode="cover">
       <SafeAreaView style={styles.safeArea}>
         <StatusBar
@@ -88,7 +89,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
                       <TextInput
                         style={styles.textInput}
                         placeholder="Card ID"
-                        placeholderTextColor={Colors.inputPlaceholder}
+                        placeholderTextColor={Colors.textPrimary60}
                         value={userId}
                         onChangeText={(text: string) => setUserId(text)}
                         autoCapitalize="none"
@@ -103,7 +104,7 @@ const LoginScreen: React.FC<Props> = ({ navigation }) => {
                       <TextInput
                         style={styles.textInput}
                         placeholder="••••••••"
-                        placeholderTextColor={Colors.passwordPlaceholder}
+                        placeholderTextColor={Colors.passwordPlaceholderText}
                         value={password}
                         onChangeText={(text: string) => setPassword(text)}
                         secureTextEntry={!showPassword}
@@ -154,6 +155,9 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
+  bgImageStyle: {
+    opacity: 0.8,
+  },
 
   safeArea: {
     flex: 1,
@@ -171,19 +175,20 @@ const styles = StyleSheet.create({
     padding: 32,
   },
   headerLogo: {
-    width: '100%',
+    width: 175,
+    height: 40,
   },
   card: {
     width: '100%',
     maxWidth: 448,
-    backgroundColor: Colors.cardBackground,
+    backgroundColor: Colors.white,
     borderWidth: 1,
-    borderColor: 'rgba(255, 255, 255, 0.5)',
+    borderColor: Colors.white50,
     borderRadius: 20,
     paddingHorizontal: 20,
     paddingVertical: 32,
     gap: 40,
-    shadowColor: '#2C2F31',
+    shadowColor: Colors.shadowColorBlack,
     shadowOffset: {
       width: 0,
       height: 20,
@@ -196,22 +201,22 @@ const styles = StyleSheet.create({
     gap: 16,
   },
   cardTitle: {
-    fontFamily: 'Manrope',
+    fontFamily: FontFamily.primaryFont,
     fontSize: 24,
     fontWeight: '700',
     lineHeight: 36,
     letterSpacing: -0.4,
     textAlign: 'center',
-    color: '#353A51',
+    color: Colors.textPrimary,
   },
   cardSubtitle: {
-    fontFamily: 'Inter',
+    fontFamily: FontFamily.secondaryFont,
     fontSize: 14,
     fontWeight: '400',
     lineHeight: 18,
     letterSpacing: 0,
     textAlign: 'center',
-    color: '#4A4E64',
+    color: Colors.grey1,
   },
   formContainer: {
     gap: 32,
@@ -223,20 +228,20 @@ const styles = StyleSheet.create({
     gap: 6.5,
   },
   inputLabel: {
-    fontFamily: 'Manrope',
+    fontFamily: FontFamily.primaryFont,
     fontSize: 14,
     fontWeight: '600',
     lineHeight: 20,
     letterSpacing: 0,
-    color: '#353A51',
+    color: Colors.textPrimary,
   },
   baseInputContainer: {
     height: 44,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: Colors.white,
     borderWidth: 1,
-    borderColor: 'rgba(53, 58, 81, 0.3)',
+    borderColor: Colors.textPrimary30,
     borderRadius: 8,
     paddingHorizontal: 16,
   },
@@ -246,11 +251,11 @@ const styles = StyleSheet.create({
   passwordContainer: {
   },
   textInput: {
-    fontFamily: 'Manrope',
+    fontFamily: FontFamily.primaryFont,
     flex: 1,
     height: 50,
     fontSize: 15,
-    color: Colors.textDark,
+    color: Colors.textPrimary,
   },
   eyeButton: {
     paddingLeft: 8,
@@ -260,7 +265,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   loginButton: {
-    backgroundColor: '#2563FF',
+    backgroundColor: Colors.blue,
     borderRadius: 8,
     height: 48,
     justifyContent: 'center',
@@ -270,20 +275,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#90CAF9',
   },
   loginButtonText: {
-    fontFamily: 'Manrope',
-    color: '#FFFFFF',
+    fontFamily: FontFamily.primaryFont,
     fontSize: 16,
     fontWeight: '700',
     lineHeight: 24,
     letterSpacing: 0,
+    color: Colors.white,
   },
   footerText: {
-    fontFamily: 'Inter',
+    fontFamily: FontFamily.secondaryFont,
     fontSize: 13,
     fontWeight: '400',
     lineHeight: 16,
     letterSpacing: 0,
-    color: 'rgba(53, 58, 81, 0.6',
+    color: Colors.textPrimary60,
     textAlign: 'center',
   },
 });
